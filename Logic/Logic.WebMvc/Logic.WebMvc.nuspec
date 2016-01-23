@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>s2Libs.s2WebMvcUtils</id>
+    <version>$version$</version>
+    <title>S2 Web Utility Collection for MVC components</title>
+    <description>[S2] web MVC utility library</description>
+    <authors>S2 UG</authors>
+    <owners>S2 UG</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Contains extended classes and utilities useful for all kinds of web projects using ASP.NET MVC.</summary>
+    <iconUrl>https://sabstore.blob.core.windows.net/szwei/s2_logo_64_v2.png</iconUrl>
+    <releaseNotes>Updated package references.</releaseNotes>
+    <copyright>S2 UG 2015</copyright>
+    <dependencies>
+      <dependency id="s2Libs.s2Base" version="2.0.18" />      
+      <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\ReleaseNuget\s2Libs.s2WebMvcUtils.dll" target="lib\net\s2Libs.s2WebMvcUtils.dll" />
+    <file src="bin\ReleaseNuget\s2Libs.s2WebMvcUtils.xml" target="lib\net\s2Libs.s2WebMvcUtils.XML" />
+    <file src="bin\ReleaseNuget\s2Libs.s2WebMvcUtils.pdb" target="lib\net\s2Libs.s2WebMvcUtils.pdb" />
+  </files>
+</package>

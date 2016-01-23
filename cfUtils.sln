@@ -1,0 +1,201 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9030A1C-8742-42C1-86ED-73E237BDFBD6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\codingfreaks.nuget.targets = .nuget\codingfreaks.nuget.targets
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{ADDDDA89-779B-469D-822C-45AB27E52033}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{593CE85B-7B17-4D6D-827E-7A3A5FFF320A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Base", "Logic\Logic.Base\Logic.Base.csproj", "{3C63B977-7ACD-4A7B-B196-10A815D4866D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Shared", "_Shared", "{82F1F0C0-0387-451C-998B-D1B8241504F0}"
+	ProjectSection(SolutionItems) = preProject
+		_Shared\SharedAssemblyInfo.cs = _Shared\SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Utils", "Logic\Logic.Utils\Logic.Utils.csproj", "{88F51888-A010-41E2-9BFA-3D612B38F3AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Core", "Tests\Tests.Core\Tests.Core.csproj", "{0472C903-C6E6-4253-8206-5EA6AB82B6BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Wpf", "Logic\Logic.Wpf\Logic.Wpf.csproj", "{84EEE92F-21D4-4044-9C4F-EFD439EE6481}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ui", "Ui", "{82091D5E-9A0B-4615-B59B-5EE86198C6F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ui.TestConsole", "Ui\UiTestConsole\Ui.TestConsole.csproj", "{0C5AF187-0626-4A55-8ED6-26FD20955D0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Azure", "Logic\Logic.Azure\Logic.Azure.csproj", "{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Web", "Logic\Logic.Web\Logic.Web.csproj", "{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Screenshot", "Logic\Logic.Screenshot\Logic.Screenshot.csproj", "{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Portable", "Logic\Logic.Portable\Logic.Portable.csproj", "{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic\Logic.Tests\Logic.Tests.csproj", "{8CE28847-7194-499B-B3E1-8691427F0B6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.WebMvc", "Logic\Logic.WebMvc\Logic.WebMvc.csproj", "{68AB46DB-36E7-40F0-A546-66FCC191F043}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Portable", "Tests.Portable\Tests.Portable.csproj", "{D57BA698-2CE9-4A65-91BE-FB1349389D49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		ReleaseNuget|Any CPU = ReleaseNuget|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{8CE28847-7194-499B-B3E1-8691427F0B6C}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{68AB46DB-36E7-40F0-A546-66FCC191F043}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C63B977-7ACD-4A7B-B196-10A815D4866D} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{88F51888-A010-41E2-9BFA-3D612B38F3AF} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{0472C903-C6E6-4253-8206-5EA6AB82B6BC} = {593CE85B-7B17-4D6D-827E-7A3A5FFF320A}
+		{84EEE92F-21D4-4044-9C4F-EFD439EE6481} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{0C5AF187-0626-4A55-8ED6-26FD20955D0B} = {82091D5E-9A0B-4615-B59B-5EE86198C6F9}
+		{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{2EE5CDDA-E59B-415E-BEEE-950A2B2571F9} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{C7B34736-E58D-4B6E-9C46-9E77C78B6F84} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{38B4CDDF-5457-441A-84D0-3826F5D0E1AA} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{8CE28847-7194-499B-B3E1-8691427F0B6C} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{68AB46DB-36E7-40F0-A546-66FCC191F043} = {ADDDDA89-779B-469D-822C-45AB27E52033}
+		{D57BA698-2CE9-4A65-91BE-FB1349389D49} = {593CE85B-7B17-4D6D-827E-7A3A5FFF320A}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 13
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://sab-team.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Logic\\Logic.Base\\Logic.Base.csproj
+		SccProjectTopLevelParentUniqueName1 = s2Utils.sln
+		SccProjectName1 = Logic/Logic.Base
+		SccLocalPath1 = Logic\\Logic.Base
+		SccProjectUniqueName2 = Logic\\Logic.Utils\\Logic.Utils.csproj
+		SccProjectTopLevelParentUniqueName2 = s2Utils.sln
+		SccProjectName2 = Logic/Logic.Utils
+		SccLocalPath2 = Logic\\Logic.Utils
+		SccProjectUniqueName3 = Tests\\Tests.Core\\Tests.Core.csproj
+		SccProjectTopLevelParentUniqueName3 = s2Utils.sln
+		SccProjectName3 = Tests/Tests.Core
+		SccLocalPath3 = Tests\\Tests.Core
+		SccProjectUniqueName4 = Logic\\Logic.Wpf\\Logic.Wpf.csproj
+		SccProjectTopLevelParentUniqueName4 = s2Utils.sln
+		SccProjectName4 = Logic/Logic.Wpf
+		SccLocalPath4 = Logic\\Logic.Wpf
+		SccProjectUniqueName5 = Ui\\UiTestConsole\\Ui.TestConsole.csproj
+		SccProjectTopLevelParentUniqueName5 = s2Utils.sln
+		SccProjectName5 = Ui/UiTestConsole
+		SccLocalPath5 = Ui\\UiTestConsole
+		SccProjectUniqueName6 = Logic\\Logic.Azure\\Logic.Azure.csproj
+		SccProjectTopLevelParentUniqueName6 = s2Utils.sln
+		SccProjectName6 = Logic/Logic.Azure
+		SccLocalPath6 = Logic\\Logic.Azure
+		SccProjectUniqueName7 = Logic\\Logic.Web\\Logic.Web.csproj
+		SccProjectTopLevelParentUniqueName7 = s2Utils.sln
+		SccProjectName7 = Logic/Logic.Web
+		SccLocalPath7 = Logic\\Logic.Web
+		SccProjectUniqueName8 = Logic\\Logic.Screenshot\\Logic.Screenshot.csproj
+		SccProjectTopLevelParentUniqueName8 = s2Utils.sln
+		SccProjectName8 = Logic/Logic.Screenshot
+		SccLocalPath8 = Logic\\Logic.Screenshot
+		SccProjectUniqueName9 = Logic\\Logic.Portable\\Logic.Portable.csproj
+		SccProjectTopLevelParentUniqueName9 = s2Utils.sln
+		SccProjectName9 = Logic/Logic.Portable
+		SccLocalPath9 = Logic\\Logic.Portable
+		SccProjectUniqueName10 = Logic\\Logic.Tests\\Logic.Tests.csproj
+		SccProjectTopLevelParentUniqueName10 = s2Utils.sln
+		SccProjectName10 = Logic/Logic.Tests
+		SccLocalPath10 = Logic\\Logic.Tests
+		SccProjectUniqueName11 = Logic\\Logic.WebMvc\\Logic.WebMvc.csproj
+		SccProjectTopLevelParentUniqueName11 = s2Utils.sln
+		SccProjectName11 = Logic/Logic.WebMvc
+		SccLocalPath11 = Logic\\Logic.WebMvc
+		SccProjectUniqueName12 = Tests.Portable\\Tests.Portable.csproj
+		SccProjectTopLevelParentUniqueName12 = s2Utils.sln
+		SccProjectName12 = Tests.Portable
+		SccLocalPath12 = Tests.Portable
+	EndGlobalSection
+EndGlobal
