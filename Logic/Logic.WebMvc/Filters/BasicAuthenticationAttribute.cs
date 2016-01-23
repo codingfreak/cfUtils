@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.WebMvcUtils.Filters
+﻿namespace codingfreaks.cfUtils.Logic.WebMvcUtils.Filters
 {
     using System;
     using System.Globalization;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace s2.s2Utils.Logic.WebUtils.Filters
+namespace codingfreaks.cfUtils.Logic.WebUtils.Filters
 {
     using System.Diagnostics;
     using System.Globalization;

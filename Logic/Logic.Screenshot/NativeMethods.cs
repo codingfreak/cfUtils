@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace s2.s2Utils.Logic.Screenshot
+namespace codingfreaks.cfUtils.Logic.Screenshot
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;

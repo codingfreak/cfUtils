@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Delegates
+﻿namespace codingfreaks.cfUtils.Logic.Base.Delegates
 {
     using EventArguments;
 

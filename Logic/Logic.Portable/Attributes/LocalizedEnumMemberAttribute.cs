@@ -1,8 +1,8 @@
-﻿namespace s2.s2Utils.Logic.Portable.Attributes
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Attributes
 {
     using System;
 
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// A special attribute to put over enum-values for supporting multi-language enum-values using

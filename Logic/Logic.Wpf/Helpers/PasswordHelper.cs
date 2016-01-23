@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Wpf.Helpers
+﻿namespace codingfreaks.cfUtils.Logic.Wpf.Helpers
 {
     using System;
     using System.Windows;

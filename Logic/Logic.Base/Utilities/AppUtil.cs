@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,8 @@
     using System.Globalization;
     using System.Linq;
 
-    using s2.s2Utils.Logic.Base.Structures;
-    using s2.s2Utils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Base.Structures;
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>
     /// Provides useful helper methods for applications.

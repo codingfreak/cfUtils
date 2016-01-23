@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>s2Libs.s2Utils</id>
-    <version>1.1.34</version>
-    <title>S2 Utility Collection</title>
-    <description>[S2] extended utility library</description>
-    <authors>S2 UG</authors>
-    <owners>S2 UG</owners>
+    <id>codingfreaks.libs.cfUtils.cfExtendedUtils</id>
+    <version>$version$</version>
+    <title>codingfreaks Extended Utility Collection</title>
+    <description>[codingfreaks] extended utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <releaseNotes>Updated NuGet dependencies.</releaseNotes>
-    <iconUrl>https://sabstore.blob.core.windows.net/szwei/s2_logo_64_v2.png</iconUrl>
-    <copyright>S2 UG 2014-2015</copyright>
+    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <copyright>codingfreaks 2014-2015</copyright>
     <dependencies>
       <dependency id="EntityFramework" version="6.1.3" />
-      <dependency id="s2Libs.s2Base" version="2.0.29" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.1" />      
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\ReleaseNuget\s2Libs.s2Utils.dll" target="lib\net\s2Libs.s2Utils.dll" />
-    <file src="bin\ReleaseNuget\s2Libs.s2Utils.xml" target="lib\net\s2Libs.s2Utils.XML" />
-    <file src="bin\ReleaseNuget\s2Libs.s2Utils.pdb" target="lib\net\s2Libs.s2Utils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfExtendedUtils.dll" target="lib\net\cfUtils.cfExtendedUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfExtendedUtils.xml" target="lib\net\cfUtils.cfExtendedUtils.XML" />
+    <file src="bin\ReleaseNuget\cfUtils.cfExtendedUtils.pdb" target="lib\net\cfUtils.cfExtendedUtils.pdb" />
   </files>
 </package>

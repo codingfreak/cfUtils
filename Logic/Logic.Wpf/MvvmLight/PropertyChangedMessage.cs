@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace s2.s2Utils.Logic.Wpf.MvvmLight
+namespace codingfreaks.cfUtils.Logic.Wpf.MvvmLight
 {
     using GalaSoft.MvvmLight.Messaging;
 

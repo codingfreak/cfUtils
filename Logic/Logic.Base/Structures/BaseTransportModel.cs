@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace s2.s2Utils.Logic.Base.Structures
+namespace codingfreaks.cfUtils.Logic.Base.Structures
 {
     using System.Collections;
     using System.Collections.Concurrent;

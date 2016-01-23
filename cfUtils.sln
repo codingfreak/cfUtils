@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic\Logic.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.WebMvc", "Logic\Logic.WebMvc\Logic.WebMvc.csproj", "{68AB46DB-36E7-40F0-A546-66FCC191F043}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Portable", "Tests.Portable\Tests.Portable.csproj", "{D57BA698-2CE9-4A65-91BE-FB1349389D49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Portable", "Tests\Tests.Portable\Tests.Portable.csproj", "{D57BA698-2CE9-4A65-91BE-FB1349389D49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,59 +143,5 @@ Global
 		{8CE28847-7194-499B-B3E1-8691427F0B6C} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 		{68AB46DB-36E7-40F0-A546-66FCC191F043} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 		{D57BA698-2CE9-4A65-91BE-FB1349389D49} = {593CE85B-7B17-4D6D-827E-7A3A5FFF320A}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 13
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://sab-team.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Logic\\Logic.Base\\Logic.Base.csproj
-		SccProjectTopLevelParentUniqueName1 = s2Utils.sln
-		SccProjectName1 = Logic/Logic.Base
-		SccLocalPath1 = Logic\\Logic.Base
-		SccProjectUniqueName2 = Logic\\Logic.Utils\\Logic.Utils.csproj
-		SccProjectTopLevelParentUniqueName2 = s2Utils.sln
-		SccProjectName2 = Logic/Logic.Utils
-		SccLocalPath2 = Logic\\Logic.Utils
-		SccProjectUniqueName3 = Tests\\Tests.Core\\Tests.Core.csproj
-		SccProjectTopLevelParentUniqueName3 = s2Utils.sln
-		SccProjectName3 = Tests/Tests.Core
-		SccLocalPath3 = Tests\\Tests.Core
-		SccProjectUniqueName4 = Logic\\Logic.Wpf\\Logic.Wpf.csproj
-		SccProjectTopLevelParentUniqueName4 = s2Utils.sln
-		SccProjectName4 = Logic/Logic.Wpf
-		SccLocalPath4 = Logic\\Logic.Wpf
-		SccProjectUniqueName5 = Ui\\UiTestConsole\\Ui.TestConsole.csproj
-		SccProjectTopLevelParentUniqueName5 = s2Utils.sln
-		SccProjectName5 = Ui/UiTestConsole
-		SccLocalPath5 = Ui\\UiTestConsole
-		SccProjectUniqueName6 = Logic\\Logic.Azure\\Logic.Azure.csproj
-		SccProjectTopLevelParentUniqueName6 = s2Utils.sln
-		SccProjectName6 = Logic/Logic.Azure
-		SccLocalPath6 = Logic\\Logic.Azure
-		SccProjectUniqueName7 = Logic\\Logic.Web\\Logic.Web.csproj
-		SccProjectTopLevelParentUniqueName7 = s2Utils.sln
-		SccProjectName7 = Logic/Logic.Web
-		SccLocalPath7 = Logic\\Logic.Web
-		SccProjectUniqueName8 = Logic\\Logic.Screenshot\\Logic.Screenshot.csproj
-		SccProjectTopLevelParentUniqueName8 = s2Utils.sln
-		SccProjectName8 = Logic/Logic.Screenshot
-		SccLocalPath8 = Logic\\Logic.Screenshot
-		SccProjectUniqueName9 = Logic\\Logic.Portable\\Logic.Portable.csproj
-		SccProjectTopLevelParentUniqueName9 = s2Utils.sln
-		SccProjectName9 = Logic/Logic.Portable
-		SccLocalPath9 = Logic\\Logic.Portable
-		SccProjectUniqueName10 = Logic\\Logic.Tests\\Logic.Tests.csproj
-		SccProjectTopLevelParentUniqueName10 = s2Utils.sln
-		SccProjectName10 = Logic/Logic.Tests
-		SccLocalPath10 = Logic\\Logic.Tests
-		SccProjectUniqueName11 = Logic\\Logic.WebMvc\\Logic.WebMvc.csproj
-		SccProjectTopLevelParentUniqueName11 = s2Utils.sln
-		SccProjectName11 = Logic/Logic.WebMvc
-		SccLocalPath11 = Logic\\Logic.WebMvc
-		SccProjectUniqueName12 = Tests.Portable\\Tests.Portable.csproj
-		SccProjectTopLevelParentUniqueName12 = s2Utils.sln
-		SccProjectName12 = Tests.Portable
-		SccLocalPath12 = Tests.Portable
 	EndGlobalSection
 EndGlobal

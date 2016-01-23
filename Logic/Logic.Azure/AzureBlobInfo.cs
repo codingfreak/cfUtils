@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Azure
+﻿namespace codingfreaks.cfUtils.Logic.Azure
 {
     /// <summary>
     /// The <see cref="AzureBlobInfo"/> class contains information about the blobs found in

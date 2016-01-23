@@ -6,7 +6,7 @@
     <ProjectGuid>{D57BA698-2CE9-4A65-91BE-FB1349389D49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>s2.s2Utils.Tests.Portable</RootNamespace>
+    <RootNamespace>codingfreaks.cfUtils.Tests.Portable</RootNamespace>
     <AssemblyName>s2Utils.Tests.Portable</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -61,7 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logic\Logic.Portable\Logic.Portable.csproj">
+    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
       <Project>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</Project>
       <Name>Logic.Portable</Name>
     </ProjectReference>

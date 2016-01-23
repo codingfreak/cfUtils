@@ -1,12 +1,12 @@
-﻿namespace s2.s2Utils.Logic.Portable.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
-    using s2.s2Utils.Logic.Portable.Structures;
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Structures;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Provides extensions methods for the DateTime-caclulation area.

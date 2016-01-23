@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Wpf.Converters
+﻿namespace codingfreaks.cfUtils.Logic.Wpf.Converters
 {
     using System;
     using System.Globalization;

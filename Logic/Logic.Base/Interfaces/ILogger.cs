@@ -1,9 +1,9 @@
-﻿namespace s2.s2Utils.Logic.Base.Interfaces
+﻿namespace codingfreaks.cfUtils.Logic.Base.Interfaces
 {
     using System;
 
-    using s2.s2Utils.Logic.Base.EventArguments;
-    using s2.s2Utils.Logic.Portable.Structures;
+    using codingfreaks.cfUtils.Logic.Base.EventArguments;
+    using codingfreaks.cfUtils.Logic.Portable.Structures;
 
     /// <summary>
     /// Must be implemented by all logging-components.

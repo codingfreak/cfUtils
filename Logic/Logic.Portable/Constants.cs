@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Portable
+﻿namespace codingfreaks.cfUtils.Logic.Portable
 {
     /// <summary>
     /// Contains constant values for global use.

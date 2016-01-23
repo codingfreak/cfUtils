@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>s2Libs.s2Base</id>
+    <id>codingfreaks.libs.cfUtils.cfBaseUtils</id>
     <version>$version$</version>
-    <title>S2 Basic Utility Collection</title>
-    <description>[S2] base utility library</description>
-    <authors>S2 UG</authors>
-    <owners>S2 UG</owners>
+    <title>codingfreaks Basic Utility Collection</title>
+    <description>[codingfreaks] base utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
-    <iconUrl>https://sabstore.blob.core.windows.net/szwei/s2_logo_64_v2.png</iconUrl>
-    <releaseNotes>Updated package references.</releaseNotes>
-    <copyright>S2 UG 2014-2015</copyright>
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <copyright>codingfreaks UG 2014-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="s2Libs.s2PortableUtils" version="2.1.23" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.1" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\ReleaseNuget\s2Libs.s2Base.dll" target="lib\net\s2Libs.s2Base.dll" />
-    <file src="bin\ReleaseNuget\s2Libs.s2Base.xml" target="lib\net\s2Libs.s2Base.xml" />
-    <file src="bin\ReleaseNuget\s2Libs.s2Base.pdb" target="lib\net\s2Libs.s2Base.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfBaseUtils.dll" target="lib\net\cfUtils.cfBaseUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfBaseUtils.xml" target="lib\net\cfUtils.cfBaseUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfBaseUtils.pdb" target="lib\net\cfUtils.cfBaseUtils.pdb" />
   </files>
 </package>

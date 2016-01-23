@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.WebUtils.Models
+﻿namespace codingfreaks.cfUtils.Logic.WebUtils.Models
 {
     using System;
     using System.Drawing;

@@ -1,11 +1,11 @@
-﻿namespace s2.s2Utils.Logic.Portable.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Utilities
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using s2.s2Utils.Logic.Portable.Attributes;
+    using codingfreaks.cfUtils.Logic.Portable.Attributes;
 
     /// <summary>
     /// Provides logic for easy access to <see cref="Enum"/>s.

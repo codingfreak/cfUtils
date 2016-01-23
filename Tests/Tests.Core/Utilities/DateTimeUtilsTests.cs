@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Tests.Core.Utilities
+﻿namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using s2.s2Utils.Logic.Base.Extensions;
-    using s2.s2Utils.Logic.Base.Utilities;
-    using s2.s2Utils.Logic.Portable.Extensions;
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Extensions;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Provides test methods for the type <see cref="DateTimeExtensions"/>.

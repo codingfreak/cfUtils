@@ -1,10 +1,10 @@
-﻿namespace s2.s2Utils.Tests.Core.Utilities
+﻿namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
     using System.Linq;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using s2.s2Utils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
 
     /// <summary>
     /// Provides test methods for the type <see cref="CsvUtil" />.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace s2.s2Utils.Logic.Azure
+namespace codingfreaks.cfUtils.Logic.Azure
 {
     /// <summary>
     /// Can be used for events which inform on the amont of items affected by an operation.

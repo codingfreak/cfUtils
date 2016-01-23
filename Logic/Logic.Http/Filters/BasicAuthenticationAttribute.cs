@@ -1,11 +1,11 @@
-﻿namespace s2.s2Utils.Logic.WebUtils.Filters
+﻿namespace codingfreaks.cfUtils.Logic.WebUtils.Filters
 {
     using System;
     using System.Globalization;
     using System.Text;    
     using System.Web.Mvc;
 
-    using s2.s2Utils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>
     /// Can be used to force the client to enter a fixed <see cref="Username"/> and <see cref="Password"/> as

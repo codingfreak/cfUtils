@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Globalization;
@@ -11,7 +11,7 @@
     using System.Security.Permissions;
     using System.Text;
 
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Provides logic wrappers for simple calls to the namespace <see cref="System.Security"/>.

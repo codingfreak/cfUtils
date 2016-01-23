@@ -1,9 +1,9 @@
-﻿namespace s2.s2Utils.Logic.Portable.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Utilities
 {
     using System;
     using System.Linq;
 
-    using s2.s2Utils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>
     /// Provides logic for the <see cref="DateTime"/> type.

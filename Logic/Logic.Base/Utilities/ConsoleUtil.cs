@@ -1,11 +1,11 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Linq;
     using System.Reflection;
     using System.Text;
 
-    using s2.s2Utils.Logic.Base.Structures;
+    using codingfreaks.cfUtils.Logic.Base.Structures;
 
     /// <summary>
     /// Provides helpers methods for using the console.

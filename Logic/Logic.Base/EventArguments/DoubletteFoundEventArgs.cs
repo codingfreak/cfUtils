@@ -1,10 +1,10 @@
-﻿namespace s2.s2Utils.Logic.Base.EventArguments
+﻿namespace codingfreaks.cfUtils.Logic.Base.EventArguments
 {
     using System;
     using System.Collections.Generic;
 
-    using s2.s2Utils.Logic.Base.Delegates;
-    using s2.s2Utils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Delegates;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
 
     /// <summary>
     /// Is used as an argument for <see cref="DoubletteFoundEventHandler{T}"/> to enable transport

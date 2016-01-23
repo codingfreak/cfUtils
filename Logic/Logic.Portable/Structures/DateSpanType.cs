@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Portable.Structures
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Structures
 {
     /// <summary>
     /// Represents a type a <see cref="DateSpanInfo"/> can be of.

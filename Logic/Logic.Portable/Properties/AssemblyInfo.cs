@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("s2PortableUtils")]
-[assembly: AssemblyDescription("[S2] portable utility library")]
-[assembly: AssemblyVersion("2.1.23.74")]
-[assembly: AssemblyFileVersion("2.1.23.74")]
+[assembly: AssemblyTitle("cfPortableUtils")]
+[assembly: AssemblyDescription("[codingfreaks] portable utility library")]
+[assembly: AssemblyVersion("1.0.1.6")]
+[assembly: AssemblyFileVersion("1.0.1.6")]

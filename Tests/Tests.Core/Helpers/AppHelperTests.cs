@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Tests.Core.Helpers
+﻿namespace codingfreaks.cfUtils.Tests.Core.Helpers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,8 +6,8 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using s2.s2Utils.Logic.Base.Structures;
-    using s2.s2Utils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Structures;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
 
     /// <summary>
     /// Test methods for <see cref="AppUtil"/>.

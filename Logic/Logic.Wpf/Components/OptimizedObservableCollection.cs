@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace s2.s2Utils.Logic.Wpf.Components
+namespace codingfreaks.cfUtils.Logic.Wpf.Components
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

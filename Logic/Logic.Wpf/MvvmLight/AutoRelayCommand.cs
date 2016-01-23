@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Wpf.MvvmLight
+﻿namespace codingfreaks.cfUtils.Logic.Wpf.MvvmLight
 {
     using System;
     using System.Collections.Generic;

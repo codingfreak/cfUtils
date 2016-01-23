@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Utils.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Extensions
 {
     using System;
     using System.Collections;

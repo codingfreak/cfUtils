@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace s2.s2Utils.Tests.Core.Utilities
+namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
     using Logic.Base.Structures;
     using Logic.Tests;

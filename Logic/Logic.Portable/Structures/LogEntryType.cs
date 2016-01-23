@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Portable.Structures
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Structures
 {
     /// <summary>
     /// Defines possible values for types of logging entries.

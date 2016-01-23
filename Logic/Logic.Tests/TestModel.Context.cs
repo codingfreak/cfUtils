@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace s2.s2Utils.Logic.Tests
+namespace codingfreaks.cfUtils.Logic.Tests
 {
     using System;
     using System.CodeDom.Compiler;
@@ -15,7 +15,7 @@ namespace s2.s2Utils.Logic.Tests
     using System.Data.Entity.Infrastructure;
     
     [GeneratedCode("Entity Framework", "6.1.3")]
-    [DbConfigurationType(typeof(s2Utils.Logic.Utils.Misc.SqlAzureDatabaseConfiguration))] 
+    [DbConfigurationType(typeof(cfUtils.Logic.Utils.Misc.SqlAzureDatabaseConfiguration))] 
     public partial class TestDbEntities : DbContext
     {
     

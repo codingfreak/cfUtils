@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Globalization;

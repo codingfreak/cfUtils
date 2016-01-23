@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Portable.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Utilities
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Base.Extensions
 {
     using System;
     using System.Drawing;

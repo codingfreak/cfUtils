@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Structures
+﻿namespace codingfreaks.cfUtils.Logic.Base.Structures
 {
     /// <summary>
     /// Contains informations on a single command line argument for a program.

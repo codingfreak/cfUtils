@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Screenshot
+﻿namespace codingfreaks.cfUtils.Logic.Screenshot
 {
     /// <summary>
     /// 

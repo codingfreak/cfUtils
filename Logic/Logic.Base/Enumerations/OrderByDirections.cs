@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Enumerations
+﻿namespace codingfreaks.cfUtils.Logic.Base.Enumerations
 {
     using System;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Azure
+﻿namespace codingfreaks.cfUtils.Logic.Azure
 {
     using System;
     using System.Linq;
@@ -6,7 +6,7 @@
 
     using Microsoft.WindowsAzure.Storage.Table;
 
-    using s2.s2Utils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>
     /// Defines the structure of one line in the WADLogTable in Azure.

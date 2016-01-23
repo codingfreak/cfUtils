@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Utils.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -6,9 +6,9 @@
     using System.Diagnostics;
     using System.Linq;
 
-    using s2.s2Utils.Logic.Base.Interfaces;
-    using s2.s2Utils.Logic.Base.Utilities;
-    using s2.s2Utils.Logic.Utils.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Utils.Interfaces;
     
     /// <summary>
     /// This class serves as a central collection for all types derived from <see cref="BaseUtil{TEntity,TContext}"/>.

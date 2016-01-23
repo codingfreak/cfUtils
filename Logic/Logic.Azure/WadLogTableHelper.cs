@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Azure
+﻿namespace codingfreaks.cfUtils.Logic.Azure
 {
     using System;
     using System.Collections.Generic;

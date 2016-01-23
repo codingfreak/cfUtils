@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>s2Libs.s2WebUtils</id>
+    <id>codingfreaks.libs.cfUtils.cfWebUtils</id>
     <version>$version$</version>
-    <title>S2 Web Utility Collection</title>
-    <description>[S2] web utility library</description>
-    <authors>S2 UG</authors>
-    <owners>S2 UG</owners>
+    <title>codingfreaks Web Utility Collection</title>
+    <description>[codingfreaks] web utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <iconUrl>https://sabstore.blob.core.windows.net/szwei/s2_logo_64_v2.png</iconUrl>
-    <releaseNotes>Updated NuGet dependencies.</releaseNotes>
-    <copyright>S2 UG 2015</copyright>
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <copyright>codingfreaks 2015</copyright>
     <dependencies>
-      <dependency id="s2Libs.s2Base" version="2.0.29" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.1" />      
       <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\ReleaseNuget\s2Libs.s2WebUtils.dll" target="lib\net\s2Libs.s2WebUtils.dll" />
-    <file src="bin\ReleaseNuget\s2Libs.s2WebUtils.xml" target="lib\net\s2Libs.s2WebUtils.XML" />
-    <file src="bin\ReleaseNuget\s2Libs.s2WebUtils.pdb" target="lib\net\s2Libs.s2WebUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfWebUtils.dll" target="lib\net\cfUtils.cfWebUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfWebUtils.xml" target="lib\net\cfUtils.cfWebUtils.XML" />
+    <file src="bin\ReleaseNuget\cfUtils.cfWebUtils.pdb" target="lib\net\cfUtils.cfWebUtils.pdb" />
   </files>
 </package>

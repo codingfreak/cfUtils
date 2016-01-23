@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Utils.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Extensions
 {
     using System;
     using System.Collections;
@@ -13,8 +13,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using s2.s2Utils.Logic.Base.Interfaces;
-    using s2.s2Utils.Logic.Utils.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Utils.Utilities;
 
     /// <summary>
     /// Extention methods for <see cref="IEntity" />.

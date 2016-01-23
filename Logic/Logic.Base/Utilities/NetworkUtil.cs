@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Linq;
@@ -6,7 +6,7 @@
     using System.Net.Sockets;
     using System.Threading.Tasks;
 
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Contains helper-methods for working against the network on the TCP-level.

@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("s2AzureUtils")]
-[assembly: AssemblyDescription("[S2] Azure utility library")]
-[assembly: AssemblyVersion("2.0.11.69")]
-[assembly: AssemblyFileVersion("2.0.11.69")]
+[assembly: AssemblyTitle("cfAzureUtils")]
+[assembly: AssemblyDescription("[codingfreaks] Azure utility library")]
+[assembly: AssemblyVersion("1.0.2.2")]
+[assembly: AssemblyFileVersion("1.0.2.2")]
 [assembly: ComVisible(false)]

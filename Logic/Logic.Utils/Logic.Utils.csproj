@@ -7,8 +7,8 @@
     <ProjectGuid>{88F51888-A010-41E2-9BFA-3D612B38F3AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>s2.s2Utils.Logic.Utils</RootNamespace>
-    <AssemblyName>s2Libs.s2Utils</AssemblyName>
+    <RootNamespace>codingfreaks.cfUtils.Logic.Utils</RootNamespace>
+    <AssemblyName>cfUtils.cfExtendedUtils</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -29,7 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\s2Libs.s2Utils.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\s2Libs.cfUtils.xml</DocumentationFile>
     <CodeAnalysisRuleSet>sab.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <NoWarn>
@@ -42,12 +42,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\s2Libs.s2Utils.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\s2Libs.cfUtils.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|AnyCPU'">
     <OutputPath>bin\ReleaseNuget\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\Release\s2Libs.s2Utils.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\cfUtils.cfExtendedUtils.XML</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -56,6 +56,14 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.1\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.1\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -74,10 +82,6 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="s2Libs.s2Base, Version=2.0.29.326, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\s2Libs.s2Base.2.0.29\lib\net\s2Libs.s2Base.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="s2Libs.s2PortableUtils, Version=2.1.20.71, Culture=neutral, processorArchitecture=MSIL">

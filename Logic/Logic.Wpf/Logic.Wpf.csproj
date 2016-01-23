@@ -8,8 +8,8 @@
     <ProjectGuid>{84EEE92F-21D4-4044-9C4F-EFD439EE6481}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>s2.s2Utils.Logic.Wpf</RootNamespace>
-    <AssemblyName>s2Libs.s2WpfUtils</AssemblyName>
+    <RootNamespace>codingfreaks.cfUtils.Logic.Wpf</RootNamespace>
+    <AssemblyName>cfUtils.cfWpfUtils</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -44,7 +44,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\ReleaseNuget\s2Libs.s2WpfUtils.XML</DocumentationFile>
+    <DocumentationFile>bin\ReleaseNuget\cfUtils.cfWpfUtils.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight">
@@ -115,7 +115,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild" DependsOnTargets="cfUpgradeVersion">
-	<PropertyGroup>
+    <PropertyGroup>
       <NuGetSource>P:\dotnet\_nuget</NuGetSource>
     </PropertyGroup>
   </Target>

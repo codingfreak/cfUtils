@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Utils.Interfaces
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Interfaces
 {
     using System;
     using System.Data.Entity;

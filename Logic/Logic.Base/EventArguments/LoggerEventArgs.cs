@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.EventArguments
+﻿namespace codingfreaks.cfUtils.Logic.Base.EventArguments
 {
     using System;
 

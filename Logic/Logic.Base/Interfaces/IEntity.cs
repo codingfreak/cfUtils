@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Interfaces
+﻿namespace codingfreaks.cfUtils.Logic.Base.Interfaces
 {
     using System;
     using System.ComponentModel;

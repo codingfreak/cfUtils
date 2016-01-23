@@ -1,11 +1,11 @@
-﻿namespace s2.s2Utils.Logic.Utils.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Utilities
 {
     using System;
     using System.Data.Entity;
     using System.Threading.Tasks;
 
-    using s2.s2Utils.Logic.Base.Interfaces;
-    using s2.s2Utils.Logic.Utils.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Utils.Interfaces;
 
     /// <summary>
     /// Utils available to the public.

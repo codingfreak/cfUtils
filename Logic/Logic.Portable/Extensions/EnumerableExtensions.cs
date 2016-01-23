@@ -1,10 +1,10 @@
-﻿namespace s2.s2Utils.Logic.Portable.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Adds extension methods to <see cref="IEnumerable{T}"/> LINQ-liqe.

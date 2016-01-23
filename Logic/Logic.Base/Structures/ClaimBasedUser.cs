@@ -1,12 +1,12 @@
-﻿namespace s2.s2Utils.Logic.Base.Structures
+﻿namespace codingfreaks.cfUtils.Logic.Base.Structures
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading;
 
-    using s2.s2Utils.Logic.Base.Extensions;
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Extensions;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Represents a user read from ClaimsPrincipal.

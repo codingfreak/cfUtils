@@ -1,10 +1,10 @@
-﻿namespace s2.s2Utils.Logic.Base.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Base.Extensions
 {
     using System;
     using System.Data;
 
-    using s2.s2Utils.Logic.Base.Utilities;
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Provides extension methods for <see cref="IDataReader" />

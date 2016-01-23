@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Ui.TestConsole
+﻿namespace codingfreaks.cfUtils.Ui.TestConsole
 {
     using System;
     using System.Data.Entity;
@@ -12,12 +12,12 @@
     using Logic.Tests;
     using Logic.Utils.Interfaces;
 
-    using s2.s2Utils.Logic.Azure;
-    using s2.s2Utils.Logic.Base.Utilities;
-    using s2.s2Utils.Logic.Screenshot;
-    using s2.s2Utils.Logic.Utils.Enumerations;
-    using s2.s2Utils.Logic.Utils.Utilities;
-    using s2.s2Utils.Logic.Utils.Extensions;
+    using codingfreaks.cfUtils.Logic.Azure;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
+    using codingfreaks.cfUtils.Logic.Screenshot;
+    using codingfreaks.cfUtils.Logic.Utils.Enumerations;
+    using codingfreaks.cfUtils.Logic.Utils.Utilities;
+    using codingfreaks.cfUtils.Logic.Utils.Extensions;
 
     class Program
     {

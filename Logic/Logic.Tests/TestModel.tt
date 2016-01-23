@@ -467,7 +467,7 @@ public class CodeStringGenerator
         return inHeader == string.IsNullOrEmpty(_code.VsNamespaceSuggestion())
             ? string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}using System;{1}" + Environment.NewLine + "using System.CodeDom.Compiler;" + Environment.NewLine + "using s2.s2Utils.Logic.Base.Interfaces;" + Environment.NewLine + "using PropertyChanged;" + Environment.NewLine + "using System.ComponentModel;" + "{2}",
+                "{0}using System;{1}" + Environment.NewLine + "using System.CodeDom.Compiler;" + Environment.NewLine + "using codingfreaks.cfUtils.Logic.Base.Interfaces;" + Environment.NewLine + "using PropertyChanged;" + Environment.NewLine + "using System.ComponentModel;" + "{2}",
                 inHeader ? Environment.NewLine : "",
                 includeCollections ? (Environment.NewLine + "using System.Collections.Generic;") : "",
                 inHeader ? "" : Environment.NewLine)

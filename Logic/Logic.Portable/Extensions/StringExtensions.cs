@@ -1,10 +1,10 @@
-﻿namespace s2.s2Utils.Logic.Portable.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Extensions
 {
     using System;
     using System.Text;
     using System.Text.RegularExpressions;
 
-    using s2.s2Utils.Logic.Portable;
+    using codingfreaks.cfUtils.Logic.Portable;
 
     /// <summary>
     /// Collects extension methods for the type <see cref="System.String"/>.

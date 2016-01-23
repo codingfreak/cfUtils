@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Base.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Base.Utilities
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@
     using System.Configuration;
     using System.Globalization;
 
-    using s2.s2Utils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
     /// <summary>
     /// Provides logic for accessing .NET configurations.

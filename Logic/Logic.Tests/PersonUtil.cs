@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Tests
+﻿namespace codingfreaks.cfUtils.Logic.Tests
 {
     using System;
     using System.Linq;

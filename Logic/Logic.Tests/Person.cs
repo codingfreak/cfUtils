@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace s2.s2Utils.Logic.Tests
+namespace codingfreaks.cfUtils.Logic.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.CodeDom.Compiler;
-    using s2.s2Utils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
     using PropertyChanged;
     using System.ComponentModel;
     

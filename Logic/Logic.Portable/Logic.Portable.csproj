@@ -8,8 +8,8 @@
     <ProjectGuid>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>s2.s2Utils.Logic.Portable</RootNamespace>
-    <AssemblyName>s2Libs.s2PortableUtils</AssemblyName>
+    <RootNamespace>codingfreaks.cfUtils.Logic.Portable</RootNamespace>
+    <AssemblyName>cfUtils.cfPortableUtils</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -30,7 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\s2Libs.s2PortableUtils.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\cfUtils.cfPortableUtils.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>sab.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -41,12 +41,12 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\s2Libs.s2PortableUtils.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\cfUtils.cfPortableUtils.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNuget|AnyCPU'">
     <OutputPath>bin\ReleaseNuget\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\ReleaseNuget\s2Libs.s2PortableUtils.xml</DocumentationFile>
+    <DocumentationFile>bin\ReleaseNuget\cfUtils.cfPortableUtils.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

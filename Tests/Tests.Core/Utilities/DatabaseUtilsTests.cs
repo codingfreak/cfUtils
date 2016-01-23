@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Tests.Core.Utilities
+﻿namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Logic.Utils.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Utils.Utilities
 {
     using System.Data.Entity.Spatial;
     using System.Device.Location;

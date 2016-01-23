@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>s2Libs.s2Screenshot</id>
+    <id>codingfreaks.libs.cfUtils.cfScreenshotUtils</id>
     <version>$version$</version>
-    <title>S2 Screesnhot Utility Collection</title>
-    <description>[S2] screenshot utility library</description>
-    <authors>S2 UG</authors>
-    <owners>S2 UG</owners>
+    <title>codingfreaks Screesnhot Utility Collection</title>
+    <description>[codingfreaks] screenshot utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains classes for managing screenshot of windows.</summary>
-    <releaseNotes>Version harmony update for all s2-packages. No real changes here.</releaseNotes>
-    <iconUrl>https://sabstore.blob.core.windows.net/szwei/s2_logo_64_v2.png</iconUrl>
-    <copyright>S2 UG 2015</copyright>
+    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="bin\ReleaseNuget\s2Libs.s2Screenshot.dll" target="lib\net\s2Libs.s2Screenshot.dll" />
-    <file src="bin\ReleaseNuget\s2Libs.s2Screenshot.xml" target="lib\net\s2Libs.s2Screenshot.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfScreenshotUtils.dll" target="lib\net\cfUtils.cfScreenshotUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfScreenshotUtils.xml" target="lib\net\cfUtils.cfScreenshotUtils.xml" />
   </files>
 </package>

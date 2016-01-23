@@ -1,4 +1,4 @@
-﻿namespace s2.s2Utils.Tests.Portable
+﻿namespace codingfreaks.cfUtils.Tests.Portable
 {
     using System;
 
