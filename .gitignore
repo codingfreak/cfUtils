@@ -231,6 +231,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-"Tests/" 
-"Ui/" 
-"TestResults/" 
+Tests/
+Ui/
+TestResults/
