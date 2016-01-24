@@ -8,10 +8,10 @@ namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
     using System.Threading;
 
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Base.Utilities;
     using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>

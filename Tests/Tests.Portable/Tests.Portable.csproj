@@ -54,7 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\_Shared\SharedAssemblyInfo.cs">
+    <Compile Include="..\..\_Shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConversionUtilTests.cs" />
@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
-      <Project>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</Project>
+      <Project>{38b4cddf-5457-441a-84d0-3826f5d0e1aa}</Project>
       <Name>Logic.Portable</Name>
     </ProjectReference>
   </ItemGroup>

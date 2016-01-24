@@ -24,9 +24,9 @@
         {
             var testMails = new Dictionary<string, bool>
             {
-                { "schmidt@sab-team.com", true },
-                { "schmidt@s.c", false },
-                { "schmidt@test.museum", true }
+                { "test@sakple.com", true },
+                { "dsdsd@s.c", false },
+                { "dasdasdasd@test.museum", true }
             };
             testMails.Keys.ToList().ForEach(key => Assert.AreEqual(testMails[key], key.IsValidEmailAddress()));
         }

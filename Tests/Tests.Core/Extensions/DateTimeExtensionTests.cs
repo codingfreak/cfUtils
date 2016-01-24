@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Globalization;
 
+    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
 
     /// <summary>
     /// Test methods for <see cref="DateTimeExtensions"/>.

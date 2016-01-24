@@ -119,27 +119,8 @@
     <Compile Include="Utilities\ClaimBasedUserTests.cs" />
     <Compile Include="Utilities\CsvUtilTests.cs" />
     <Compile Include="Utilities\DateTimeUtilsTests.cs" />
-    <Compile Include="Utilities\MailUtilTests.cs" />
     <Compile Include="Utilities\NetworkUtilTests.cs" />
     <Compile Include="Utilities\DatabaseUtilsTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Logic\Logic.Base\Logic.Base.csproj">
-      <Project>{3c63b977-7acd-4a7b-b196-10a815d4866d}</Project>
-      <Name>Logic.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
-      <Project>{38b4cddf-5457-441a-84d0-3826f5d0e1aa}</Project>
-      <Name>Logic.Portable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Tests\Logic.Tests.csproj">
-      <Project>{8CE28847-7194-499B-B3E1-8691427F0B6C}</Project>
-      <Name>Logic.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Utils\Logic.Utils.csproj">
-      <Project>{88f51888-a010-41e2-9bfa-3d612b38f3af}</Project>
-      <Name>Logic.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -156,6 +137,24 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Logic\Logic.Base\Logic.Base.csproj">
+      <Project>{3C63B977-7ACD-4A7B-B196-10A815D4866D}</Project>
+      <Name>Logic.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
+      <Project>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</Project>
+      <Name>Logic.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logic\Logic.Tests\Logic.Tests.csproj">
+      <Project>{8CE28847-7194-499B-B3E1-8691427F0B6C}</Project>
+      <Name>Logic.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logic\Logic.Utils\Logic.Utils.csproj">
+      <Project>{88F51888-A010-41E2-9BFA-3D612B38F3AF}</Project>
+      <Name>Logic.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
+    using codingfreaks.cfUtils.Logic.Tests;
+    using codingfreaks.cfUtils.Logic.Utils.Utilities;
+
     using Logic.Base.Structures;
-    using Logic.Tests;
-    using Logic.Utils.Utilities;
+
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     
