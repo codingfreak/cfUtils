@@ -98,7 +98,7 @@
         /// <param name="cancellationToken">An external cancellation token to stop monitoring.</param>
         /// <param name="intervalSeconds">The interval in seconds the monitoring should try to retrieve new elements.</param>
         /// <param name="timeSpanSeconds">The amount of seconds to look in the past with the first request.</param>        
-        public static async Task MonitorTableAsync(this CloudTable table, CancellationToken cancellationToken, int intervalSeconds = 5, int timeSpanSeconds = 3600)
+        public static async Task MonitorTableAsync(this CloudTable table, CancellationToken cancellationToken, int intervalSeconds = 5, double timeSpanSeconds = 3600)
         {
             var lastTicks = "";
             while (true)
