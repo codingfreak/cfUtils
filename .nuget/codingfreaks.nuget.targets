@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ExtensionTasksPath>$(SolutionDir)packages\MSBuild.Extension.Pack.1.5.0\tools\net40</ExtensionTasksPath>
+    <ExtensionTasksPath>$(SolutionDir)packages\MSBuild.Extension.Pack.1.8.0\tools\net40</ExtensionTasksPath>
     <NugetReleaseName>ReleaseNuget</NugetReleaseName>
   </PropertyGroup>
   <Import Project="$(SolutionDir).nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -35,10 +35,10 @@
     </GetVersionParts>
     <Message Text="Build: $(BuildVersionNumber)" Importance="High" />
   </Target>
-  <Target Name="cfUpgradeVersion" Condition="Exists('$(ExtensionTasksPath)')">
+  <Target Name="cfUpgradeVersion">
     <Message Text="Extension path: $(ExtensionTasksPath)" Importance="Low" />
     <Message Text="Upgrading version including build." Importance="High" Condition="'$(Configuration)' == '$(NugetReleaseName)'" />
-    <Message Text="Upgrading version excluding build." Importance="High" Condition="'$(Configuration)' != '$(NugetReleaseName)'" />        
+    <Message Text="Upgrading version excluding build." Importance="High" Condition="'$(Configuration)' != '$(NugetReleaseName)'" />
     <AssemblyInfo Condition="'$(Configuration)' == '$(NugetReleaseName)'" AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyBuildNumberType="AutoIncrement" AssemblyRevisionType="AutoIncrement" AssemblyFileBuildNumberType="AutoIncrement" AssemblyFileRevisionType="AutoIncrement" />
     <AssemblyInfo Condition="'$(Configuration)' != '$(NugetReleaseName)'" AssemblyInfoFiles="@(AssemblyInfoFiles)" AssemblyBuildNumberType="NoIncrement" AssemblyRevisionType="AutoIncrement" AssemblyFileBuildNumberType="NoIncrement" AssemblyFileRevisionType="AutoIncrement" />
   </Target>
@@ -46,8 +46,8 @@
     <PropertyGroup>
       <NuSpecPath>$(ProjectDir)$(ProjectName).nuspec</NuSpecPath>
       <NuGetVersion>$(MajorVersionNumber).$(MinorVersionNumber).$(BuildVersionNumber)</NuGetVersion>
-      <NuGetPackage>$(ProjectDir)$(AssemblyName).$(MajorVersionNumber).$(MinorVersionNumber).$(BuildVersionNumber).nupkg</NuGetPackage>
-      <NuGetPushCommand>"$(NugetToolsPath)\NuGet.exe" push "$(NuGetPackage)"</NuGetPushCommand>
+      <NuGetPackage>$(ProjectDir)codingfreaks.libs.$(AssemblyName).$(MajorVersionNumber).$(MinorVersionNumber).$(BuildVersionNumber).nupkg</NuGetPackage>
+      <NuGetPushCommand>"$(NugetToolsPath)\NuGet.exe" push "$(NuGetPackage)" -Source "$(NuGetSource)"</NuGetPushCommand>
     </PropertyGroup>
     <Message Text="Building Nuget Package with version $(NugetVersion)" Importance="High" Condition="Exists('$(NuSpecPath)')" />
     <Message Text="Skipping NuGet Packaging because spec was NOT found under $(NuSpecPath)" Importance="High" Condition="!Exists('$(NuSpecPath)')" />
