@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <releaseNotes>Creaking changes: WaDLogTableHelper is replaced by more generic TableHelper which is not static anymore.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
