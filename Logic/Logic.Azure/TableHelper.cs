@@ -12,29 +12,30 @@
     /// <summary>
     /// Contains helper and extension methods for the <see cref="CloudTable"/> type.
     /// </summary>
-    public static class WadLogTableHelper
+    
+    public class TableHelper<TTableItem> where TTableItem : TableEntity, new()
     {
         #region events
 
         /// <summary>
-        /// Occurs when <see cref="GetEntriesAsync(CloudTable,string)"/> receives new entries.
+        /// Occurs when <see cref="GetEntriesAsync(CloudTable,TimeSpan)"/> receives new entries.
         /// </summary>
-        public static event EventHandler<WadLogEntityListEventArgs> EntriesReceived;
+        public event EventHandler<TableEntityListEventArgs<TTableItem>> EntriesReceived;
 
         /// <summary>
         /// Occurs when <see cref="MonitorTableAsync"/> receives new entries.
         /// </summary>
-        public static event EventHandler<WadLogEntityListEventArgs> MonitoringReceivedNewEntries;
+        public event EventHandler<TableEntityListEventArgs<TTableItem>> MonitoringReceivedNewEntries;
 
         /// <summary>
         /// Occurs when a storage query starts.
         /// </summary>
-        public static event EventHandler QueryStarted;
+        public event EventHandler QueryStarted;
 
         /// <summary>
         /// Occurs after a storage query finishes.
         /// </summary>
-        public static event EventHandler QueryFinished;
+        public event EventHandler QueryFinished;
 
         #endregion
 
@@ -49,10 +50,11 @@
         /// <param name="table">The Azure WADLogs table to query against.</param>
         /// <param name="timeSlot">The amount of time to go into the past.</param>
         /// <returns>All items from the WADLogs table inside the <paramref name="timeSlot"/>.</returns>
-        public static async Task<IEnumerable<WadLogEntity>> GetEntriesAsync(this CloudTable table, TimeSpan timeSlot)
+        /// <typeparam name="TTableItem">The type of the items in the table.</typeparam>
+        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, TimeSpan timeSlot) 
         {
             var partitionKeyMin = "0" + DateTime.UtcNow.Subtract(timeSlot).Ticks;
-            return await table.GetEntriesAsync(partitionKeyMin);
+            return await GetEntriesAsync(table, partitionKeyMin);
         }
 
         /// <summary>
@@ -64,12 +66,12 @@
         /// <param name="table">The Azure WADLogs table to query against.</param>
         /// <param name="minTimestamp">The smallest WADLogs partition key to put into result.</param>
         /// <returns>All items from the WADLogs table inside the defined time.</returns>
-        public static async Task<IEnumerable<WadLogEntity>> GetEntriesAsync(this CloudTable table, string minTimestamp)
+        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, string minTimestamp) 
         {
             var term = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.GreaterThanOrEqual, minTimestamp);
-            var query = new TableQuery<WadLogEntity>().Where(term);
+            var query = new TableQuery<TTableItem>().Where(term);
             TableContinuationToken continuationToken = null;
-            var result = new List<WadLogEntity>();
+            var result = new List<TTableItem>();
             do
             {
                 var stopWatch = new Stopwatch();
@@ -81,7 +83,7 @@
                 QueryFinished?.Invoke(null, EventArgs.Empty);
                 continuationToken = tableQueryResult.ContinuationToken;
                 var entries = tableQueryResult.Results.ToList();
-                EntriesReceived?.Invoke(null, new WadLogEntityListEventArgs(entries));
+                EntriesReceived?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                 result.AddRange(entries);
             }
             while (continuationToken != null);
@@ -98,17 +100,17 @@
         /// <param name="cancellationToken">An external cancellation token to stop monitoring.</param>
         /// <param name="intervalSeconds">The interval in seconds the monitoring should try to retrieve new elements.</param>
         /// <param name="timeSpanSeconds">The amount of seconds to look in the past with the first request.</param>        
-        public static async Task MonitorTableAsync(this CloudTable table, CancellationToken cancellationToken, int intervalSeconds = 5, double timeSpanSeconds = 3600)
+        public async Task MonitorTableAsync(CloudTable table, CancellationToken cancellationToken, int intervalSeconds = 5, double timeSpanSeconds = 3600)
         {
             var lastTicks = "";
             while (true)
             {
-                var entries = string.IsNullOrEmpty(lastTicks) ? table.GetEntriesAsync(TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : table.GetEntriesAsync(lastTicks).Result.ToList();
+                var entries = string.IsNullOrEmpty(lastTicks) ? GetEntriesAsync(table, TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : GetEntriesAsync(table, lastTicks).Result.ToList();
                 var maxTicks = entries.Max(e => e.PartitionKey);
                 if (entries.Any() && lastTicks != maxTicks)
                 {
                     lastTicks = maxTicks;
-                    MonitoringReceivedNewEntries?.Invoke(null, new WadLogEntityListEventArgs(entries));
+                    MonitoringReceivedNewEntries?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                 }
                 await Task.Delay(TimeSpan.FromSeconds(intervalSeconds), cancellationToken);
                 if (cancellationToken.IsCancellationRequested)
@@ -125,7 +127,7 @@
         /// <summary>
         /// The amount of time the last Azure query took.
         /// </summary>
-        public static TimeSpan LastQueryTime { get; private set; }
+        public TimeSpan LastQueryTime { get; private set; }
 
         #endregion
     }
