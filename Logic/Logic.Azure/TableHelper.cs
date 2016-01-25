@@ -117,14 +117,18 @@
             }
             _monitoringFinished = new AutoResetEvent(false);
             _isMonitoringRunning = true;
-            var lastTicks = "";
+            var nextTicksToRetrieve = "0";
             while (true)
             {
-                var entries = string.IsNullOrEmpty(lastTicks) ? GetEntriesAsync(table, TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : GetEntriesAsync(table, lastTicks).Result.ToList();
-                var maxTicks = "0"  + (entries.Max(e => long.Parse(e.PartitionKey)) + 1);
-                if (entries.Any() && lastTicks != maxTicks)
+                var entries = string.IsNullOrEmpty(nextTicksToRetrieve) ? GetEntriesAsync(table, TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : GetEntriesAsync(table, nextTicksToRetrieve).Result.ToList();
+                var nextTicks = "0";
+                if (entries.Any())
                 {
-                    lastTicks = maxTicks;
+                    nextTicks = "0" + (entries.Max(e => long.Parse(e.PartitionKey)) + 1);
+                }                
+                if (entries.Any() && nextTicksToRetrieve != nextTicks)
+                {
+                    nextTicksToRetrieve = nextTicks;
                     MonitoringReceivedNewEntries?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                 }
                 try
