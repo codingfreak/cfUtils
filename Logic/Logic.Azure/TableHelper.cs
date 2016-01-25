@@ -121,7 +121,7 @@
             while (true)
             {
                 var entries = string.IsNullOrEmpty(lastTicks) ? GetEntriesAsync(table, TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : GetEntriesAsync(table, lastTicks).Result.ToList();
-                var maxTicks = entries.Max(e => e.PartitionKey);
+                var maxTicks = "0"  + (entries.Max(e => long.Parse(e.PartitionKey)) + 1);
                 if (entries.Any() && lastTicks != maxTicks)
                 {
                     lastTicks = maxTicks;
