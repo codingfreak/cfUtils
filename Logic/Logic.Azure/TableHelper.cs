@@ -12,9 +12,18 @@
     /// <summary>
     /// Contains helper and extension methods for the <see cref="CloudTable"/> type.
     /// </summary>
-    
-    public class TableHelper<TTableItem> where TTableItem : TableEntity, new()
+    public class TableHelper<TTableItem>
+        where TTableItem : TableEntity, new()
     {
+        #region member vars
+
+        private bool _isMonitoringRunning;
+
+        private AutoResetEvent _monitoringFinished;
+        private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
+
+        #endregion
+
         #region events
 
         /// <summary>
@@ -51,7 +60,7 @@
         /// <param name="timeSlot">The amount of time to go into the past.</param>
         /// <returns>All items from the WADLogs table inside the <paramref name="timeSlot"/>.</returns>
         /// <typeparam name="TTableItem">The type of the items in the table.</typeparam>
-        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, TimeSpan timeSlot) 
+        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, TimeSpan timeSlot)
         {
             var partitionKeyMin = "0" + DateTime.UtcNow.Subtract(timeSlot).Ticks;
             return await GetEntriesAsync(table, partitionKeyMin);
@@ -66,7 +75,7 @@
         /// <param name="table">The Azure WADLogs table to query against.</param>
         /// <param name="minTimestamp">The smallest WADLogs partition key to put into result.</param>
         /// <returns>All items from the WADLogs table inside the defined time.</returns>
-        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, string minTimestamp) 
+        public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, string minTimestamp)
         {
             var term = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.GreaterThanOrEqual, minTimestamp);
             var query = new TableQuery<TTableItem>().Where(term);
@@ -102,6 +111,12 @@
         /// <param name="timeSpanSeconds">The amount of seconds to look in the past with the first request.</param>        
         public async Task MonitorTableAsync(CloudTable table, CancellationToken cancellationToken, int intervalSeconds = 5, double timeSpanSeconds = 3600)
         {
+            if (_isMonitoringRunning)
+            {
+                throw new InvalidOperationException("Only one monitoring per instance allowed!");
+            }
+            _monitoringFinished = new AutoResetEvent(false);
+            _isMonitoringRunning = true;
             var lastTicks = "";
             while (true)
             {
@@ -112,12 +127,49 @@
                     lastTicks = maxTicks;
                     MonitoringReceivedNewEntries?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                 }
-                await Task.Delay(TimeSpan.FromSeconds(intervalSeconds), cancellationToken);
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(intervalSeconds), cancellationToken);
+                }
+                catch (TaskCanceledException)
+                {
+                    Trace.TraceInformation("Monitoring cancelled.");
+                }
                 if (cancellationToken.IsCancellationRequested)
                 {
                     break;
                 }
             }
+            _isMonitoringRunning = false;
+            _monitoringFinished.Set();
+        }
+
+        /// <summary>
+        /// Starts <see cref="MonitorTableAsync"/> and leaves the method immediately.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="StopMonitoringTable"/> to cancel the monitoring.
+        /// </remarks>
+        /// <param name="table">The Azure WADLogs table to query against.</param>        
+        /// <param name="intervalSeconds">The interval in seconds the monitoring should try to retrieve new elements.</param>
+        /// <param name="timeSpanSeconds">The amount of seconds to look in the past with the first request.</param>  
+        public void StartMonitoringTable(CloudTable table, int intervalSeconds = 5, double timeSpanSeconds = 3600)
+        {
+            var token = _tokenSource.Token;
+            Task.Factory.StartNew(() => MonitorTableAsync(table, token, intervalSeconds, timeSpanSeconds), token);
+        }
+
+        /// <summary>
+        /// Stops a monitoring started by <see cref="StartMonitoringTable"/>.
+        /// </summary>
+        public void StopMonitoringTable()
+        {
+            if (!_isMonitoringRunning)
+            {
+                throw new InvalidOperationException("No monitoring running!");
+            }
+            _tokenSource.Cancel();
+            _monitoringFinished.WaitOne();
         }
 
         #endregion
