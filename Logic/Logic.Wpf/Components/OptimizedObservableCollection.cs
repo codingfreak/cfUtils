@@ -6,6 +6,7 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Optimized implementation of <see cref="ObservableCollection{T}"/> which reduces the amount of events propageted
@@ -17,6 +18,15 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         #region member vars
 
         private bool _preventEvent;
+
+        #endregion
+
+        #region events
+
+        /// <summary>
+        /// Occurs when an item is added, removed, changed, moved, or the entire list is refreshed.
+        /// </summary>
+        public override event NotifyCollectionChangedEventHandler CollectionChanged;
 
         #endregion
 
@@ -65,9 +75,27 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         /// <param name="e">Arguments of the event being raised.</param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (!_preventEvent)
+            if (_preventEvent)
             {
-                base.OnCollectionChanged(e);
+                return;
+            }
+            var eh = CollectionChanged;
+            if (eh == null)
+            {
+                return;
+            }
+            var dispatcher = (from NotifyCollectionChangedEventHandler nh in eh.GetInvocationList() let dpo = nh.Target as DispatcherObject where dpo != null select dpo.Dispatcher).FirstOrDefault();
+            if (dispatcher != null && dispatcher.CheckAccess() == false)
+            {
+                dispatcher.Invoke(DispatcherPriority.DataBind, (Action)(() => OnCollectionChanged(e)));
+            }
+            else
+            {
+                foreach (var @delegate in eh.GetInvocationList())
+                {
+                    var nh = (NotifyCollectionChangedEventHandler)@delegate;
+                    nh.Invoke(this, e);
+                }
             }
         }
 
