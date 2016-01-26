@@ -44,10 +44,11 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
             var sqlException = exception as SqlException;
             if (sqlException != null)
             {
+                SqlConnection.ClearAllPools();
                 foreach (SqlError error in sqlException.Errors)
                 {
                     if (error.Number == -2 || error.Number == 19)
-                    {
+                    {                        
                         shouldRetry = true;
                     }
                 }

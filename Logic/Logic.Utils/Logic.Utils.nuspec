@@ -9,12 +9,12 @@
     <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <releaseNotes>Moved from s2Utils.</releaseNotes>
+    <releaseNotes>Changed CustomExecutionStrategy.</releaseNotes>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <copyright>codingfreaks 2014-2015</copyright>
     <dependencies>
       <dependency id="EntityFramework" version="6.1.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.1" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.4" />      
     </dependencies>
   </metadata>
   <files>
