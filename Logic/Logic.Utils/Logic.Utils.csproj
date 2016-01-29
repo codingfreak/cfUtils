@@ -56,12 +56,12 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.1.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.1\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.5.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.5\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.4.13, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.4\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.5.15, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.5\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

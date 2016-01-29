@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Changed logic for detecting new entries in TableHelper.</releaseNotes>
+    <releaseNotes>Updated package references.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
@@ -19,7 +19,7 @@
       <dependency id="WindowsAzure.Storage" version="6.2.0" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.2.0" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.1" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.5" />
     </dependencies>
   </metadata>
   <files>
