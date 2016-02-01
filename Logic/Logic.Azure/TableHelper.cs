@@ -86,14 +86,22 @@
                 var stopWatch = new Stopwatch();
                 QueryStarted?.Invoke(null, EventArgs.Empty);
                 stopWatch.Start();
-                var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
-                stopWatch.Stop();
-                LastQueryTime = stopWatch.Elapsed;
-                QueryFinished?.Invoke(null, EventArgs.Empty);
-                continuationToken = tableQueryResult.ContinuationToken;
-                var entries = tableQueryResult.Results.ToList();
-                EntriesReceived?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
-                result.AddRange(entries);
+                try
+                {
+                    var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+                    stopWatch.Stop();
+                    LastQueryTime = stopWatch.Elapsed;
+                    QueryFinished?.Invoke(null, EventArgs.Empty);
+                    continuationToken = tableQueryResult.ContinuationToken;
+                    var entries = tableQueryResult.Results.ToList();
+                    EntriesReceived?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
+                    result.AddRange(entries);
+                }
+                catch (Exception ex)
+                {                    
+                    Trace.TraceError(ex.Message);
+                }
+                
             }
             while (continuationToken != null);
             return result;

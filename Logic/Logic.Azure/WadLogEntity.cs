@@ -31,6 +31,11 @@
         public DateTime EventDateTime => new DateTime(long.Parse(PartitionKey.Substring(1)));
 
         /// <summary>
+        /// The precise timestamp of this entry.
+        /// </summary>
+        public DateTimeOffset PreciseTimeStamp { get; set; }
+       
+        /// <summary>
         /// The id of the event.
         /// </summary>
         public int EventId { get; set; }
