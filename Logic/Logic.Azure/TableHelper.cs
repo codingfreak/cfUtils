@@ -93,7 +93,7 @@
                     LastQueryTime = stopWatch.Elapsed;
                     QueryFinished?.Invoke(null, EventArgs.Empty);
                     continuationToken = tableQueryResult.ContinuationToken;
-                    var entries = tableQueryResult.Results.ToList();
+                    var entries = tableQueryResult.Results.ToList();                    
                     EntriesReceived?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                     result.AddRange(entries);
                 }
@@ -125,7 +125,8 @@
             }
             _monitoringFinished = new AutoResetEvent(false);
             _isMonitoringRunning = true;
-            var nextTicksToRetrieve = "0";
+            var nextTicksToRetrieve = "0" + DateTime.Now.Subtract(TimeSpan.FromSeconds(timeSpanSeconds)).Ticks;
+            EntriesReceived += (s, e) => MonitoringReceivedNewEntries?.Invoke(this, new TableEntityListEventArgs<TTableItem>(e.Entries.ToList()));
             while (true)
             {
                 var entries = string.IsNullOrEmpty(nextTicksToRetrieve) ? GetEntriesAsync(table, TimeSpan.FromSeconds(timeSpanSeconds)).Result.ToList() : GetEntriesAsync(table, nextTicksToRetrieve).Result.ToList();
@@ -137,7 +138,7 @@
                 if (entries.Any() && nextTicksToRetrieve != nextTicks)
                 {
                     nextTicksToRetrieve = nextTicks;
-                    MonitoringReceivedNewEntries?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
+                    //MonitoringReceivedNewEntries?.Invoke(null, new TableEntityListEventArgs<TTableItem>(entries));
                 }
                 try
                 {

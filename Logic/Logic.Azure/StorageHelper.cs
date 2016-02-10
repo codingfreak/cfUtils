@@ -116,7 +116,7 @@
             {
                 parallelity = Environment.ProcessorCount * 4;
             }
-            parallelity = Math.Max(parallelity, 48);
+            parallelity = Math.Min(parallelity, 48);
             var tasks = new List<Task>();
             do
             {

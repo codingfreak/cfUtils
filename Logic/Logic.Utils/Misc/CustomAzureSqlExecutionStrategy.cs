@@ -20,8 +20,8 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public CustomExecutionStrategy()
-        {
+        public CustomExecutionStrategy() : base(10, TimeSpan.FromMinutes(10))
+        {            
         }
 
         /// <summary>
@@ -52,12 +52,15 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
                         shouldRetry = true;
                     }
                 }
-            }
-            shouldRetry = shouldRetry || base.ShouldRetryOn(exception);            
-            Trace.WriteLine("ShouldRetryOn: " + shouldRetry);
+            }            
+            shouldRetry = shouldRetry || base.ShouldRetryOn(exception);                 
             return shouldRetry;
         }
-       
+
+        //public int MaxRetryCount { get; set; }
+
+        //public TimeSpan MaxDelay { get; set; }
+
         #endregion
     }
 }

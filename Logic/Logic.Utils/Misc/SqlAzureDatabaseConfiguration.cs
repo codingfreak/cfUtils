@@ -4,6 +4,7 @@ using System.Linq;
 namespace codingfreaks.cfUtils.Logic.Utils.Misc
 {
     using System.Data.Entity;
+    using System.Data.Entity.SqlServer;
 
     using Base.Utilities;
 
@@ -20,7 +21,7 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
         public SqlAzureDatabaseConfiguration()
         {
             TraceUtil.WriteTraceDebug("Using custom database configuration.");
-            SetExecutionStrategy("System.Data.SqlClient", () => new CustomExecutionStrategy(100, TimeSpan.FromSeconds(3)));
+            SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy());
             SetDatabaseLogFormatter((ctx, logAction) => new OneLineDatabaseLogFormatter(ctx, logAction));
         }
 
