@@ -58,9 +58,9 @@
         {
             get
             {
-                var regex = @"Message=(\\?"")(.*?)\1";
+                var regex = @"Message=(\\?"")(.*?)("" TraceSource.*)?$";
                 var result = Regex.Match(Message, regex);
-                return result.Success && result.Groups.Count == 3 ? result.Groups[2].Captures[0].Value : Message;
+                return result.Success && result.Groups.Count == 4 ? result.Groups[2].Captures[0].Value : Message;
             }
         }
 
