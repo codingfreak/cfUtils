@@ -1,10 +1,17 @@
 ﻿namespace codingfreaks.cfUtils.Logic.Utils.Utilities
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Data.Entity;
+
+    using codingfreaks.cfUtils.Logic.Utils.Extensions;
+
+    using System.Linq;
     using System.Threading.Tasks;
 
     using codingfreaks.cfUtils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
     using codingfreaks.cfUtils.Logic.Utils.Interfaces;
 
     /// <summary>
@@ -26,11 +33,8 @@
         {
             if (action == null)
             {
-                var ex = new ArgumentNullException("action");
-                if (logger != null)
-                {
-                    logger.LogException("ECU-EX-01", ex);
-                }
+                var ex = new ArgumentNullException(nameof(action));
+                logger?.LogException("ECU-EX-01", ex);
                 throw ex;
             }
             var dispose = false;
@@ -65,11 +69,8 @@
         {
             if (func == null)
             {
-                var ex = new ArgumentNullException("func");
-                if (logger != null)
-                {
-                    logger.LogException("ECU-EX-02", ex);
-                }
+                var ex = new ArgumentNullException(nameof(func));
+                logger?.LogException("ECU-EX-02", ex);
                 throw ex;
             }
             var dispose = false;
@@ -106,11 +107,8 @@
         {
             if (func == null)
             {
-                var ex = new ArgumentNullException("func");
-                if (logger != null)
-                {
-                    logger.LogException("ECU-EX-03", ex);
-                }
+                var ex = new ArgumentNullException(nameof(func));
+                logger?.LogException("ECU-EX-03", ex);
                 throw ex;
             }
             var dispose = false;
@@ -128,6 +126,47 @@
             {
                 ctx.Dispose();
             }
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves a dictionary containing the name of each table in a DbContext as the key
+        /// and the amount of entries as the value.
+        /// </summary>
+        /// <remarks>
+        /// Each table will be queries in a single thread.
+        /// </remarks>
+        /// <param name="contextFactory">A method which generates a DbContext.</param>
+        /// <param name="isSqlServer"><c>true</c> if the context is targetting SQL Server.</param>
+        /// <returns>A dictionary containing all table names and their amount of rows or <c>null</c> if query fails.</returns>
+        public static IDictionary<string, int?> GetTableFillGrade(Func<DbContext> contextFactory, bool isSqlServer = true)
+        {
+            var result = new ConcurrentDictionary<string, int?>();
+            var tasks = new List<Task>();
+            var ctx = contextFactory.Invoke();
+            ctx.GetTableNames(isSqlServer).ToList().ForEach(
+                table => tasks.Add(
+                    Task.Run(
+                        async () =>
+                        {
+                            var queryContext = contextFactory.Invoke();                            
+                            int? amount = null;
+                            try
+                            {
+                                var query = queryContext.Database.SqlQuery<int>($"SELECT COUNT(*) FROM {table};");
+                                amount = await query.FirstAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                TraceUtil.WriteTraceError(ex.Message);
+                            }
+                            finally
+                            {
+                                queryContext.Dispose();
+                            }
+                            result.TryAdd(table, amount);
+                        })));
+            Task.WaitAll(tasks.ToArray());
             return result;
         }
 

@@ -19,39 +19,7 @@
     public static class DbContextExtensions
     {
         #region methods
-
-        /// <summary>
-        /// Retrieves a dictionary containing the name of each table in the <paramref name="ctx"/> as te key
-        /// and the amount of entries as the value.
-        /// </summary>
-        /// <remarks>
-        /// Each table will be queries in a single thread.
-        /// </remarks>
-        /// <param name="ctx">The context to extend.</param>
-        /// <param name="isSqlServer"><c>true</c> if the context is targetting SQL Server.</param>
-        /// <returns>A dictionary containing all table names and their amount of rows or <c>null</c> if query fails.</returns>
-        public static async Task<IDictionary<string, int?>> GetTableFillGradeAsync(this DbContext ctx, bool isSqlServer = true)
-        {
-            var result = new ConcurrentDictionary<string, int?>();
-            Task.WaitAll(
-                ctx.GetTableNames(isSqlServer).ToList().Select(
-                    table => Task.Run(
-                        async () =>
-                        {
-                            var query = ctx.Database.SqlQuery<int>($"SELECT COUNT(*) FROM {table};");
-                            int? amount = null;
-                            try
-                            {
-                                amount = await query.FirstAsync();
-                            }
-                            catch (Exception)
-                            {
-                            }
-                            result.TryAdd(table, amount);
-                        })).ToArray());
-            return result;
-        }
-
+        
         /// <summary>
         /// Retrieves a list of all table names (including schemas) of the <paramref name="ctx"/>.
         /// </summary>

@@ -11,7 +11,7 @@
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
     <releaseNotes>Added functionallity in DbContextExtensions to query all table names and to get the current row count of each table.</releaseNotes>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <copyright>codingfreaks 2014-2015</copyright>
+    <copyright>codingfreaks 2014-2016</copyright>
     <dependencies>
       <dependency id="EntityFramework" version="6.1.3" />
       <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.5" />      
