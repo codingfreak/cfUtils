@@ -1,14 +1,12 @@
 ﻿namespace codingfreaks.cfUtils.Logic.Utils.Extensions
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Core.Metadata.Edm;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using codingfreaks.cfUtils.Logic.Base.Interfaces;
     using codingfreaks.cfUtils.Logic.Base.Utilities;
@@ -19,7 +17,35 @@
     public static class DbContextExtensions
     {
         #region methods
-        
+
+        /// <summary>
+        /// Retrieves a dictionary containing the name of each table in a DbContext as the key
+        /// and the amount of entries as the value.
+        /// </summary>        
+        /// <param name="ctx">The context to extend.</param>
+        /// <param name="isSqlServer"><c>true</c> if the context is targetting SQL Server.</param>
+        /// <returns>A dictionary containing all table names and their amount of rows or <c>null</c> if query fails.</returns>
+        public static IDictionary<string, int?> GetTableFillGrade(this DbContext ctx, bool isSqlServer = true)
+        {
+            var result = new Dictionary<string, int?>();
+            ctx.GetTableNames(isSqlServer).ToList().ForEach(
+                table =>
+                {
+                    int? amount = null;
+                    try
+                    {
+                        var query = ctx.Database.SqlQuery<int>($"SELECT COUNT(*) FROM {table};");
+                        amount = query.FirstAsync().Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        TraceUtil.WriteTraceError(ex.Message);
+                    }
+                    result.Add(table, amount);
+                });
+            return result;
+        }
+
         /// <summary>
         /// Retrieves a list of all table names (including schemas) of the <paramref name="ctx"/>.
         /// </summary>
