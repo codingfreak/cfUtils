@@ -1,13 +1,17 @@
 ﻿namespace codingfreaks.cfUtils.Logic.Utils.Extensions
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Metadata.Edm;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-    using Base.Utilities;
-
-    using Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Interfaces;
+    using codingfreaks.cfUtils.Logic.Base.Utilities;
 
     /// <summary>
     /// Extends any <see cref="DbContext" />.
@@ -15,6 +19,67 @@
     public static class DbContextExtensions
     {
         #region methods
+
+        /// <summary>
+        /// Retrieves a dictionary containing the name of each table in the <paramref name="ctx"/> as te key
+        /// and the amount of entries as the value.
+        /// </summary>
+        /// <remarks>
+        /// Each table will be queries in a single thread.
+        /// </remarks>
+        /// <param name="ctx">The context to extend.</param>
+        /// <param name="isSqlServer"><c>true</c> if the context is targetting SQL Server.</param>
+        /// <returns>A dictionary containing all table names and their amount of rows or <c>null</c> if query fails.</returns>
+        public static async Task<IDictionary<string, int?>> GetTableFillGradeAsync(this DbContext ctx, bool isSqlServer = true)
+        {
+            var result = new ConcurrentDictionary<string, int?>();
+            Task.WaitAll(
+                ctx.GetTableNames(isSqlServer).ToList().Select(
+                    table => Task.Run(
+                        async () =>
+                        {
+                            var query = ctx.Database.SqlQuery<int>($"SELECT COUNT(*) FROM {table};");
+                            int? amount = null;
+                            try
+                            {
+                                amount = await query.FirstAsync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+                            result.TryAdd(table, amount);
+                        })).ToArray());
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves a list of all table names (including schemas) of the <paramref name="ctx"/>.
+        /// </summary>
+        /// <param name="ctx">The context to extend.</param>
+        /// <param name="isSqlServer"><c>true</c> if the context is targetting SQL Server or SQL Azure so that names
+        /// will be surrounded by [] instead of ''.</param>
+        /// <returns>The list of table names.</returns>
+        public static IEnumerable<string> GetTableNames(this DbContext ctx, bool isSqlServer = true)
+        {
+            var metadata = ctx.ToObjectContext().MetadataWorkspace;
+            var opener = isSqlServer ? "[" : "'";
+            var closer = isSqlServer ? "]" : "'";
+            return
+                metadata.GetItemCollection(DataSpace.SSpace)
+                    .GetItems<EntityContainer>()
+                    .Single()
+                    .BaseEntitySets.OfType<EntitySet>()
+                    .Where(s => !s.MetadataProperties.Contains("Type") || s.MetadataProperties["Type"].ToString() == "Tables")
+                    .Select(
+                        table =>
+                        {
+                            var tableName = table.MetadataProperties.Contains("Table") && table.MetadataProperties["Table"].Value != null
+                                ? table.MetadataProperties["Table"].Value.ToString()
+                                : table.Name;
+                            var tableSchema = table.MetadataProperties["Schema"].Value.ToString();
+                            return $"{opener}{tableSchema}{closer}.{opener}{tableName}{closer}";
+                        }).ToList();
+        }
 
         /// <summary>
         /// Retrieves the <see cref="ObjectContext" /> from a given

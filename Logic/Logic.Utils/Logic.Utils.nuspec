@@ -9,7 +9,7 @@
     <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <releaseNotes>Changed package dependencies.</releaseNotes>
+    <releaseNotes>Added functionallity in DbContextExtensions to query all table names and to get the current row count of each table.</releaseNotes>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <copyright>codingfreaks 2014-2015</copyright>
     <dependencies>
