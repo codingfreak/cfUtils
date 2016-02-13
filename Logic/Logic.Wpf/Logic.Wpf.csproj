@@ -117,6 +117,7 @@
   <Target Name="BeforeBuild" DependsOnTargets="cfUpgradeVersion">
     <PropertyGroup>
       <NuGetSource>P:\dotnet\_nuget</NuGetSource>
+	  <NuGetPraefix>codingfreaks.libs.</NuGetPraefix>
     </PropertyGroup>
   </Target>
   <Target Name="AfterBuild" DependsOnTargets="cfNugetPackage">

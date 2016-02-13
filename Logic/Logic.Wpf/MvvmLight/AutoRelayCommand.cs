@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using System.Windows.Threading;
 
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
@@ -132,7 +133,7 @@
                 {
                     if (_properties != null && _properties.Contains(property.PropertyName))
                     {
-                        RaiseCanExecuteChanged();
+                        Dispatcher.CurrentDispatcher.Invoke(RaiseCanExecuteChanged);
                     }
                 });
         }
@@ -263,7 +264,7 @@
                 {
                     if (_properties != null && _properties.Contains(property.PropertyName))
                     {
-                        RaiseCanExecuteChanged();
+                        Dispatcher.CurrentDispatcher.Invoke(RaiseCanExecuteChanged);
                     }
                 });
         }
