@@ -58,8 +58,7 @@
         /// </remarks>
         /// <param name="table">The Azure WADLogs table to query against.</param>
         /// <param name="timeSlot">The amount of time to go into the past.</param>
-        /// <returns>All items from the WADLogs table inside the <paramref name="timeSlot"/>.</returns>
-        /// <typeparam name="TTableItem">The type of the items in the table.</typeparam>
+        /// <returns>All items from the WADLogs table inside the <paramref name="timeSlot"/>.</returns>        
         public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, TimeSpan timeSlot)
         {
             var partitionKeyMin = "0" + DateTime.UtcNow.Subtract(timeSlot).Ticks;
@@ -182,7 +181,7 @@
                 throw new InvalidOperationException("No monitoring running!");
             }
             _tokenSource.Cancel();
-            _monitoringFinished.WaitOne();
+            _monitoringFinished.WaitOne();            
         }
 
         #endregion

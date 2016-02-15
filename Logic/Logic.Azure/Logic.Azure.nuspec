@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Updated package references.</releaseNotes>
+    <releaseNotes>Bugfixing in TableHelper.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
