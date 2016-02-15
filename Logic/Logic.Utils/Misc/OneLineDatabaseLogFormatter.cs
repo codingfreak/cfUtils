@@ -51,6 +51,10 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
         /// <param name="interceptionContext">The interception context.</param>
         public override void LogCommand<TResult>(DbCommand command, DbCommandInterceptionContext<TResult> interceptionContext)
         {
+            if (Context == null)
+            {
+                return; 
+            }
             var commandText = command.CommandText.Replace(Environment.NewLine, "");
             Write(string.Format(_cultureInfoToUse, "Context '{0}' is executing command '{1}'", Context.GetType().Name, commandText));
         }
@@ -62,6 +66,10 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
         /// <param name="interceptionContext">The interception context.</param>
         public override void LogResult<TResult>(DbCommand command, DbCommandInterceptionContext<TResult> interceptionContext)
         {
+            if (interceptionContext == null)
+            {
+                return;
+            }
             Write(string.Format(_cultureInfoToUse, "Result of {0} operation: {1}", interceptionContext.IsAsync ? "ASYNC" : "SYNC", interceptionContext.Result));
         }
 
@@ -72,6 +80,10 @@ namespace codingfreaks.cfUtils.Logic.Utils.Misc
         /// <param name="interceptionContext">The interception context.</param>
         public override void Opened(DbConnection connection, DbConnectionInterceptionContext interceptionContext)
         {
+            if (interceptionContext == null)
+            {
+                return;
+            }
             Write(string.Format(_cultureInfoToUse, "Opened db connection at {0}.", DateTime.UtcNow));
         }
 
