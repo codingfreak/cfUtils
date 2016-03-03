@@ -99,6 +99,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Components\OptimizedObservableCollection.cs" />
+    <Compile Include="Converters\ExrtendedBooleanToVisibilityConverter.cs" />
     <Compile Include="MvvmLight\AutoRelayCommand.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\StringToUIntConverter.cs" />
@@ -117,7 +118,7 @@
   <Target Name="BeforeBuild" DependsOnTargets="cfUpgradeVersion">
     <PropertyGroup>
       <NuGetSource>P:\dotnet\_nuget</NuGetSource>
-	  <NuGetPraefix>codingfreaks.libs.</NuGetPraefix>
+      <NuGetPraefix>codingfreaks.libs.</NuGetPraefix>
     </PropertyGroup>
   </Target>
   <Target Name="AfterBuild" DependsOnTargets="cfNugetPackage">
