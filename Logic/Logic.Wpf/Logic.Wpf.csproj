@@ -99,7 +99,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Components\OptimizedObservableCollection.cs" />
-    <Compile Include="Converters\ExrtendedBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\ExtendedBooleanToVisibilityConverter.cs" />
     <Compile Include="MvvmLight\AutoRelayCommand.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\StringToUIntConverter.cs" />

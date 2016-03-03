@@ -9,7 +9,7 @@
     /// Convertes a boolean value to its opposite.
     /// </summary>
     [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class ExrtendedBooleanToVisibilityConverter : IValueConverter
+    public class ExtendedBooleanToVisibilityConverter : IValueConverter
     {
         #region explicit interfaces
 
@@ -53,7 +53,10 @@
 
         #endregion
 
-        enum Parameters
+        /// <summary>
+        /// Defines possible values the converter parameter can take.
+        /// </summary>
+        private enum Parameters
         {
             Normal,
             Inverted

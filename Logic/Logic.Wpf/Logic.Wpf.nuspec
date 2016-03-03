@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for WPF projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>AutoRelayCommand secured by Dispatcher.</releaseNotes>
+    <releaseNotes>Fixed type-problem in ExtendedBooleanToVisibilityConverter.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
   </metadata>
   <files>
