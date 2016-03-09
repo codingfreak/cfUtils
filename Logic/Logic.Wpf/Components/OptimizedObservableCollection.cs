@@ -62,6 +62,27 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         }
 
         /// <summary>
+        /// Tries to replace an item inside the items by the <paramref name="newItem"/>.
+        /// </summary>
+        /// <param name="newItem">The new item to replace into the current list.</param>
+        /// <param name="matchPredicate">A predicate to find the item to remove inside the current list.</param>
+        /// <exception cref="InvalidOperationException">Is thrown if Items is null or empty.</exception>
+        public void Replace(T newItem, Func<T, bool> matchPredicate)
+        {
+            if (Items == null || !Items.Any())
+            {
+                throw new InvalidOperationException("No items in destination!");
+            }
+            var item = Items.FirstOrDefault(matchPredicate);
+            if (item == null)
+            {
+                return;
+            }
+            var index = Items.IndexOf(item);
+            Items[index] = newItem;
+        }
+
+        /// <summary>
         /// Resumes propagation of collection-change-events.
         /// </summary>
         public void ResumeCollectionChanged()
