@@ -10,8 +10,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for WPF projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added OptimizedBindingList to Logic.Wpf.</releaseNotes>
+    <tags>codingfreaks,WPF,.NET,C#,Converter,MVVM,MvvmLight</tags>
+    <releaseNotes>Updated package references.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
+    <dependencies>
+      <dependency id="MvvmLightLibs" version="5.2.0" />      
+    </dependencies>
   </metadata>
   <files>
     <file src="bin\ReleaseNuget\cfUtils.cfWpfUtils.dll" target="lib\net\cfUtils.cfWpfUtils.dll" />

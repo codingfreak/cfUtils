@@ -37,16 +37,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.5.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.5\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.6.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.6\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="cfUtils.cfExtendedUtils, Version=1.0.3.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfExtendedUtils.1.0.3\lib\net\cfUtils.cfExtendedUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfExtendedUtils, Version=1.0.10.12, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfExtendedUtils.1.0.10\lib\net\cfUtils.cfExtendedUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.5.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.5\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.9.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.9\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -69,9 +69,9 @@
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PropertyChanged, Version=1.50.3.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\PropertyChanged.Fody.1.50.3\lib\dotnet\PropertyChanged.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="PropertyChanged, Version=1.50.4.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PropertyChanged.Fody.1.50.4\lib\dotnet\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -139,20 +139,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\..\packages\Fody.1.29.2\build\dotnet\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.2\build\dotnet\Fody.targets')" />
+  <Import Project="..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets" Condition="Exists('..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Fody.1.29.2\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.29.2\build\dotnet\Fody.targets'))" />
-    <Error Condition="!Exists('..\..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.1.29.4\build\dotnet\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
-  <Import Project="..\..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets" Condition="Exists('..\..\packages\PropertyChanged.Fody.1.50.3\build\dotnet\PropertyChanged.Fody.targets')" />
-  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
-  </Target>
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

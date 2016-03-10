@@ -6,7 +6,7 @@ namespace codingfreaks.cfUtils.Logic.Portable.Extensions
     using System.Collections.Generic;
 
     /// <summary>
-    /// Adds extension methods to <see cref="List{T}"/> LINQ-liqe.
+    /// Adds extension methods to <see cref="List{T}"/> and <see cref="IList{T}"/> LINQ-liqe.
     /// </summary>
     public static class ListExtensions
     {
@@ -25,6 +25,41 @@ namespace codingfreaks.cfUtils.Logic.Portable.Extensions
             // ReSharper disable once RedundantAssignment
             list = null;
             GC.Collect();
+        }
+
+        /// <summary>
+        /// Replaces all matches of <paramref name="matchPredicate"/> in a <paramref name="list"/> with the <paramref name="newItem"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is not thread safe. Apply your own thread-safe logic around this call!
+        /// </remarks>
+        /// <typeparam name="T">The type of the items in the list.</typeparam>
+        /// <param name="list">The list where to perform the replacement.</param>
+        /// <param name="newItem">The item which to insert instead of the old item(s).</param>
+        /// <param name="matchPredicate">A predicate which will retrieve the old items to replace.</param>
+        public static void Replace<T>(this IList<T> list, T newItem, Func<T, bool> matchPredicate)
+        {
+            if (!list.Any())
+            {
+                // nothing to do
+                return;
+            }
+            var item = list.FirstOrDefault(matchPredicate);
+            var lastIndex = -1;
+            while (item != null)
+            {
+                var index = list.IndexOf(item);
+                if (index <= 0 || index == lastIndex)
+                {
+                    // either the item wasn't found or it is the same as the
+                    // last item
+                    break;
+                }
+                // retrieve index and replace item
+                lastIndex = index;
+                list[index] = newItem;
+                item = list.FirstOrDefault(matchPredicate);
+            }
         }
 
         #endregion

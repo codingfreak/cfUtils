@@ -4,6 +4,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("cfWpfUtils")]
 [assembly: AssemblyDescription("[codingfreaks] WPF utility library")]
-[assembly: AssemblyVersion("1.0.8.10")]
-[assembly: AssemblyFileVersion("1.0.8.10")]
+[assembly: AssemblyVersion("1.0.13.16")]
+[assembly: AssemblyFileVersion("1.0.13.16")]
 [assembly: ComVisible(false)]

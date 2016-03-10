@@ -80,15 +80,16 @@
   <Target Name="BeforeBuild" DependsOnTargets="cfUpgradeVersion">
     <PropertyGroup>
       <NuGetSource>P:\dotnet\_nuget</NuGetSource>
+      <NuGetPraefix>codingfreaks.libs.</NuGetPraefix>
     </PropertyGroup>
   </Target>
   <Target Name="AfterBuild" DependsOnTargets="cfNugetPackage">
   </Target>
-  <Import Project="..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition="Exists('..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" />
+  <Import Project="..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets" Condition="Exists('..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets'))" />
+    <Error Condition="!Exists('..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets'))" />
   </Target>
 </Project>

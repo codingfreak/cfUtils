@@ -19,6 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,12 +52,12 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.5.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.5\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.6.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.6\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.5.15, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.5\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.9.20, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.9\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -76,7 +77,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -133,9 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Logic.Web.nuspec">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Logic.Web.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -144,16 +143,17 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets'))" />
+    <Error Condition="!Exists('..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <Target Name="BeforeBuild" DependsOnTargets="cfUpgradeVersion">
     <PropertyGroup>
       <NuGetSource>P:\dotnet\_nuget</NuGetSource>
+      <NuGetPraefix>codingfreaks.libs.</NuGetPraefix>
     </PropertyGroup>
   </Target>
   <Target Name="AfterBuild" DependsOnTargets="cfNugetPackage">
   </Target>
-  <Import Project="..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets" Condition="Exists('..\..\packages\MSBuild.Extension.Pack.1.6.0\build\net40\MSBuild.Extension.Pack.targets')" />
+  <Import Project="..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets" Condition="Exists('..\..\packages\MSBuild.Extension.Pack.1.8.0\build\net40\MSBuild.Extension.Pack.targets')" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
 </Project>
