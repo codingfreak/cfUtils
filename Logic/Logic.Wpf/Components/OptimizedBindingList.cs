@@ -4,16 +4,16 @@ using System.Linq;
 namespace codingfreaks.cfUtils.Logic.Wpf.Components
 {
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.Windows.Threading;
 
     /// <summary>
-    /// Optimized implementation of <see cref="ObservableCollection{T}"/> which reduces the amount of events propageted
+    /// Optimized implementation of <see cref="BindingList{T}"/> which reduces the amount of events propageted
     /// to the UI and adds the <see cref="AddRange"/> functionallity.
     /// </summary>
     /// <typeparam name="T">The type of items in this collection.</typeparam>
-    public class OptimizedObservableCollection<T> : ObservableCollection<T>
+    public class OptimizedBindingList<T> : BindingList<T>
     {
         #region member vars
 
@@ -26,7 +26,26 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         /// <summary>
         /// Occurs when an item is added, removed, changed, moved, or the entire list is refreshed.
         /// </summary>
-        public override event NotifyCollectionChangedEventHandler CollectionChanged;
+        public new event ListChangedEventHandler ListChanged;
+
+        #endregion
+
+        #region constructors and destructors
+
+        /// <summary>
+        /// Initializes a new empty instance of <see cref="T:System.ComponentModel.BindingList`1"/>-type.
+        /// </summary>
+        public OptimizedBindingList()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="T:System.ComponentModel.BindingList`1"/>-type using the given <paramref name="list"/>.
+        /// </summary>
+        /// <param name="list">A <see cref="T:System.Collections.Generic.IList`1"/> of elements which should be contained in <see cref="T:System.ComponentModel.BindingList`1"/>.</param>
+        public OptimizedBindingList(IList<T> list) : base(list)
+        {
+        }
 
         #endregion
 
@@ -49,7 +68,7 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
             finally
             {
                 ResumeCollectionChanged();
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, 0, 0));
             }
         }
 
@@ -62,27 +81,6 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         }
 
         /// <summary>
-        /// Tries to replace an item inside the items by the <paramref name="newItem"/>.
-        /// </summary>
-        /// <param name="newItem">The new item to replace into the current list.</param>
-        /// <param name="matchPredicate">A predicate to find the item to remove inside the current list.</param>
-        /// <exception cref="InvalidOperationException">Is thrown if Items is null or empty.</exception>
-        public void Replace(T newItem, Func<T, bool> matchPredicate)
-        {
-            if (Items == null || !Items.Any())
-            {
-                throw new InvalidOperationException("No items in destination!");
-            }
-            var item = Items.FirstOrDefault(matchPredicate);
-            if (item == null)
-            {
-                return;
-            }
-            var index = Items.IndexOf(item);
-            Items[index] = newItem;
-        }
-
-        /// <summary>
         /// Resumes propagation of collection-change-events.
         /// </summary>
         public void ResumeCollectionChanged()
@@ -91,30 +89,31 @@ namespace codingfreaks.cfUtils.Logic.Wpf.Components
         }
 
         /// <summary>
-        /// Raises the <see cref="E:System.Collections.ObjectModel.ObservableCollection`1.CollectionChanged"/> event with the provided arguments.
+        /// Raises the <see cref="E:System.ComponentModel.BindingList`1.ListChanged"/> event.
         /// </summary>
-        /// <param name="e">Arguments of the event being raised.</param>
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        /// <param name="e">A <see cref="T:System.ComponentModel.ListChangedEventArgs"/> that contains the event data. </param>
+        protected override void OnListChanged(ListChangedEventArgs e)
         {
             if (_preventEvent)
             {
                 return;
             }
-            var eventHandler = CollectionChanged;
+            var eventHandler = ListChanged;
             if (eventHandler == null)
             {
                 return;
             }
-            var dispatcher = (from NotifyCollectionChangedEventHandler nh in eventHandler.GetInvocationList() let dpo = nh.Target as DispatcherObject where dpo != null select dpo.Dispatcher).FirstOrDefault();
+            var dispatcher =
+                (from NotifyCollectionChangedEventHandler nh in eventHandler.GetInvocationList() let dpo = nh.Target as DispatcherObject where dpo != null select dpo.Dispatcher).FirstOrDefault();
             if (dispatcher != null && dispatcher.CheckAccess() == false)
             {
-                dispatcher.Invoke(DispatcherPriority.DataBind, (Action)(() => OnCollectionChanged(e)));
+                dispatcher.Invoke(DispatcherPriority.DataBind, (Action)(() => OnListChanged(e)));
             }
             else
             {
                 foreach (var @delegate in eventHandler.GetInvocationList())
                 {
-                    var nh = (NotifyCollectionChangedEventHandler)@delegate;
+                    var nh = (ListChangedEventHandler)@delegate;
                     nh.Invoke(this, e);
                 }
             }

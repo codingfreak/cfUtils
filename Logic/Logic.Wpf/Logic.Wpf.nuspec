@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for WPF projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added Replace method to OptimizedObservableCollection.</releaseNotes>
+    <releaseNotes>Added OptimizedBindingList to Logic.Wpf.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
   </metadata>
   <files>

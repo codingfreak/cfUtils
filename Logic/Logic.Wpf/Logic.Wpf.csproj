@@ -98,6 +98,7 @@
     <Compile Include="..\..\_Shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Components\OptimizedBindingList.cs" />
     <Compile Include="Components\OptimizedObservableCollection.cs" />
     <Compile Include="Converters\ExtendedBooleanToVisibilityConverter.cs" />
     <Compile Include="MvvmLight\AutoRelayCommand.cs" />
