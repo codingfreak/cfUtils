@@ -10,13 +10,13 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Updated package references and added ThreadingUtil.</releaseNotes>
+    <releaseNotes>ConfigureAwait implemented.</releaseNotes>
     <copyright>codingfreaks UG 2014-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.9" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.11" />
     </dependencies>
   </metadata>
   <files>

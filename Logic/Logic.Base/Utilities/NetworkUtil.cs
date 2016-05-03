@@ -115,7 +115,7 @@
                     {
                         client.ReceiveTimeout = timeout * 1000;
                         client.SendTimeout = timeout * 1000;
-                        await client.ConnectAsync(host, port);
+                        await client.ConnectAsync(host, port).ConfigureAwait(false);
                         result = client.Connected;
                     }
                     catch

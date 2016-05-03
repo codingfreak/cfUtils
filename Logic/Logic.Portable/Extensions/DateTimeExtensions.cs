@@ -101,20 +101,20 @@
         public static IEnumerable<DateSpanInfo> GetCalendarHalfYearsForYear(this int year)
         {
             var result = new List<DateSpanInfo>();
-            var currentQuarter = 0;
+            var currentHalfyear = 0;
             // 1. Get first and last day
             var startDate = new DateTime(year, 1, 1);
             var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all week-informations
+            // 2. Collect all halfyear-informations
             while (startDate < endDate)
             {
                 result.Add(
                     new DateSpanInfo
                     {
                         SpanType = DateSpanType.CalendarHalfyear,
-                        SpanNumber = ++currentQuarter,
+                        SpanNumber = ++currentHalfyear,
                         DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 5)
+                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)
                     });
                 startDate = startDate.AddMonths(6);
             }
@@ -385,7 +385,13 @@
                 // if no past-date is given, take current date
                 dateInPast = DateTime.Now;
             }
-            return (int)(dateInFuture.Subtract(dateInPast.Value).TotalDays / DaysPerYear);
+            var totalDays = dateInFuture.Subtract(dateInPast.Value).TotalDays;
+            if (totalDays.Equals(365d))
+            {
+                // this would end up in rounding issues if we would calculate it.
+                return 1;
+            }
+            return (int)(totalDays / DaysPerYear);
         }
 
         /// <summary>

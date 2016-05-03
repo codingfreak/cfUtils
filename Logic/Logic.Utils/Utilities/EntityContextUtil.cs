@@ -121,7 +121,7 @@
                 }
                 dispose = true;
             }
-            var result = await func.Invoke(ctx);
+            var result = await func.Invoke(ctx).ConfigureAwait(false);
             if (dispose)
             {
                 ctx.Dispose();

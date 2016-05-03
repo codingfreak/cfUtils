@@ -54,7 +54,7 @@
         {
             EnsureInitialized();
             var request = GetRequest(WebRequestMethods.Ftp.DeleteFile, remotefolder, remoteFilename);
-            using (var response = (FtpWebResponse)(await request.GetResponseAsync()))
+            using (var response = (FtpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false)))
             {
                 LastStatusDescription = response.StatusDescription;
                 return response.StatusCode == FtpStatusCode.FileActionOK;
@@ -92,11 +92,11 @@
             var request = GetRequest(WebRequestMethods.Ftp.DownloadFile, remotefolder, remoteFilename);
             string content;
             bool result;
-            using (var response = (FtpWebResponse)(await request.GetResponseAsync()))
+            using (var response = (FtpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false)))
             {
                 using (var remoteReader = new StreamReader(response.GetResponseStream() ?? Stream.Null))
                 {
-                    content = await remoteReader.ReadToEndAsync();
+                    content = await remoteReader.ReadToEndAsync().ConfigureAwait(false);
                 }
                 LastStatusDescription = response.StatusDescription;
                 result = response.StatusCode == FtpStatusCode.ClosingData;
@@ -181,7 +181,7 @@
         {
             EnsureInitialized();
             var request = GetRequest(WebRequestMethods.Ftp.ListDirectory, folder);
-            using (var response = (FtpWebResponse)(await request.GetResponseAsync()))
+            using (var response = (FtpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false)))
             {
                 try
                 {
@@ -239,11 +239,11 @@
                 var request = GetRequest(WebRequestMethods.Ftp.UploadFile, folder, localInfo.Name);
                 var content = File.ReadAllBytes(localInfo.FullName);
                 request.ContentLength = content.Length;
-                using (var stream = await request.GetRequestStreamAsync())
+                using (var stream = await request.GetRequestStreamAsync().ConfigureAwait(false))
                 {
                     stream.Write(content, 0, content.Length);
                 }
-                var response = (FtpWebResponse)(await request.GetResponseAsync());
+                var response = (FtpWebResponse)(await request.GetResponseAsync().ConfigureAwait(false));
                 LastStatusDescription = response.StatusDescription;
                 return response.StatusCode == FtpStatusCode.ClosingData;
             }

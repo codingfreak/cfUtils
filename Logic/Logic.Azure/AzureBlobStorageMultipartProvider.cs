@@ -77,7 +77,7 @@
                 // Upload content to blob storage
                 using (var fStream = new FileStream(fileData.LocalFileName, FileMode.Open, FileAccess.Read, FileShare.Read, BufferSize, true))
                 {
-                    await Task.Factory.FromAsync(blob.BeginUploadFromStream, blob.EndUploadFromStream, fStream, null);
+                    await Task.Factory.FromAsync(blob.BeginUploadFromStream, blob.EndUploadFromStream, fStream, null).ConfigureAwait(false);
                 }
                 // Delete local file
                 File.Delete(fileData.LocalFileName);
@@ -91,7 +91,7 @@
                     });
             }
 
-            await base.ExecutePostProcessingAsync();
+            await base.ExecutePostProcessingAsync().ConfigureAwait(false);
         }
 
         /// <summary>

@@ -9,12 +9,12 @@
     <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <releaseNotes>Updated package references.</releaseNotes>
+    <releaseNotes>ConfigureAwait implemented.</releaseNotes>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <copyright>codingfreaks 2014-2016</copyright>
     <dependencies>
       <dependency id="EntityFramework" version="6.1.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.6" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.8" />      
     </dependencies>
   </metadata>
   <files>

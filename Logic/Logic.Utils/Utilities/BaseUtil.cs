@@ -75,7 +75,7 @@
         /// <returns><c>true</c> if the <paramref name="instance" /> is valid, otherwise <c>false</c>.</returns>
         public async Task<bool> CheckInstance(TEntity instance)
         {
-            return await Task.Run(async () => await CheckInstanceInternal(instance));
+            return await Task.Run(async () => await CheckInstanceInternal(instance)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@
                     var ok = true;
                     if (checkForDoublettes && DoubletteFound != null)
                     {
-                        var doublettes = (await GetValidEntitiesAsync(c)).Where(DoubletteFindExpression(newItem));
+                        var doublettes = (await GetValidEntitiesAsync(c).ConfigureAwait(false)).Where(DoubletteFindExpression(newItem));
                         if (doublettes.Any())
                         {
                             // found doublettes
@@ -155,7 +155,7 @@
                         GetEntitiesSet(c).Add(newItem);
                         try
                         {
-                            await c.SaveChangesAsync();
+                            await c.SaveChangesAsync().ConfigureAwait(false);
                         }
                         catch (Exception ex)
                         {
@@ -165,7 +165,7 @@
                     }
                     return true;
                 },
-                ctx);
+                ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@
         // <returns><c>true</c> if no exceptions occured otherwise <c>false</c>.</returns>
         public async Task<bool> CreateOrUpdateAsync(TEntity entity, TContext ctx = null, bool checkForDoublettes = false)
         {
-            return await ExecuteContextWrappedAsync(async c => c.Entry(entity).State == EntityState.Added ? await CreateAsync(entity, c, checkForDoublettes) : await UpdateAsync(entity, c), ctx);
+            return await ExecuteContextWrappedAsync(async c => c.Entry(entity).State == EntityState.Added ? await CreateAsync(entity, c, checkForDoublettes) : await UpdateAsync(entity, c), ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -204,13 +204,13 @@
             return await ExecuteContextWrappedAsync(
                 async c =>
                 {
-                    var user = await LoadAsync(id, c);
+                    var user = await LoadAsync(id, c).ConfigureAwait(false);
                     if (user == null)
                     {
                         return false;
                     }
-                    return await DeleteAsync(user, deletionTimestampProperty, c);
-                });
+                    return await DeleteAsync(user, deletionTimestampProperty, c).ConfigureAwait(false);
+                }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@
                     }
                     try
                     {
-                        await c.SaveChangesAsync();
+                        await c.SaveChangesAsync().ConfigureAwait(false);
                         return true;
                     }
                     catch (Exception ex)
@@ -286,7 +286,7 @@
                         return false;
                     }
                 },
-                ctx);
+                ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@
         /// <returns>The base paged result.</returns>
         public async Task<BasePagedResult<TEntity>> GetBasePagedResultAsync(PagedRequest request, TContext ctx = null, IQueryable<TEntity> query = null, Expression<Func<TEntity, bool>> filter = null)
         {
-            return await ExecuteContextWrappedAsync(async c => await PagedResult<TEntity, TContext>.GetBaseResultAsync(request, c, query, filter, this), ctx);
+            return await ExecuteContextWrappedAsync(async c => await PagedResult<TEntity, TContext>.GetBaseResultAsync(request, c, query, filter, this), ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -372,7 +372,7 @@
                                 //query = properties.Where(property => property.PropertyType.IsClass || typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                                 //    .Aggregate(query, (current, property) => current.Include(property.Name).AsQueryable());
                             }
-                            return await query.ToListAsync();
+                            return await query.ToListAsync().ConfigureAwait(false);
                         }
                         catch (Exception ex)
                         {
@@ -381,7 +381,7 @@
                         return null;
                     },
                     ctx),
-                skipCache);
+                skipCache).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@
             IQueryable<TEntity> query = null,
             Expression<Func<TEntity, bool>> filter = null)
         {
-            return await ExecuteContextWrappedAsync(async c => await PagedResult<TEntity, TContext>.GetResultAsync(request, c, query, filter, this), ctx);
+            return await ExecuteContextWrappedAsync(async c => await PagedResult<TEntity, TContext>.GetResultAsync(request, c, query, filter, this).ConfigureAwait(false), ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -461,9 +461,9 @@
             return await ExecuteContextWrappedAsync(
                 async c =>
                 {
-                    return await GetEntitiesSet(c).AnyAsync(e => e.Id == id);
+                    return await GetEntitiesSet(c).AnyAsync(e => e.Id == id).ConfigureAwait(false);
                 },
-                ctx);
+                ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@
         /// <returns>The instance or <c>null</c> if no item was found.</returns>
         public async Task<TEntity> LoadAsync(long id, DbQuery<TEntity> baseQuery, TContext ctx = null)
         {
-            return await ExecuteContextWrappedAsync(async c => await baseQuery.SingleOrDefaultAsync(e => e.Id == id), ctx);
+            return await ExecuteContextWrappedAsync(async c => await baseQuery.SingleOrDefaultAsync(e => e.Id == id).ConfigureAwait(false), ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -565,7 +565,7 @@
             {
                 throw new InvalidOperationException("Can not load entities of this type because no KeyFindExpression is defined.");
             }
-            return await ExecuteContextWrappedAsync(async c => await baseQuery.SingleOrDefaultAsync(expr), ctx);
+            return await ExecuteContextWrappedAsync(async c => await baseQuery.SingleOrDefaultAsync(expr).ConfigureAwait(false), ctx).ConfigureAwait(false);
         }        
 
         /// <summary>
@@ -586,7 +586,7 @@
             {
                 throw new InvalidOperationException("Can not load entities of this type because no KeyFindExpression is defined.");
             }
-            return await ExecuteContextWrappedAsync(async c => await GetValidEntities(c).SingleOrDefaultAsync(expr), ctx);
+            return await ExecuteContextWrappedAsync(async c => await GetValidEntities(c).SingleOrDefaultAsync(expr).ConfigureAwait(false), ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -597,7 +597,7 @@
         /// <returns>The instance or <c>null</c> if no item was found.</returns>
         public async Task<TEntity> LoadAsync(long id, TContext ctx = null)
         {
-            return await Task.Run(async () => await ExecuteContextWrappedAsync(async c => await GetEntitiesSet(c).FindAsync(id), ctx));
+            return await Task.Run(async () => await ExecuteContextWrappedAsync(async c => await GetEntitiesSet(c).FindAsync(id).ConfigureAwait(false), ctx)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@
                     c.Entry(entity).State = EntityState.Modified;
                     try
                     {
-                        await c.SaveChangesAsync();
+                        await c.SaveChangesAsync().ConfigureAwait(false);
                         return true;
                     }
                     catch (Exception ex)
@@ -651,7 +651,7 @@
                         return false;
                     }
                 },
-                ctx);
+                ctx).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -726,7 +726,7 @@
             }
             try
             {
-                await func(ctx);
+                await func(ctx).ConfigureAwait(false);
             }
             catch (AggregateException aex)
             {
@@ -771,7 +771,7 @@
             var result = default(TResult);
             try
             {
-                result = await func(ctx);
+                result = await func(ctx).ConfigureAwait(false);
             }
             catch (AggregateException aex)
             {
@@ -858,7 +858,7 @@
         {
             if (skipCache)
             {
-                return await creationFunc();
+                return await creationFunc().ConfigureAwait(false);
             }
             var cache = MemoryCache.Default;
             if (cache.Contains(key))
@@ -867,7 +867,7 @@
                 Trace.TraceInformation("Cache hit on key {0}", key);
                 return (T)cache.Get(key);
             }
-            var result = await creationFunc();
+            var result = await creationFunc().ConfigureAwait(false);
             // ReSharper disable once CompareNonConstrainedGenericWithNull
             if (result != null)
             {

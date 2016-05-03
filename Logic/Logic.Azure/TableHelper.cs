@@ -62,7 +62,7 @@
         public async Task<IEnumerable<TTableItem>> GetEntriesAsync(CloudTable table, TimeSpan timeSlot)
         {
             var partitionKeyMin = "0" + DateTime.UtcNow.Subtract(timeSlot).Ticks;
-            return await GetEntriesAsync(table, partitionKeyMin);
+            return await GetEntriesAsync(table, partitionKeyMin).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@
                 stopWatch.Start();
                 try
                 {
-                    var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+                    var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken).ConfigureAwait(false);
                     stopWatch.Stop();
                     LastQueryTime = stopWatch.Elapsed;
                     QueryFinished?.Invoke(null, EventArgs.Empty);
@@ -141,7 +141,7 @@
                 }
                 try
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(intervalSeconds), cancellationToken);
+                    await Task.Delay(TimeSpan.FromSeconds(intervalSeconds), cancellationToken).ConfigureAwait(false);
                 }
                 catch (TaskCanceledException)
                 {

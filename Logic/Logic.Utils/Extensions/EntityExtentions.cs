@@ -72,7 +72,7 @@
         public static async Task<bool> CreateOrUpdateAsync<TEntity, TContext>(this TEntity entity, TContext ctx = null, bool checkForDoublettes = false) where TEntity : class, IEntity
             where TContext : DbContext
         {
-            return await Utils.Get<TEntity, TContext>().CreateOrUpdateAsync(entity, ctx, checkForDoublettes);
+            return await Utils.Get<TEntity, TContext>().CreateOrUpdateAsync(entity, ctx, checkForDoublettes).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@
             var sql = string.Format(CultureInfo.InvariantCulture, "DELETE FROM {0};", tableName);
             try
             {
-                return await ctx.Database.ExecuteSqlCommandAsync(sql);
+                return await ctx.Database.ExecuteSqlCommandAsync(sql).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -300,7 +300,7 @@
         /// <returns><c>true</c> if the operaton succeeds, otherwise <c>false</c>.</returns>
         public static async Task<bool> UpdateAsync<TEntity, TContext>(this TEntity entity, TContext ctx = null) where TEntity : class, IEntity where TContext : DbContext
         {
-            return await Utils.Get<TEntity, TContext>().UpdateAsync(entity, ctx);
+            return await Utils.Get<TEntity, TContext>().UpdateAsync(entity, ctx).ConfigureAwait(false);
         }
 
         #endregion

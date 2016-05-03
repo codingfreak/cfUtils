@@ -88,11 +88,11 @@
         /// <returns><c>true</c> if the message was added otherwise <c>false</c>.</returns>
         public static async Task<bool> AddQueueMessageAsync(string queueName, string messageContent, string accountConnectionString = null)
         {
-            var queue = await GetQueueAsync(queueName, accountConnectionString);
+            var queue = await GetQueueAsync(queueName, accountConnectionString).ConfigureAwait(false);
             var message = new CloudQueueMessage(messageContent);
             try
             {
-                await queue.AddMessageAsync(message);
+                await queue.AddMessageAsync(message).ConfigureAwait(false);
                 return true;
             }
             catch (Exception ex)
@@ -120,7 +120,7 @@
             var tasks = new List<Task>();
             do
             {
-                var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken);
+                var tableQueryResult = await table.ExecuteQuerySegmentedAsync(query, continuationToken).ConfigureAwait(false);
                 continuationToken = tableQueryResult.ContinuationToken;
                 var elements = tableQueryResult.OrderBy(ele => ele.PartitionKey).ToList();
                 while (tasks.Count == parallelity)
@@ -140,20 +140,20 @@
                                 {
                                     // we have to start the batch now because the current item will have a new 
                                     // partition key and batches are only allowed within the same partition key
-                                    await table.ExecuteBatchAsync(operations, raiseEvents);
+                                    await table.ExecuteBatchAsync(operations, raiseEvents).ConfigureAwait(false);
                                 }
                                 operations.Add(TableOperation.Delete(item));
                                 lastPartKey = item.PartitionKey;
                                 if (operations.Count == 100)
                                 {
                                     // take care that the maximum amount of items for a batch is used
-                                    await table.ExecuteBatchAsync(operations, raiseEvents);
+                                    await table.ExecuteBatchAsync(operations, raiseEvents).ConfigureAwait(false);
                                 }
                             }
                             if (operations.Any())
                             {
                                 // take care of the rest of the operations
-                                await table.ExecuteBatchAsync(operations, raiseEvents);
+                                await table.ExecuteBatchAsync(operations, raiseEvents).ConfigureAwait(false);
                             }
                         }));
             }
@@ -172,8 +172,8 @@
         /// <returns>The amount of items that where deleted.</returns>
         public static async Task<int> DeleteAllBlobsAsync(string containerName, string accountConnectionString = null)
         {
-            var container = await GetContainerAsync(containerName, accountConnectionString);
-            return await DeleteAllBlobsAsync(container);
+            var container = await GetContainerAsync(containerName, accountConnectionString).ConfigureAwait(false);
+            return await DeleteAllBlobsAsync(container).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -183,11 +183,11 @@
         /// <returns>The amount of items that where deleted.</returns>
         public static async Task<int> DeleteAllBlobsAsync(CloudBlobContainer container)
         {
-            var blobs = await ListBlockBlobsAsync(container);
+            var blobs = await ListBlockBlobsAsync(container).ConfigureAwait(false);
             var deletes = 0;
             foreach (var blob in blobs)
             {
-                await blob.DeleteAsync();
+                await blob.DeleteAsync().ConfigureAwait(false);
                 deletes++;
             }
             return deletes;
@@ -256,7 +256,7 @@
             }
             try
             {
-                await table.ExecuteBatchAsync(operations);
+                await table.ExecuteBatchAsync(operations).ConfigureAwait(false);
                 if (raiseEvents)
                 {
                     TableItemsRemoved?.Invoke(null, new AmountBasedEventArgs(operations.Count));
@@ -308,12 +308,12 @@
             var options = new BlobRequestOptions();
             try
             {
-                await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Container, options, null);
-                var permissions = await container.GetPermissionsAsync();
+                await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Container, options, null).ConfigureAwait(false);
+                var permissions = await container.GetPermissionsAsync().ConfigureAwait(false);
                 if (permissions.PublicAccess == BlobContainerPublicAccessType.Off)
                 {
                     permissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-                    await container.SetPermissionsAsync(permissions);
+                    await container.SetPermissionsAsync(permissions).ConfigureAwait(false);
                 }
             }
             catch (SocketException sockex)
@@ -335,16 +335,16 @@
         /// <returns>The message or <c>null</c> if no message could be retrieved.</returns>
         public static async Task<CloudQueueMessage> GetNextQueueMessageAsync(string queueName, string accountConnectionString = null, bool deleteMessage = true)
         {
-            var queue = await GetQueueAsync(queueName, accountConnectionString);
-            await queue.FetchAttributesAsync();
+            var queue = await GetQueueAsync(queueName, accountConnectionString).ConfigureAwait(false);
+            await queue.FetchAttributesAsync().ConfigureAwait(false);
             if (queue.ApproximateMessageCount <= 0)
             {
                 return null;
             }
-            var message = await queue.GetMessageAsync();
+            var message = await queue.GetMessageAsync().ConfigureAwait(false);
             if (deleteMessage)
             {
-                await queue.DeleteMessageAsync(message);
+                await queue.DeleteMessageAsync(message).ConfigureAwait(false);
             }
             return message;
         }
@@ -381,7 +381,7 @@
             }
             var queueClient = account.CreateCloudQueueClient();
             var queue = queueClient.GetQueueReference(queueName);
-            await queue.CreateIfNotExistsAsync();
+            await queue.CreateIfNotExistsAsync().ConfigureAwait(false);
             return queue;
         }
 
@@ -433,7 +433,7 @@
             var task = Task.Run(
                 async () =>
                 {
-                    result = await ListBlockBlobsAsync(containerName, accountConnectionString);
+                    result = await ListBlockBlobsAsync(containerName, accountConnectionString).ConfigureAwait(false);
                 });
             task.Wait();
             return result;
@@ -454,8 +454,8 @@
         /// <returns>The list if block blobs found inside the <paramref name="containerName"/>.</returns>
         public static async Task<IEnumerable<CloudBlockBlob>> ListBlockBlobsAsync(string containerName, string accountConnectionString = null)
         {
-            var container = await GetContainerAsync(containerName, accountConnectionString);
-            return await ListBlockBlobsAsync(container);
+            var container = await GetContainerAsync(containerName, accountConnectionString).ConfigureAwait(false);
+            return await ListBlockBlobsAsync(container).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@
                     {
                         try
                         {
-                            var newMessage = await GetNextQueueMessageAsync(queueName, accountConnectionString);
+                            var newMessage = await GetNextQueueMessageAsync(queueName, accountConnectionString).ConfigureAwait(false);
                             if (newMessage != null)
                             {
                                 OnMessageReceived(null, new CloudQueueMessageEventArgs(newMessage, queueName));
@@ -611,8 +611,8 @@
             string remoteFolder = null,
             string contentType = null)
         {
-            var container = await GetContainerAsync(containerName, accountConnectionString);
-            return await UploadFileAsync(container, localFileUri, remoteFileName, remoteFolder, contentType);
+            var container = await GetContainerAsync(containerName, accountConnectionString).ConfigureAwait(false);
+            return await UploadFileAsync(container, localFileUri, remoteFileName, remoteFolder, contentType).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -645,7 +645,7 @@
             {
                 newBlob.Properties.ContentType = contentType;
             }
-            await newBlob.UploadFromFileAsync(localFileUri, FileMode.Open);
+            await newBlob.UploadFromFileAsync(localFileUri).ConfigureAwait(false);
             return true;
         }
 
@@ -670,7 +670,7 @@
             var newBlob = container.GetBlockBlobReference(remoteFileName);
             newBlob.Properties.ContentType = image.GetMimeContentType();
             var bytes = image.GetByteArrayFromImage(image.RawFormat);
-            await newBlob.UploadFromByteArrayAsync(bytes, 0, bytes.Length);
+            await newBlob.UploadFromByteArrayAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
             return true;
         }
 
@@ -688,7 +688,7 @@
         /// <returns><c>true</c> if the upload succeeds otherwise <c>false</c>.</returns>
         public static async Task<bool> UploadToAzureAsync(this FileInfo file, string containerName, string accountConnectionString = null, string remoteFolder = null, string contentType = null)
         {
-            return await UploadFileAsync(containerName, file.FullName, accountConnectionString, file.Name, remoteFolder, contentType);
+            return await UploadFileAsync(containerName, file.FullName, accountConnectionString, file.Name, remoteFolder, contentType).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@
         /// <returns><c>true</c> if the upload succeeds otherwise <c>false</c>.</returns>
         public static async Task<bool> UploadToAzureAsync(this FileInfo file, CloudBlobContainer container, string remoteFolder = null, string contentType = null)
         {
-            return await UploadFileAsync(container, file.FullName, file.Name, remoteFolder, contentType);
+            return await UploadFileAsync(container, file.FullName, file.Name, remoteFolder, contentType).ConfigureAwait(false);
         }
 
         #endregion

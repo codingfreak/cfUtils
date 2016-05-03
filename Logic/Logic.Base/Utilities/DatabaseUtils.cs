@@ -62,7 +62,7 @@
                     CheckUtil.ThrowIfNull(() => commandToUse);
                     // ReSharper disable once PossibleNullReferenceException
                     commandToUse.CommandText = commandText;
-                    return await commandToUse.ExecuteNonQueryAsync();
+                    return await commandToUse.ExecuteNonQueryAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -135,7 +135,7 @@
             connection.ConnectionString = connectionString;
             try
             {
-                await connection.OpenAsync();
+                await connection.OpenAsync().ConfigureAwait(false);
                 return connection;
             }
             catch (Exception ex)
@@ -186,7 +186,7 @@
                     CheckUtil.ThrowIfNull(() => commandToUse);
                     // ReSharper disable once PossibleNullReferenceException
                     commandToUse.CommandText = commandText;
-                    return await commandToUse.ExecuteReaderAsync(behavior);
+                    return await commandToUse.ExecuteReaderAsync(behavior).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
@@ -237,7 +237,7 @@
                     CheckUtil.ThrowIfNull(() => commandToUse);
                     // ReSharper disable once PossibleNullReferenceException
                     commandToUse.CommandText = commandText;
-                    var result = await commandToUse.ExecuteScalarAsync();
+                    var result = await commandToUse.ExecuteScalarAsync().ConfigureAwait(false);
                     if (result == null)
                     {
                         return default(TResult);

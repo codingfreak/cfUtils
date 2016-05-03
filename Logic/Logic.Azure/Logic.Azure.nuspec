@@ -10,17 +10,17 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Updated package references.</releaseNotes>
+    <releaseNotes>ConfigureAwait implemented and updated package references.</releaseNotes>
     <tags>codingfreaks,Azure,.NET,C#,Storage,Queue</tags>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="WindowsAzure.Storage" version="6.2.0" />
+      <dependency id="WindowsAzure.Storage" version="7.0.0" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.2.1" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.6" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.8" />
     </dependencies>
   </metadata>
   <files>

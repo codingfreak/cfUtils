@@ -114,7 +114,7 @@
         /// <param name="filter">An optional filter expression.</param>        
         public async Task GenerateAsync(TContext ctx, IQueryable<TEntity> query = null, Expression<Func<TEntity, bool>> filter = null)
         {
-            await GenerateAsync(ctx, CancellationToken.None, query, filter);
+            await GenerateAsync(ctx, CancellationToken.None, query, filter).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@
                 CheckUtil.ThrowIfNull(() => Util);
                 query = Util.GetValidEntities(ctx, filter);
             }
-            CompleteItemsCount = await query.CountAsync(cancellationToken);
+            CompleteItemsCount = await query.CountAsync(cancellationToken).ConfigureAwait(false);
             if (Request.OrderByExpressions != null && Request.OrderByExpressions.Any())
             {
                 // we habe to cycle through each desired order-expression and build up our query-
@@ -163,7 +163,7 @@
             }
             // generate and return the result
             var itemsToSkip = Request.EntriesToSkip ?? (Request.PageToDeliver - 1) * Request.ItemsPerPage;
-            Items = await query.Skip(itemsToSkip).Take(Request.ItemsPerPage).ToListAsync(cancellationToken);
+            Items = await query.Skip(itemsToSkip).Take(Request.ItemsPerPage).ToListAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@
                     try
                     {
                         var result = new PagedResult<TEntity, TContext>(request, util);
-                        await result.GenerateAsync(ctx, query, filter);
+                        await result.GenerateAsync(ctx, query, filter).ConfigureAwait(false);
                         if (!completionSource.TrySetResult(result.ToBasePagedResult()))
                         {
                             completionSource.TrySetException(new InvalidOperationException("Could not retrieve result."));
@@ -247,7 +247,7 @@
                     try
                     {
                         var result = new PagedResult<TEntity, TContext>(request, util);
-                        await result.GenerateAsync(ctx, query, filter);
+                        await result.GenerateAsync(ctx, query, filter).ConfigureAwait(false);
                         if (!completionSource.TrySetResult(result))
                         {
                             completionSource.TrySetException(new InvalidOperationException("Could not retrieve result."));

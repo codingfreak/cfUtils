@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace codingfreaks.cfUtils.Logic.Wpf.MvvmLight
 {
+    using System.Diagnostics;
+
     using GalaSoft.MvvmLight;
 
     /// <summary>
@@ -28,6 +30,9 @@ namespace codingfreaks.cfUtils.Logic.Wpf.MvvmLight
             {
                 throw new ArgumentNullException(nameof(propertyName));
             }
+#if TRACE
+            Trace.WriteLine($"Property {propertyName} changed in view model.");
+#endif
             RaisePropertyChanged(propertyName);
             Broadcast(oldValue, newValue, propertyName);
         }

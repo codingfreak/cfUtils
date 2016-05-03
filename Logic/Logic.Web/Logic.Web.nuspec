@@ -14,7 +14,7 @@
     <releaseNotes>Updated package references.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <dependencies>
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.6" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.8" />      
       <dependency id="Microsoft.AspNet.WebApi.Core" version="5.2.3" />
       <dependency id="Newtonsoft.Json" version="8.0.2" />
     </dependencies>

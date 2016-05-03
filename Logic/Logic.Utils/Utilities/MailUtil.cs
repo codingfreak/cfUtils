@@ -195,7 +195,7 @@
                             client.Credentials = new NetworkCredential(settings.Username, settings.Password, settings.Domain ?? string.Empty);
                         }
                     }
-                    await client.SendMailAsync(messageToSend);
+                    await client.SendMailAsync(messageToSend).ConfigureAwait(false);
                 }
                 return true;
             }
