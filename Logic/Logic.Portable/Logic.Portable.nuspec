@@ -11,7 +11,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <releaseNotes>Added IList.Replace method.</releaseNotes>
-    <copyright>codingfreaks 2015-2016</copyright>    
+    <copyright>codingfreaks 2015-2016</copyright>
+    <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>
     <dependencies>
       <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
     </dependencies>

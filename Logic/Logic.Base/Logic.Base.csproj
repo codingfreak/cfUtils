@@ -99,6 +99,7 @@
     <Compile Include="Structures\BaseTransportModel.cs" />
     <Compile Include="Structures\ClaimBasedUser.cs" />
     <Compile Include="Structures\CommandlineArgumentInfo.cs" />
+    <Compile Include="Structures\CsvValidationError.cs" />
     <Compile Include="Structures\FtpFileInfo.cs" />
     <Compile Include="Structures\OrderByExpression.cs" />
     <Compile Include="Structures\PagedRequest.cs" />

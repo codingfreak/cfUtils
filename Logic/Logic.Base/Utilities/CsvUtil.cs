@@ -7,12 +7,92 @@
     using System.Linq;
     using System.Text;
 
+    using codingfreaks.cfUtils.Logic.Base.Structures;
+
     /// <summary>
     /// Provides logic for parsing and generating CSV-files.
     /// </summary>
     public static class CsvUtil
     {
         #region methods
+
+        /// <summary>
+        /// Converts a double-quoted value as a clean value.
+        /// </summary>
+        /// <param name="fileValue">The value potentially including double quotes.</param>
+        /// <returns>The value without double quotes.</returns>
+        public static string GetCleanedValue(string fileValue)
+        {
+            if (string.IsNullOrEmpty(fileValue))
+            {
+                return fileValue;
+            }
+            return fileValue.Replace('"', ' ').Trim();
+        }
+
+        /// <summary>
+        /// Checks a given <paramref name="fileUri" /> for CSV consistency.
+        /// </summary>
+        /// <param name="fileUri">The location of the CSV file.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <param name="containsHeaders"><c>true</c> if headers are present in the topmose line.</param>
+        /// <param name="separator">The char which seperates columns.</param>
+        /// <param name="breakOnFirstError"><c>true</c> if the logic should return immediately on any error.</param>
+        /// <returns>The list of errors found.</returns>
+        public static IEnumerable<CsvValidationError> GetCsvErrors(string fileUri, Encoding encoding, bool containsHeaders = false, char separator = ',', bool breakOnFirstError = true)
+        {
+            var result = new List<CsvValidationError>();
+            if (!File.Exists(fileUri))
+            {
+                throw new FileNotFoundException("Provided file not found.", fileUri);
+            }
+            string[] lines = null;
+            try
+            {
+                lines = File.ReadAllLines(fileUri, encoding);
+            }
+            catch (Exception ex)
+            {
+                result.Add(new CsvValidationError(0, ex.Message));
+                if (breakOnFirstError)
+                {
+                    return result;
+                }
+            }
+            if (lines == null || !lines.Any())
+            {
+                result.Add(new CsvValidationError(0, "No lines found."));
+                if (breakOnFirstError)
+                {
+                    return result;
+                }
+            }
+            var firstLine = lines[0].Split(separator);
+            if (!firstLine.Any())
+            {
+                result.Add(new CsvValidationError(1, "No fields found in first line using the separator."));
+                if (breakOnFirstError)
+                {
+                    return result;
+                }
+            }
+            var lineNo = 1;
+            foreach (var line in lines)
+            {
+                var countOk = line.Split(separator).Count() == firstLine.Count();
+                if (!countOk)
+                {
+                    TraceUtil.WriteTraceError("Line #{0}", lineNo);
+                    result.Add(new CsvValidationError(lineNo, "Invalid amount of lines in line."));
+                    if (breakOnFirstError)
+                    {
+                        return result;
+                    }
+                }
+                lineNo++;
+            }
+            return result;
+        }
 
         /// <summary>
         /// Checks if a given <paramref name="fileUri" /> can be interpreted as CSV without any errors.
@@ -36,40 +116,7 @@
         /// <returns><c>true</c> if the file is valid otherwise <c>false</c>.</returns>
         public static bool IsValidCsvFile(string fileUri, Encoding encoding, bool containsHeaders = false, char separator = ',')
         {
-            if (!File.Exists(fileUri))
-            {
-                throw new FileNotFoundException("Provided file not found.", fileUri);
-            }
-            string[] lines = null;
-            try
-            {
-                lines = File.ReadAllLines(fileUri, encoding);
-            }
-            catch
-            {
-            }
-            if (lines == null || !lines.Any())
-            {
-                return false;
-            }
-            var firstLine = lines[0].Split(separator);
-            if (!firstLine.Any())
-            {
-                return false;
-            }
-            var result = true;
-            var lineNo = 1;
-            foreach (var line in lines)
-            {
-                result &= line.Split(separator).Count() == firstLine.Count();
-                lineNo++;
-                if (!result)
-                {
-                    TraceUtil.WriteTraceError("Line #{0}", lineNo);
-                    break;
-                }
-            }
-            return result;
+            return !GetCsvErrors(fileUri, encoding, containsHeaders, separator).Any();
         }
 
         /// <summary>
@@ -152,20 +199,6 @@
                     fieldNames.Add(containsHeaders ? GetCleanedValue(firstLine[i - 1]) : i.ToString(CultureInfo.InvariantCulture));
                 });
             return ItemIterator(lines, fieldNames.ToArray(), containsHeaders, separator);
-        }
-
-        /// <summary>
-        /// Converts a double-quoted value as a clean value.
-        /// </summary>
-        /// <param name="fileValue">The value potentially including double quotes.</param>
-        /// <returns>The value without double quotes.</returns>
-        public static string GetCleanedValue(string fileValue)
-        {
-            if (string.IsNullOrEmpty(fileValue))
-            {
-                return fileValue;
-            }
-            return fileValue.Replace('"', ' ').Trim();
         }
 
         /// <summary>
