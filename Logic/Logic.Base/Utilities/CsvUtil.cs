@@ -61,12 +61,12 @@
             }
             if (lines == null || !lines.Any())
             {
+                // nothing was retrieved
                 result.Add(new CsvValidationError(0, "No lines found."));
-                if (breakOnFirstError)
-                {
-                    return result;
-                }
-            }
+                // return here in any case so that further lines are not hit!
+                return result;                
+            }            
+            // at least one line was retrieved
             var firstLine = lines[0].Split(separator);
             if (!firstLine.Any())
             {
@@ -90,7 +90,7 @@
                     }
                 }
                 lineNo++;
-            }
+            }            
             return result;
         }
 

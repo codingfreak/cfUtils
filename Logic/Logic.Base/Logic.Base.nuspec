@@ -10,7 +10,7 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Implemented new method GetCsvErrors in CsvUtil.</releaseNotes>
+    <releaseNotes>Corrected a possible NullReferenceException in GetCsvErrors in CsvUtil.</releaseNotes>
     <copyright>codingfreaks UG 2014-2016</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
