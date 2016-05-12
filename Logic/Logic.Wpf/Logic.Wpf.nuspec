@@ -11,7 +11,7 @@
     <summary>Contains extended classes and utilities useful for WPF projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <tags>codingfreaks,WPF,.NET,C#,Converter,MVVM,MvvmLight</tags>
-    <releaseNotes>ConfigureAwait implemented.</releaseNotes>
+    <releaseNotes>Removed tracing.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <dependencies>
       <dependency id="MvvmLightLibs" version="5.3.0" />      
