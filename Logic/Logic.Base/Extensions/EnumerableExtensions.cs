@@ -22,14 +22,14 @@ namespace codingfreaks.cfUtils.Logic.Base.Extensions
         /// <param name="list">IEnumerable to convert to a DataTable.</param>
         /// <param name="tableName">Name of the table.</param>
         /// <returns></returns>
-        private static DataTable ToDataTable<T>(this IEnumerable<T> list, string tableName)
+        public static DataTable ToDataTable<T>(this IEnumerable<T> list, string tableName)
         {
             var type = typeof(T);
             var propertyInfos = type.GetProperties();
             var table = new DataTable(tableName);
             foreach (var info in propertyInfos)
             {
-                table.Columns.Add(info.Name, info.PropertyType);
+                table.Columns.Add(info.Name, Nullable.GetUnderlyingType(info.PropertyType) != null ? typeof(object) : info.PropertyType);
             }
             foreach (var element in list)
             {

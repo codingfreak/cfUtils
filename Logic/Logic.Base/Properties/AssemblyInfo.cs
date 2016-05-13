@@ -2,5 +2,5 @@
 
 [assembly: AssemblyTitle("cfBaseUtils")]
 [assembly: AssemblyDescription("[codingfreaks] base utility library")]
-[assembly: AssemblyVersion("1.0.12.15")]
-[assembly: AssemblyFileVersion("1.0.12.15")]
+[assembly: AssemblyVersion("1.0.14.17")]
+[assembly: AssemblyFileVersion("1.0.14.17")]
