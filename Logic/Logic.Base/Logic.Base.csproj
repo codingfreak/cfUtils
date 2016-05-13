@@ -80,6 +80,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\_Shared\SharedAssemblyInfo.cs">
@@ -91,6 +92,7 @@
     <Compile Include="EventArguments\LoggerEventArgs.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
