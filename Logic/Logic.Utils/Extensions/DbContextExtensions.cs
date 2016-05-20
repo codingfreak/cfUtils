@@ -70,9 +70,9 @@
                             var tableName = table.MetadataProperties.Contains("Table") && table.MetadataProperties["Table"].Value != null
                                 ? table.MetadataProperties["Table"].Value.ToString()
                                 : table.Name;
-                            var tableSchema = table.MetadataProperties["Schema"].Value.ToString();
-                            return $"{opener}{tableSchema}{closer}.{opener}{tableName}{closer}";
-                        }).ToList();
+                            var tableSchema = table.MetadataProperties["Schema"].Value?.ToString();
+                            return string.IsNullOrEmpty(tableSchema) ? null : $"{opener}{tableSchema}{closer}.{opener}{tableName}{closer}";
+                        }).Where(e => e != null).ToList();
         }
 
         /// <summary>
