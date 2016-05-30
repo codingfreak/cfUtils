@@ -5,11 +5,16 @@
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
+
+    using Base.Extensions;
+
     using System.Linq;
     using System.Linq.Expressions;
     using System.Net.Sockets;
     using System.Threading;
     using System.Threading.Tasks;
+
+    using Base.Utilities;
 
     using Microsoft.Azure;
     using Microsoft.WindowsAzure.Storage;
@@ -19,10 +24,8 @@
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Queryable;
 
-    using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Base.Utilities;
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using Portable.Extensions;
+    using Portable.Utilities;
 
     /// <summary>
     /// Provides easy access to Azure storage accounts.
@@ -59,7 +62,7 @@
         #endregion
 
         /// <summary>
-        /// Occurs when <see cref="ClearAsync"/> removed a chunk of entries.
+        /// Occurs when <see cref="ClearAsync" /> removed a chunk of entries.
         /// </summary>
         public static event EventHandler<AmountBasedEventArgs> TableItemsRemoved;
 
@@ -77,13 +80,13 @@
         #region methods
 
         /// <summary>
-        /// Adds a new message with <paramref name="messageContent"/> to a <paramref name="queueName"/>.
+        /// Adds a new message with <paramref name="messageContent" /> to a <paramref name="queueName" />.
         /// </summary>
         /// <param name="queueName">The name of the queue.</param>
         /// <param name="messageContent">The content to pass to the queue.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <returns><c>true</c> if the message was added otherwise <c>false</c>.</returns>
         public static async Task<bool> AddQueueMessageAsync(string queueName, string messageContent, string accountConnectionString = null)
@@ -107,7 +110,10 @@
         /// </summary>
         /// <param name="table">The table to clear.</param>
         /// <param name="parallelity">The amount of threads to use in parallel</param>
-        /// <param name="raiseEvents">If <c>true</c> the <see cref="TableItemsRemoved"/> event will be raised regulary to indicate progress.</param>        
+        /// <param name="raiseEvents">
+        /// If <c>true</c> the <see cref="TableItemsRemoved" /> event will be raised regulary to indicate
+        /// progress.
+        /// </param>
         public static async Task ClearAsync(this CloudTable table, int parallelity = 0, bool raiseEvents = true)
         {
             var query = new TableQuery<WadLogEntity>();
@@ -166,8 +172,8 @@
         /// </summary>
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <returns>The amount of items that where deleted.</returns>
         public static async Task<int> DeleteAllBlobsAsync(string containerName, string accountConnectionString = null)
@@ -185,7 +191,7 @@
         {
             var blobs = await ListBlockBlobsAsync(container).ConfigureAwait(false);
             var deletes = 0;
-            foreach (var blob in blobs)
+            foreach (var blob in blobs.Where(b => b is CloudBlockBlob).OfType<CloudBlockBlob>())
             {
                 await blob.DeleteAsync().ConfigureAwait(false);
                 deletes++;
@@ -194,7 +200,7 @@
         }
 
         /// <summary>
-        /// Extends <see cref="CloudTable"/> to enable batched deleting of all entries in it.
+        /// Extends <see cref="CloudTable" /> to enable batched deleting of all entries in it.
         /// </summary>
         /// <param name="table">The Cloud Table where to delete all entries.</param>
         /// <param name="filter">A filter for selecting the entities.</param>
@@ -204,9 +210,9 @@
         }
 
         /// <summary>
-        /// Extends <see cref="CloudTable"/> to enable batched deleting of all entries in it.
+        /// Extends <see cref="CloudTable" /> to enable batched deleting of all entries in it.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the entities in the <paramref name="table"/>.</typeparam>
+        /// <typeparam name="TEntity">The type of the entities in the <paramref name="table" />.</typeparam>
         /// <param name="table">The Cloud Table where to delete all entries.</param>
         /// <param name="filter">A filter for selecting the entities.</param>
         public static void DeleteAllEntitiesInBatches<TEntity>(this CloudTable table, Expression<Func<TEntity, bool>> filter) where TEntity : ITableEntity, new()
@@ -239,15 +245,18 @@
         }
 
         /// <summary>
-        /// Executes a batch operation on a Azure Storage table securely and raises the <see cref="TableItemsRemoved"/> event.
+        /// Executes a batch operation on a Azure Storage table securely and raises the <see cref="TableItemsRemoved" /> event.
         /// </summary>
         /// <remarks>
-        /// Be ware to supply only operations that are working on the same partition key. Otherwise an exception will occur in 
+        /// Be ware to supply only operations that are working on the same partition key. Otherwise an exception will occur in
         /// Azure Storage.
         /// </remarks>
         /// <param name="table">The table on which to execute the batch.</param>
         /// <param name="operations">The batch containing the operations.</param>
-        /// <param name="raiseEvents">If <c>true</c> the <see cref="TableItemsRemoved"/> event will be raised if the btach completed.</param>           
+        /// <param name="raiseEvents">
+        /// If <c>true</c> the <see cref="TableItemsRemoved" /> event will be raised if the btach
+        /// completed.
+        /// </param>
         public static async Task ExecuteBatchAsync(this CloudTable table, TableBatchOperation operations, bool raiseEvents)
         {
             if (!operations.Any())
@@ -270,16 +279,16 @@
         }
 
         /// <summary>
-        /// Retrieves a reference to a blob container referenced by the <paramref name="containerName"/>.
+        /// Retrieves a reference to a blob container referenced by the <paramref name="containerName" />.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="accountConnectionString"/> is null or empty this code assumes that the calling
-        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey"/>.
+        /// If <paramref name="accountConnectionString" /> is null or empty this code assumes that the calling
+        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey" />.
         /// </remarks>
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <returns>The ready-to-use container.</returns>
         public static async Task<CloudBlobContainer> GetContainerAsync(string containerName, string accountConnectionString = null)
@@ -324,12 +333,37 @@
         }
 
         /// <summary>
+        /// Retrieves all elements of a given <paramref name="container" /> and supports recursive calls.
+        /// </summary>
+        /// <param name="container">The storage container to use.</param>
+        /// <param name="directory">The directory in recursive calls to start with.</param>
+        /// <param name="recursive"><c>true</c> if subfolders should be searched too.</param>
+        /// <returns>The list of items.</returns>
+        public static async Task<IEnumerable<AzureBlobInfo>> GetElementsAsync(CloudBlobContainer container, CloudBlobDirectory directory, bool recursive)
+        {
+            var blobs = directory?.ListBlobs().ToList() ?? container.ListBlobs(null, false, BlobListingDetails.Metadata).ToList();
+            var files = blobs.Where(b => b is CloudBlockBlob).OfType<CloudBlockBlob>().ToList();
+            var result = files.Select(AzureBlobInfo.Create).ToList();
+            if (!recursive)
+            {
+                return result;
+            }
+            var folders = blobs.Where(b => b is CloudBlobDirectory).OfType<CloudBlobDirectory>().ToList();
+            foreach (var folder in folders)
+            {
+                var inner = await GetElementsAsync(container, folder, true).ConfigureAwait(false);
+                result.AddRange(inner);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Retrieves the next available message from a Azure storage queue.
         /// </summary>
         /// <param name="queueName">The name of the queue in the cloud.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <param name="deleteMessage">Indicates whether the message should be deleted after retrieving it.</param>
         /// <returns>The message or <c>null</c> if no message could be retrieved.</returns>
@@ -354,8 +388,8 @@
         /// </summary>
         /// <param name="queueName">The name of the queue.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <returns>The queue or <c>null</c> if no queue was found.</returns>
         public static async Task<CloudQueue> GetQueueAsync(string queueName, string accountConnectionString = null)
@@ -390,8 +424,8 @@
         /// </summary>
         /// <param name="tableName">The name of the table.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <returns></returns>
         public static CloudTable GetTableReference(string tableName, string accountConnectionString = null)
@@ -415,62 +449,65 @@
         }
 
         /// <summary>
-        /// Retrieves a list of all block-blobs inside the <paramref name="containerName"/>.
+        /// Retrieves a list of all block-blobs inside the <paramref name="containerName" />.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="accountConnectionString"/> is null or empty this code assumes that the calling
-        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey"/>.
+        /// If <paramref name="accountConnectionString" /> is null or empty this code assumes that the calling
+        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey" />.
         /// </remarks>
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
-        /// <returns>The list if block blobs found inside the <paramref name="containerName"/>.</returns>
-        public static IEnumerable<CloudBlockBlob> ListBlockBlobs(string containerName, string accountConnectionString = null)
+        /// <param name="folderName">An optional sub-folder-name.</param>
+        /// <returns>The list if block blobs found inside the <paramref name="containerName" />.</returns>
+        public static IEnumerable<IListBlobItem> ListBlockBlobs(string containerName, string accountConnectionString = null, string folderName = null)
         {
-            IEnumerable<CloudBlockBlob> result = null;
+            IEnumerable<IListBlobItem> result = null;
             var task = Task.Run(
                 async () =>
                 {
-                    result = await ListBlockBlobsAsync(containerName, accountConnectionString).ConfigureAwait(false);
+                    result = await ListBlockBlobsAsync(containerName, accountConnectionString, folderName).ConfigureAwait(false);
                 });
             task.Wait();
             return result;
         }
 
         /// <summary>
-        /// Retrieves a list of all block-blobs inside the <paramref name="containerName"/>.
+        /// Retrieves a list of all block-blobs inside the <paramref name="containerName" />.
         /// </summary>
         /// <remarks>
-        /// If <paramref name="accountConnectionString"/> is null or empty this code assumes that the calling
-        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey"/>.
+        /// If <paramref name="accountConnectionString" /> is null or empty this code assumes that the calling
+        /// assembly is defining an app.config App-setting named <see cref="StorageConnectionStringKey" />.
         /// </remarks>
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
-        /// <returns>The list if block blobs found inside the <paramref name="containerName"/>.</returns>
-        public static async Task<IEnumerable<CloudBlockBlob>> ListBlockBlobsAsync(string containerName, string accountConnectionString = null)
+        /// <param name="folderName">An optional sub-folder-name.</param>
+        /// <returns>The list if block blobs found inside the <paramref name="containerName" />.</returns>
+        public static async Task<IEnumerable<IListBlobItem>> ListBlockBlobsAsync(string containerName, string accountConnectionString = null, string folderName = null)
         {
             var container = await GetContainerAsync(containerName, accountConnectionString).ConfigureAwait(false);
             return await ListBlockBlobsAsync(container).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieves a list of all block-blobs inside the <paramref name="container"/>.
+        /// Retrieves a list of all block-blobs inside the <paramref name="container" />.
         /// </summary>
         /// <param name="container">The storage container to use.</param>
-        /// <returns>The list if block blobs found inside the <paramref name="container"/>.</returns>
-        public static Task<IEnumerable<CloudBlockBlob>> ListBlockBlobsAsync(CloudBlobContainer container)
+        /// <returns>The list if block blobs found inside the <paramref name="container" />.</returns>
+        public static Task<IEnumerable<IListBlobItem>> ListBlockBlobsAsync(CloudBlobContainer container)
         {
-            return Task.Run(() => container.ListBlobs().OfType<CloudBlockBlob>());
+            return Task.Run(() => container.ListBlobs());
         }
 
         /// <summary>
-        /// Performs the <paramref name="action"/> on a <paramref name="table"/> filtered by <paramref name="filter"/> for <see cref="DynamicTableEntity"/>.
-        /// </summary>        
+        /// Performs the <paramref name="action" /> on a <paramref name="table" /> filtered by <paramref name="filter" /> for
+        /// <see cref="DynamicTableEntity" />.
+        /// </summary>
         /// <param name="table">The cloud table.</param>
         /// <param name="action">The action to perform on the entities.</param>
         /// <param name="filter">A filter for selecting the entities.</param>
@@ -480,9 +517,9 @@
         }
 
         /// <summary>
-        /// Performs the <paramref name="action"/> on a <paramref name="table"/> filtered by <paramref name="filter"/>.
+        /// Performs the <paramref name="action" /> on a <paramref name="table" /> filtered by <paramref name="filter" />.
         /// </summary>
-        /// <typeparam name="TEntity">The type of the entities in the <paramref name="table"/>.</typeparam>
+        /// <typeparam name="TEntity">The type of the entities in the <paramref name="table" />.</typeparam>
         /// <param name="table">The cloud table.</param>
         /// <param name="action">The action to perform on the entities.</param>
         /// <param name="filter">A filter for selecting the entities.</param>
@@ -505,7 +542,8 @@
         }
 
         /// <summary>
-        /// Allows to safely try to create a <paramref name="table"/> in the cloud and respects the fact that Azure will block creation after
+        /// Allows to safely try to create a <paramref name="table" /> in the cloud and respects the fact that Azure will block
+        /// creation after
         /// deleting a table for an amount of time.
         /// </summary>
         /// <param name="table">The cloud table to create.</param>
@@ -545,12 +583,12 @@
         }
 
         /// <summary>
-        /// Starts watching of a queue with a <paramref name="queueName"/>.
+        /// Starts watching of a queue with a <paramref name="queueName" />.
         /// </summary>
         /// <param name="queueName">The name of the Azure storage queue.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         public static void StartQueueWatcher(string queueName, string accountConnectionString = null)
         {
@@ -596,8 +634,8 @@
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="localFileUri">The path to the local file.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <param name="remoteFileName">The name the file should have in the storage container.</param>
         /// <param name="remoteFolder">A folder name to use or create in the storage container.</param>
@@ -680,8 +718,8 @@
         /// <param name="containerName">The name of the container inside the storage account.</param>
         /// <param name="file">The extended FileInfo instance.</param>
         /// <param name="accountConnectionString">
-        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for 
-        /// an app-setting defined in <see cref="StorageConnectionStringKey"/>.
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
         /// </param>
         /// <param name="remoteFolder">A folder name to use or create in the storage container.</param>
         /// <param name="contentType">An optional content-type in MIME format to set for the new BLOB.</param>

@@ -81,13 +81,16 @@
                 }
                 // Delete local file
                 File.Delete(fileData.LocalFileName);
+                DateTimeOffset modified;
+                var modifiedOk = DateTimeOffset.TryParse(blob.Metadata["CbModifiedTime"], out modified);
                 AzureBlobs.Add(
                     new AzureBlobInfo
                     {
                         ContentType = blob.Properties.ContentType,
                         Name = blob.Name,
                         Size = blob.Properties.Length,
-                        Location = blob.Uri.AbsoluteUri
+                        Location = blob.Uri.AbsoluteUri,
+                        ModifiedTime = modifiedOk ? modified : default(DateTimeOffset?)                        
                     });
             }
 

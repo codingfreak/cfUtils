@@ -1,15 +1,14 @@
 ﻿namespace codingfreaks.cfUtils.Ui.TestConsole
 {
+    using Logic.Azure;
+    using Logic.Base.Utilities;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
-    using codingfreaks.cfUtils.Logic.Azure;
-
     using System.Linq;
-    using System.Threading;
-
-    using codingfreaks.cfUtils.Logic.Tests;
-    using codingfreaks.cfUtils.Logic.Utils.Utilities;
+    using System.Runtime.Remoting.Messaging;
 
     class Program
     {
@@ -17,47 +16,22 @@
 
         static void Main(string[] args)
         {
-            Utils.Init(null, new ContextResolver());
-            //TestAzureTableMonitoring();
-            TestClearAzureTable();
+            TestStorageSync();
             Console.WriteLine("Fertig");
             Console.ReadKey();
         }
 
-        private static void TestAzureTableMonitoring()
+        private static void TestStorageSync()
         {
-            var table = StorageHelper.GetTableReference(
-                "WADLogsTable",
-                "DefaultEndpointsProtocol=https;AccountName=cybertradingshared;AccountKey=TSVajlX7b2m7xISNQqx2DrpIjsFR2YpghKJGLkCxk7HvvB3YCpGjpEQwGpqC+I45uC3q+YkrubEsMtxpN+kb/Q==");
-            var helper = new TableHelper<WadLogEntity>();
-            helper.MonitoringReceivedNewEntries += (s, e) =>
+            var container = StorageHelper.GetContainerAsync(ConfigurationUtil.Get<string>("CloudContainer")).Result;
+            var elements = StorageHelper.GetElementsAsync(container, null, true).Result;
+            foreach(var ele in elements)
             {
-                e.Entries.ToList().ForEach(ent => Console.WriteLine("{0} | {1}", ent.PreciseTimeStamp, ent.MessageCleaned));
-            };
-            helper.StartMonitoringTable(table, 5, TimeSpan.FromDays(2).TotalSeconds);
-            Console.ReadKey();
-            helper.StopMonitoringTable();
+                Console.WriteLine("{0} {1}", ele.DirectoryPath, ele.Name);                
+            }
         }
 
-        private static void TestClearAzureTable()
-        {
-            var table = StorageHelper.GetTableReference(
-                "WADLogsTable",
-                "DefaultEndpointsProtocol=https;AccountName=cybertradingshared;AccountKey=TSVajlX7b2m7xISNQqx2DrpIjsFR2YpghKJGLkCxk7HvvB3YCpGjpEQwGpqC+I45uC3q+YkrubEsMtxpN+kb/Q==");
-            var removed = 0L;        
-            var timer = new Stopwatch();              
-            StorageHelper.TableItemsRemoved += (s, e) =>
-            {
-                removed += e.Amount;
-                Console.SetCursorPosition(0,0);
-                Console.Write("{0}                                     ", removed);
-                Console.SetCursorPosition(0, 1);
-                Console.Write("{0}                                     ", removed / timer.Elapsed.TotalSeconds);
-            };
-            timer.Start();
-            table.ClearAsync().Wait();
-            timer.Stop();
-        }
+       
 
         #endregion
     }

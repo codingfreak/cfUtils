@@ -111,28 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Logic\Logic.Azure\Logic.Azure.csproj">
-      <Project>{9213F9E3-2A7E-4890-8A3C-BC91ACE4D235}</Project>
+      <Project>{9213f9e3-2a7e-4890-8a3c-bc91ace4d235}</Project>
       <Name>Logic.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logic\Logic.Base\Logic.Base.csproj">
-      <Project>{3c63b977-7acd-4a7b-b196-10a815d4866d}</Project>
+      <Project>{3C63B977-7ACD-4A7B-B196-10A815D4866D}</Project>
       <Name>Logic.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
-      <Project>{38b4cddf-5457-441a-84d0-3826f5d0e1aa}</Project>
-      <Name>Logic.Portable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Screenshot\Logic.Screenshot.csproj">
-      <Project>{C7B34736-E58D-4B6E-9C46-9E77C78B6F84}</Project>
-      <Name>Logic.Screenshot</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Tests\Logic.Tests.csproj">
-      <Project>{8CE28847-7194-499B-B3E1-8691427F0B6C}</Project>
-      <Name>Logic.Tests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Utils\Logic.Utils.csproj">
-      <Project>{88F51888-A010-41E2-9BFA-3D612B38F3AF}</Project>
-      <Name>Logic.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
