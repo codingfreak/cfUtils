@@ -333,6 +333,22 @@
         }
 
         /// <summary>
+        /// Retrieves all elements of a given <paramref name="containerName" /> and supports recursive calls.
+        /// </summary>
+        /// <param name="containerName">The name of the container inside the storage account.</param>
+        /// <param name="accountConnectionString">
+        /// The connection string to connect to Azure or <c>null</c> if logic should search in configuration for
+        /// an app-setting defined in <see cref="StorageConnectionStringKey" />.
+        /// </param>
+        /// <param name="recursive"><c>true</c> if subfolders should be searched too.</param>
+        /// <returns>The list of items.</returns>
+        public static async Task<IEnumerable<AzureBlobInfo>> GetElementsAsync(string containerName, string accountConnectionString = null, bool recursive = false)
+        {
+            var container = await GetContainerAsync(containerName, accountConnectionString).ConfigureAwait(false);
+            return await GetElementsAsync(container, null, recursive);
+        }
+
+        /// <summary>
         /// Retrieves all elements of a given <paramref name="container" /> and supports recursive calls.
         /// </summary>
         /// <param name="container">The storage container to use.</param>
