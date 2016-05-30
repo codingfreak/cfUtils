@@ -30,6 +30,7 @@
                 }
                 return new AzureBlobInfo
                 {
+                    BlobElement = file,
                     ContentType = file.Properties.ContentType,
                     Name = file.Name,
                     Size = file.Properties.Length,
@@ -43,7 +44,7 @@
                 return null;
             }
             return new AzureBlobInfo
-            {
+            {                
                 Name = folder.Prefix,
                 Location = folder.Uri.AbsoluteUri
             };
@@ -73,6 +74,11 @@
                 return Name.Substring(0, pos);
             }
         }
+
+        /// <summary>
+        /// The BLOB itself.
+        /// </summary>
+        public CloudBlob BlobElement { get; set; }
 
         /// <summary>
         /// Indicates whether this is a folder.
