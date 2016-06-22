@@ -2,5 +2,5 @@
 
 [assembly: AssemblyTitle("cfPortableUtils")]
 [assembly: AssemblyDescription("[codingfreaks] portable utility library")]
-[assembly: AssemblyVersion("1.0.11.28")]
-[assembly: AssemblyFileVersion("1.0.11.28")]
+[assembly: AssemblyVersion("1.0.12.29")]
+[assembly: AssemblyFileVersion("1.0.12.29")]

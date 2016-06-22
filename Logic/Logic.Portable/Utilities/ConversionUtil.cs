@@ -12,7 +12,7 @@
         #region methods
 
         /// <summary>
-        /// Converts meters to m or ft depending on the <paramref name="localeId"/>.
+        /// Converts meters to m or ft depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// Converts meters to m or ft depending on the <paramref name="localeId"/>.
+        /// Converts meters to m or ft depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
@@ -34,9 +34,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct altitude unit text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct altitude unit text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetAltitudeUnit(string localeId)
         {
@@ -44,7 +44,7 @@
         }
 
         /// <summary>
-        /// Converts meters to km or miles depending on the <paramref name="localeId"/>.
+        /// Converts meters to km or miles depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
@@ -55,7 +55,7 @@
         }
 
         /// <summary>
-        /// Converts meters to km or miles depending on the <paramref name="localeId"/>.
+        /// Converts meters to km or miles depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
@@ -66,9 +66,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct distance unit text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct distance unit text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetDistanceUnit(string localeId)
         {
@@ -76,8 +76,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetAltitude(string,int)"/> and <see cref="GetAltitudeUnit"/> and merges the results to a completely 
-        /// formatted altitude depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetAltitude(string,int)" /> and <see cref="GetAltitudeUnit" /> and merges the results to a completely
+        /// formatted altitude depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
@@ -88,8 +88,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetAltitude(string,int)"/> and <see cref="GetAltitudeUnit"/> and merges the results to a completely 
-        /// formatted altitude depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetAltitude(string,int)" /> and <see cref="GetAltitudeUnit" /> and merges the results to a completely
+        /// formatted altitude depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
@@ -100,29 +100,59 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetDistance(string,int)"/> and <see cref="GetDistanceUnit"/> and merges the results to a completely 
-        /// formatted distance depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetDistance(string,int)" /> and <see cref="GetDistanceUnit" /> and merges the results to a completely
+        /// formatted distance depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
-        /// <param name="enforceBigUnit">If set to <c>true</c>, no automatic switch between small and big distances will be applied.</param>
+        /// <param name="enforceBigUnit">
+        /// If set to <c>true</c>, no automatic switch between small and big distances will be
+        /// applied.
+        /// </param>
         /// <param name="decimalPlaces">The amount of places after the ','.</param>
         /// <returns>The formatted distance-text.</returns>
-        public static string GetFormattedDistance(string localeId, int meters, bool enforceBigUnit = false, int decimalPlaces = 2)
+        public static string GetFormattedDistance(string localeId, int meters, bool enforceBigUnit, int decimalPlaces)
         {
             return GetFormattedDistance(localeId, (double)meters, enforceBigUnit, decimalPlaces);
         }
 
         /// <summary>
-        /// Calls <see cref="GetDistance(string,int)"/> and <see cref="GetDistanceUnit"/> and merges the results to a completely 
-        /// formatted distance depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetDistance(string,int)" /> and <see cref="GetDistanceUnit" /> and merges the results to a completely
+        /// formatted distance depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
-        /// <param name="enforceBigUnit">If set to <c>true</c>, no automatic switch between small and big distances will be applied.</param>
+        /// <returns>The formatted distance-text.</returns>
+        public static string GetFormattedDistance(string localeId, int meters)
+        {
+            return GetFormattedDistance(localeId, (double)meters);
+        }
+
+        /// <summary>
+        /// Calls <see cref="GetDistance(string,int)" /> and <see cref="GetDistanceUnit" /> and merges the results to a completely
+        /// formatted distance depending on the given <paramref name="localeId" />.
+        /// </summary>
+        /// <param name="localeId">The locale ID.</param>
+        /// <param name="meters">The amount of distance.</param>
+        /// <returns>The formatted distance-text.</returns>
+        public static string GetFormattedDistance(string localeId, double meters)
+        {
+            return GetFormattedDistance(localeId, meters, false, 2);
+        }
+
+        /// <summary>
+        /// Calls <see cref="GetDistance(string,int)" /> and <see cref="GetDistanceUnit" /> and merges the results to a completely
+        /// formatted distance depending on the given <paramref name="localeId" />.
+        /// </summary>
+        /// <param name="localeId">The locale ID.</param>
+        /// <param name="meters">The amount of distance.</param>
+        /// <param name="enforceBigUnit">
+        /// If set to <c>true</c>, no automatic switch between small and big distances will be
+        /// applied.
+        /// </param>
         /// <param name="decimalPlaces">The amount of places after the ','.</param>
         /// <returns>The formatted distance-text.</returns>
-        public static string GetFormattedDistance(string localeId, double meters, bool enforceBigUnit = false, int decimalPlaces = 2)
+        public static string GetFormattedDistance(string localeId, double meters, bool enforceBigUnit, int decimalPlaces)
         {
             var distance = GetDistance(localeId, meters);
             var unit = GetDistanceUnit(localeId);
@@ -148,8 +178,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetHeight(string,int)"/> and <see cref="GetHeightUnit"/> and merges the results to a completely 
-        /// formatted height depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetHeight(string,int)" /> and <see cref="GetHeightUnit" /> and merges the results to a completely
+        /// formatted height depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="centiMeters">The amount of height.</param>
@@ -160,8 +190,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetSpeed(string,int)"/> and <see cref="GetSpeedUnit"/> and merges the results to a completely 
-        /// formatted speed depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetSpeed(string,int)" /> and <see cref="GetSpeedUnit" /> and merges the results to a completely
+        /// formatted speed depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
@@ -172,8 +202,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetSpeed(string,int)"/> and <see cref="GetSpeedUnit"/> and merges the results to a completely 
-        /// formatted speed depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetSpeed(string,int)" /> and <see cref="GetSpeedUnit" /> and merges the results to a completely
+        /// formatted speed depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
@@ -184,8 +214,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetSpeed(string,int)"/> and <see cref="GetSpeedUnit"/> and merges the results to a completely 
-        /// formatted speed depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetSpeed(string,int)" /> and <see cref="GetSpeedUnit" /> and merges the results to a completely
+        /// formatted speed depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
@@ -196,7 +226,7 @@
         }
 
         /// <summary>
-        /// Retrieves a timespan formatted in a given <paramref name="localeId"/>.
+        /// Retrieves a timespan formatted in a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="value">The timepart.</param>
@@ -207,8 +237,8 @@
         }
 
         /// <summary>
-        /// Calls <see cref="GetWeight(string,int)"/> and <see cref="GetWeightUnit"/> and merges the results to a completely 
-        /// formatted weight depending on the given <paramref name="localeId"/>.
+        /// Calls <see cref="GetWeight(string,int)" /> and <see cref="GetWeightUnit" /> and merges the results to a completely
+        /// formatted weight depending on the given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="kiloGrams">The amount of weight.</param>
@@ -219,7 +249,7 @@
         }
 
         /// <summary>
-        /// Converts centimeters to cm or inch depending on the <paramref name="localeId"/>.
+        /// Converts centimeters to cm or inch depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="centiMeters">The amount of height.</param>
@@ -230,9 +260,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct height unit text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct height unit text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetHeightUnit(string localeId)
         {
@@ -251,7 +281,7 @@
         }
 
         /// <summary>
-        /// Converts meters to meters or yards depending on the <paramref name="localeId"/>.
+        /// Converts meters to meters or yards depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
@@ -262,7 +292,7 @@
         }
 
         /// <summary>
-        /// Converts meters to km or yards depending on the <paramref name="localeId"/>.
+        /// Converts meters to km or yards depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
@@ -273,9 +303,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct distance unit for small distances text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct distance unit for small distances text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetSmallDistanceUnit(string localeId)
         {
@@ -430,7 +460,7 @@
         }
 
         /// <summary>
-        /// Converts meters/s to km/h or miles/h depending on the <paramref name="localeId"/>.
+        /// Converts meters/s to km/h or miles/h depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
@@ -447,7 +477,7 @@
         }
 
         /// <summary>
-        /// Converts meters/s to km/h or miles/h depending on the <paramref name="localeId"/>.
+        /// Converts meters/s to km/h or miles/h depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
@@ -462,9 +492,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct speed unit text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct speed unit text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetSpeedUnit(string localeId)
         {
@@ -472,7 +502,7 @@
         }
 
         /// <summary>
-        /// Converts kilograms to kg or pound depending on the <paramref name="localeId"/>.
+        /// Converts kilograms to kg or pound depending on the <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="kiloGrams">The amount of weight.</param>
@@ -483,9 +513,9 @@
         }
 
         /// <summary>
-        /// Retrieves the correct weight unit text for a given <paramref name="localeId"/>.
+        /// Retrieves the correct weight unit text for a given <paramref name="localeId" />.
         /// </summary>
-        /// <param name="localeId">The locale ID.</param>        
+        /// <param name="localeId">The locale ID.</param>
         /// <returns>The correkt unit.</returns>
         public static string GetWeightUnit(string localeId)
         {
@@ -493,7 +523,7 @@
         }
 
         /// <summary>
-        /// Retrieves either the <see cref="RegionInfo"/> for <paramref name="localeId"/>.
+        /// Retrieves either the <see cref="RegionInfo" /> for <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The specific culture ID in the form xx-XX.</param>
         /// <exception cref="CultureNotFoundException"></exception>
