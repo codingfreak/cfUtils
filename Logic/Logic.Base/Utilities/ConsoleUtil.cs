@@ -5,7 +5,7 @@
     using System.Reflection;
     using System.Text;
 
-    using codingfreaks.cfUtils.Logic.Base.Structures;
+    using Structures;
 
     /// <summary>
     /// Provides helpers methods for using the console.
@@ -40,6 +40,112 @@
         }
 
         /// <summary>
+        /// Is used to inform the caller on error and give him help.
+        /// </summary>
+        /// <param name="errorMessage">The message to display to the user.</param>
+        /// <param name="appInfo">Metadata on the calling application.</param>
+        public static void PrintArgumentError(ApplicationInfo appInfo, string errorMessage)
+        {
+            WriteLine(errorMessage, ConsoleColor.Red);
+            Console.WriteLine();
+            PrintShortArgumentHelp(appInfo);
+        }
+
+        /// <summary>
+        /// Writes a text to the console and uses a specified foreground-color.
+        /// </summary>
+        /// <param name="text">The text to print to the console.</param>
+        /// <param name="color">The color to use as the text color.</param>
+        [Obsolete("Use WriteLine instead.")]
+        public static void PrintColoredLine(string text, ConsoleColor color)
+        {
+            WriteLine(text, color);
+        }
+
+        /// <summary>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
+        /// the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        [Obsolete("Use WriteLine instead.")]
+        public static void PrintConsoleLine(char charToPrint, int lineLength)
+        {
+            WriteLine(charToPrint, lineLength);
+        }
+
+        /// <summary>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
+        /// the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        /// <param name="firstAndLastChar">The char at the beginning and end of the line.</param>
+        [Obsolete("Use WriteLine instead.")]
+        public static void PrintConsoleLine(char charToPrint, int lineLength, char firstAndLastChar)
+        {
+            WriteLine(charToPrint, lineLength, firstAndLastChar);
+        }
+
+        /// <summary>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" />
+        /// and a specific color to the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        /// <param name="color">The color to use</param>
+        [Obsolete("Use WriteLine instead.")]
+        public static void PrintConsoleLine(char charToPrint, int lineLength, ConsoleColor color)
+        {
+            WriteLine(charToPrint, lineLength, color);
+        }
+
+        /// <summary>
+        /// Writes a given text to the console. The text is encapsulated with a special char at the beginning and the end of the
+        /// line.
+        /// </summary>
+        /// <param name="text">The text to write to the console.</param>
+        /// <param name="firstAndLastChar">The char to put at the beginning and the end of the line.</param>
+        public static void PrintFullWidthText(string text, char firstAndLastChar)
+        {
+            var fullWidthText = text + new string(Convert.ToChar(" "), Console.WindowWidth - text.Length - 5);
+            Console.WriteLine("{0} {1} {0}", firstAndLastChar, fullWidthText);
+        }
+
+        /// <summary>
+        /// Prints the
+        /// </summary>
+        /// <param name="appInfo">Metadata on the calling application.</param>
+        public static void PrintShortArgumentHelp(ApplicationInfo appInfo)
+        {
+            // Step 1: Build the calling convention line
+            var exeName = Portable.Utilities.ReflectionUtil.GetAssemblyTitle(appInfo.AssemblyInfo) + ".exe ";
+            var callingBuilder = new StringBuilder(exeName);
+            var shortSampleBuilder = new StringBuilder(exeName);
+            var sampleBuilder = new StringBuilder(exeName);
+            appInfo.CommandlineArgumentInfos.OrderByDescending(arg => arg.IsMandatory).ThenBy(arg => arg.OrderPosition).ToList().ForEach(
+                arg =>
+                {
+                    callingBuilder.AppendFormat("{0}{1}{2}{3} ", arg.IsMandatory ? string.Empty : "[", appInfo.ParameterPraefix, arg.ArgumentName, arg.IsMandatory ? string.Empty : "]");
+                    if (arg.IsFlag)
+                    {
+                        sampleBuilder.AppendFormat("{0}{1} ", appInfo.ParameterPraefix, arg.ArgumentName);
+                    }
+                    else
+                    {
+                        sampleBuilder.AppendFormat("{0}{1}{2}{3} ", appInfo.ParameterPraefix, arg.ArgumentName, appInfo.ParameterDelimiter, arg.SampleValue);
+                    }
+                    if (arg.IsMandatory)
+                    {
+                        shortSampleBuilder.AppendFormat("{0} ", arg.SampleValue);
+                    }
+                });
+            Console.WriteLine("Usage:\n  {0}", callingBuilder);
+            Console.WriteLine("Short Sample call:\n  {0}", shortSampleBuilder);
+            Console.WriteLine("Full Sample call:\n  {0}", sampleBuilder);
+        }
+
+        /// <summary>
         /// Writes a standardized app-specific header to the current cursor-position in the console.
         /// </summary>
         /// <param name="appName">The name of the application.</param>
@@ -49,14 +155,14 @@
         /// <param name="companyName">The name of the manufacturer or a person.</param>
         public static void ShowAppHeader(string appName, string description, string appVersion, string legalInformations, string companyName)
         {
-            PrintConsoleLine('*', Console.WindowWidth - 1);
+            WriteLine('*', Console.WindowWidth - 1);
             PrintFullWidthText(appName, '*');
             if (!string.IsNullOrEmpty(description))
             {
-                PrintConsoleLine('-', Console.WindowWidth - 1, '*');
+                WriteLine('-', Console.WindowWidth - 1, '*');
                 PrintFullWidthText(description, '*');
             }
-            PrintConsoleLine('-', Console.WindowWidth - 1, '*');
+            WriteLine('-', Console.WindowWidth - 1, '*');
             if (!string.IsNullOrEmpty(companyName))
             {
                 PrintFullWidthText(companyName, '*');
@@ -69,7 +175,7 @@
             {
                 PrintFullWidthText(legalInformations, '*');
             }
-            PrintConsoleLine('*', Console.WindowWidth - 1);
+            WriteLine('*', Console.WindowWidth - 1);
             Console.WriteLine();
         }
 
@@ -88,100 +194,102 @@
         }
 
         /// <summary>
-        /// Is used to inform the caller on error and give him help.
-        /// </summary>        
-        /// <param name="errorMessage">The message to display to the user.</param>        
-        /// <param name="appInfo">Metadata on the calling application.</param>        
-        public static void PrintArgumentError(ApplicationInfo appInfo, string errorMessage)
-        {
-            PrintColoredLine(errorMessage, ConsoleColor.Red);
-            Console.WriteLine();
-            PrintShortArgumentHelp(appInfo);
-        }
-
-        /// <summary>
-        /// Prints the 
-        /// </summary>
-        /// <param name="appInfo">Metadata on the calling application.</param>
-        public static void PrintShortArgumentHelp(ApplicationInfo appInfo)
-        {
-            // Step 1: Build the calling convention line
-            var exeName = Portable.Utilities.ReflectionUtil.GetAssemblyTitle(appInfo.AssemblyInfo) + ".exe ";
-            var callingBuilder = new StringBuilder(exeName);
-            var shortSampleBuilder = new StringBuilder(exeName);
-            var sampleBuilder = new StringBuilder(exeName);
-            appInfo.CommandlineArgumentInfos.OrderByDescending(arg => arg.IsMandatory).ThenBy(arg => arg.OrderPosition).ToList().ForEach(arg =>
-            {
-                callingBuilder.AppendFormat("{0}{1}{2}{3} ", arg.IsMandatory ? string.Empty : "[", appInfo.ParameterPraefix, arg.ArgumentName, arg.IsMandatory ? string.Empty : "]");
-                if (arg.IsFlag)
-                {
-                    sampleBuilder.AppendFormat(
-                        "{0}{1} ",                        
-                        appInfo.ParameterPraefix,
-                        arg.ArgumentName);
-                }
-                else
-                {
-                    sampleBuilder.AppendFormat(
-                        "{0}{1}{2}{3} ",                        
-                        appInfo.ParameterPraefix,
-                        arg.ArgumentName,
-                        appInfo.ParameterDelimiter,
-                        arg.SampleValue);
-                }
-                if (arg.IsMandatory)
-                {
-                    shortSampleBuilder.AppendFormat("{0} ", arg.SampleValue);
-                }
-            });
-            Console.WriteLine("Usage:\n  {0}", callingBuilder);
-            Console.WriteLine("Short Sample call:\n  {0}", shortSampleBuilder);
-            Console.WriteLine("Full Sample call:\n  {0}", sampleBuilder);
-        }
-
-        /// <summary>
-        /// Prints a line using a <paramref name="charToPrint"/> with a length of <paramref name="lineLength"/> to
+        /// Prints using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
         /// the current position of the console.
         /// </summary>
         /// <param name="charToPrint">The char with which the line should be written.</param>
         /// <param name="lineLength">The amount of chars to repeat.</param>
-        public static void PrintConsoleLine(char charToPrint, int lineLength)
+        public static void Write(char charToPrint, int lineLength)
         {
-            Console.WriteLine(new string(charToPrint, lineLength));
+            Console.Write(new string(charToPrint, lineLength));
         }
 
         /// <summary>
-        /// Prints a line using a <paramref name="charToPrint"/> with a length of <paramref name="lineLength"/> to
+        /// Prints using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
         /// the current position of the console.
         /// </summary>
         /// <param name="charToPrint">The char with which the line should be written.</param>
         /// <param name="lineLength">The amount of chars to repeat.</param>
         /// <param name="firstAndLastChar">The char at the beginning and end of the line.</param>
-        public static void PrintConsoleLine(char charToPrint, int lineLength, char firstAndLastChar)
+        public static void Write(char charToPrint, int lineLength, char firstAndLastChar)
+        {
+            var text = new string(charToPrint, lineLength - 4);
+            Console.Write("{0} {1} {0}", firstAndLastChar, text);
+        }
+
+        /// <summary>
+        /// Prints using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" />
+        /// and a specific color to the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        /// <param name="color">The color to use</param>
+        public static void Write(char charToPrint, int lineLength, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(new string(charToPrint, lineLength));
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Writes to the console and uses a specified foreground-color.
+        /// </summary>
+        /// <param name="text">The text to print to the console.</param>
+        /// <param name="color">The color to use as the text color.</param>
+        public static void Write(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Writes to the console and uses a specified foreground-color.
+        /// </summary>
+        /// <param name="text">The text to print to the console.</param>
+        /// <param name="color">The color to use as the text color.</param>
+        /// <param name="left">The column position of the cursor where to start the write operation.</param>
+        /// <param name="top">The row position of the cursor where to start the write operation.</param>
+        public static void Write(string text, int left, int top, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(left, top);
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
+        /// the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        public static void WriteLine(char charToPrint, int lineLength)
+        {
+            Console.WriteLine(new string(charToPrint, lineLength));
+        }
+
+        /// <summary>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" /> to
+        /// the current position of the console.
+        /// </summary>
+        /// <param name="charToPrint">The char with which the line should be written.</param>
+        /// <param name="lineLength">The amount of chars to repeat.</param>
+        /// <param name="firstAndLastChar">The char at the beginning and end of the line.</param>
+        public static void WriteLine(char charToPrint, int lineLength, char firstAndLastChar)
         {
             var text = new string(charToPrint, lineLength - 4);
             Console.WriteLine("{0} {1} {0}", firstAndLastChar, text);
         }
 
         /// <summary>
-        /// Writes a given text to the console. The text is encapsulated with a special char at the beginning and the end of the line.
-        /// </summary>
-        /// <param name="text">The text to write to the console.</param>
-        /// <param name="firstAndLastChar">The char to put at the beginning and the end of the line.</param>
-        public static void PrintFullWidthText(string text, char firstAndLastChar)
-        {
-            var fullWidthText = text + new string(Convert.ToChar(" "), Console.WindowWidth - text.Length - 5);
-            Console.WriteLine("{0} {1} {0}", firstAndLastChar, fullWidthText);
-        }
-
-        /// <summary>
-        /// Prints a line using a <paramref name="charToPrint"/> with a length of <paramref name="lineLength"/>
+        /// Prints a line using a <paramref name="charToPrint" /> with a length of <paramref name="lineLength" />
         /// and a specific color to the current position of the console.
         /// </summary>
         /// <param name="charToPrint">The char with which the line should be written.</param>
         /// <param name="lineLength">The amount of chars to repeat.</param>
         /// <param name="color">The color to use</param>
-        public static void PrintConsoleLine(char charToPrint, int lineLength, ConsoleColor color)
+        public static void WriteLine(char charToPrint, int lineLength, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(new string(charToPrint, lineLength));
@@ -193,7 +301,7 @@
         /// </summary>
         /// <param name="text">The text to print to the console.</param>
         /// <param name="color">The color to use as the text color.</param>
-        public static void PrintColoredLine(string text, ConsoleColor color)
+        public static void WriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(text);

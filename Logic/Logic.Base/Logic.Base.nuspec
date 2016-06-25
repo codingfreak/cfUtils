@@ -10,14 +10,14 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added EnumerableExtensions.</releaseNotes>
+    <releaseNotes>Updated references and renamed methods in ConsoleUtil. Added new methods in ConsoleUtil too.</releaseNotes>
     <copyright>codingfreaks UG 2014-2016</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.11" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.12" />
     </dependencies>
   </metadata>
   <files>
