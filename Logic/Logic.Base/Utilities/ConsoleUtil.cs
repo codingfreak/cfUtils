@@ -239,7 +239,7 @@
         public static void Write(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(text);
+            Console.Write(text);
             Console.ResetColor();
         }
 
@@ -254,7 +254,7 @@
         {
             Console.ForegroundColor = color;
             Console.SetCursorPosition(left, top);
-            Console.WriteLine(text);
+            Console.Write(text);
             Console.ResetColor();
         }
 
