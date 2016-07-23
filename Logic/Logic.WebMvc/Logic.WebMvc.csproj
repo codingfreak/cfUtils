@@ -47,8 +47,8 @@
     <DocumentationFile>bin\ReleaseNuget\cfUtils.cfWebMvcUtils.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.11.28, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.11\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.12.29, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.12\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
