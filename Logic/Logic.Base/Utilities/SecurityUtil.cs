@@ -233,7 +233,7 @@
         {
             if (desiredLength < 1)
             {
-                throw new ArgumentException("Desired lenght invalid.", "desiredLength");
+                throw new ArgumentException("Desired lenght invalid.", nameof(desiredLength));
             }
             // Allocate a byte array, which will hold the salt.
             var bytes = new byte[desiredLength];

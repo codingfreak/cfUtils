@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for all kinds of web projects using ASP.NET MVC.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Updated package references.</releaseNotes>
+    <releaseNotes>Added PasswordHasher with default implementation.</releaseNotes>
     <tags>codingfreaks,ASP.NET,MVC,Web,.NET,C#,Filters</tags>
     <copyright>codingfreaks 2015-2016</copyright>
     <dependencies>
