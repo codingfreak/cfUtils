@@ -186,8 +186,11 @@
             try
             {
                 // Send the mail and use credentials if given.
-                using (var client = new SmtpClient(settings.ServerAddress, settings.Port))
+                using (var client = new SmtpClient())
                 {
+                    client.Host = settings.ServerAddress;
+                    client.Port = settings.Port;
+                    client.UseDefaultCredentials = settings.UseDefaultCredentials;
                     if (settings.UseDefaultCredentials)
                     {
                         client.Credentials = CredentialCache.DefaultNetworkCredentials;

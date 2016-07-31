@@ -118,6 +118,14 @@
       <Project>{3C63B977-7ACD-4A7B-B196-10A815D4866D}</Project>
       <Name>Logic.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
+      <Project>{38b4cddf-5457-441a-84d0-3826f5d0e1aa}</Project>
+      <Name>Logic.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logic\Logic.Utils\Logic.Utils.csproj">
+      <Project>{88f51888-a010-41e2-9bfa-3d612b38f3af}</Project>
+      <Name>Logic.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

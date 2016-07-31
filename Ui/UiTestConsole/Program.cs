@@ -8,7 +8,11 @@
     using System.Diagnostics;
 
     using System.Linq;
+    using System.Net.Mail;
     using System.Runtime.Remoting.Messaging;
+
+    using Logic.Portable.Structures;
+    using Logic.Utils.Utilities;
 
     class Program
     {
@@ -16,22 +20,36 @@
 
         static void Main(string[] args)
         {
-            TestStorageSync();
+            TestMail();
             Console.WriteLine("Fertig");
             Console.ReadKey();
         }
 
-        private static void TestStorageSync()
+        private static void TestMail()
         {
-            var container = StorageHelper.GetContainerAsync(ConfigurationUtil.Get<string>("CloudContainer")).Result;
-            var elements = StorageHelper.GetElementsAsync(container, null, true).Result;
-            foreach(var ele in elements)
+            var from = "";
+            var to = "";
+            var user = "";
+            var pass = "";
+            var domain = "";           
+            var message = new MailMessage()
             {
-                Console.WriteLine("{0} {1}", ele.DirectoryPath, ele.Name);                
-            }
+                Body = "Testmail",
+                Subject = "Test"
+            };
+            message.To.Add(to);
+            message.From = new MailAddress(from);
+            MailUtil.SendMail(message, new MailServerSettings()
+            {
+                Domain = domain,
+                Password = pass,
+                ServerAddress = "smtp.office365.com",
+                Username = user,
+                Port = 587,
+                UseDefaultCredentials = false,
+                UseSsl = true
+            });            
         }
-
-       
 
         #endregion
     }
