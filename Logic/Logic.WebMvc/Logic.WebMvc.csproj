@@ -45,6 +45,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\ReleaseNuget\cfUtils.cfWebMvcUtils.xml</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="cfUtils.cfPortableUtils, Version=1.0.12.29, Culture=neutral, processorArchitecture=MSIL">

@@ -37,6 +37,11 @@
         /// </summary>
         public string Username { get; set; }
 
+        /// <summary>
+        /// If set to <c>true</c> SSL will be used for encryption-
+        /// </summary>
+        public bool UseSsl { get; set; }
+        
         #endregion
     }
 }

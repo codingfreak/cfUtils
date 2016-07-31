@@ -111,10 +111,11 @@
         /// <param name="subject">Subject of the mail.</param>
         /// <param name="body">The string for the body of the mail.</param>
         /// <param name="settings">A structure containing the settings for the server.</param>
+        /// <param name="deliveryMethod">The method for mail delivery to use.</param>
         /// <returns><c>True</c> if the mail was sent, otherwise <c>false</c>.</returns>        
-        public static bool SendMail(string fromAddress, string toAddress, string subject, string body, MailServerSettings settings)
+        public static bool SendMail(string fromAddress, string toAddress, string subject, string body, MailServerSettings settings, SmtpDeliveryMethod deliveryMethod = SmtpDeliveryMethod.Network)
         {
-            return SendMail(fromAddress, new[] { toAddress }, subject, body, settings);
+            return SendMail(fromAddress, new[] { toAddress }, subject, body, settings, deliveryMethod);
         }
 
         /// <summary>
@@ -125,8 +126,9 @@
         /// <param name="subject">Subject of the mail.</param>
         /// <param name="body">The string for the body of the mail.</param>
         /// <param name="settings">A structure containing the settings for the server.</param>
+        /// <param name="deliveryMethod">The method for mail delivery to use.</param>
         /// <returns><c>True</c> if the mail was sent, otherwise <c>false</c>.</returns>       
-        public static bool SendMail(string fromAddress, string[] toAddresses, string subject, string body, MailServerSettings settings)
+        public static bool SendMail(string fromAddress, string[] toAddresses, string subject, string body, MailServerSettings settings, SmtpDeliveryMethod deliveryMethod = SmtpDeliveryMethod.Network)
         {
             CheckUtil.ThrowIfNullOrWhitespace(() => subject);
             CheckUtil.ThrowIfNullOrWhitespace(() => body);
@@ -154,7 +156,7 @@
                         message.To.Add(toAddresses[i]);
                     }
                 }
-                result = SendMail(message, settings);
+                result = SendMail(message, settings, deliveryMethod);
             }
             return result;
         }
@@ -164,10 +166,11 @@
         /// </summary>
         /// <param name="messageToSend">The pre-configured <see cref="MailMessage" /> to send.</param>
         /// <param name="settings">A structure containing the settings for the server.</param>
+        /// <param name="deliveryMethod">The method for mail delivery to use.</param>
         /// <returns><c>True</c> if the mail was sent, otherwise <c>false</c>.</returns>
-        public static bool SendMail(MailMessage messageToSend, MailServerSettings settings)
+        public static bool SendMail(MailMessage messageToSend, MailServerSettings settings, SmtpDeliveryMethod deliveryMethod = SmtpDeliveryMethod.Network)
         {
-            return AsyncUtil.CallSync(() => SendMailAsync(messageToSend, settings));
+            return AsyncUtil.CallSync(() => SendMailAsync(messageToSend, settings, deliveryMethod));
         }
 
         /// <summary>
@@ -175,8 +178,9 @@
         /// </summary>
         /// <param name="messageToSend">The pre-configured <see cref="MailMessage" /> to send.</param>
         /// <param name="settings">A structure containing the settings for the server.</param>
+        /// <param name="deliveryMethod">The method for mail delivery to use.</param>
         /// <returns><c>True</c> if the mail was sent, otherwise <c>false</c>.</returns>
-        public static async Task<bool> SendMailAsync(MailMessage messageToSend, MailServerSettings settings)
+        public static async Task<bool> SendMailAsync(MailMessage messageToSend, MailServerSettings settings, SmtpDeliveryMethod deliveryMethod = SmtpDeliveryMethod.Network)
         {
             CheckUtil.ThrowIfNull(() => messageToSend);
             try
@@ -195,6 +199,8 @@
                             client.Credentials = new NetworkCredential(settings.Username, settings.Password, settings.Domain ?? string.Empty);
                         }
                     }
+                    client.DeliveryMethod = deliveryMethod;                    
+                    client.EnableSsl = settings.UseSsl;
                     await client.SendMailAsync(messageToSend).ConfigureAwait(false);
                 }
                 return true;
