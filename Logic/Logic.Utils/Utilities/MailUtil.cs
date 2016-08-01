@@ -170,7 +170,7 @@
         /// <returns><c>True</c> if the mail was sent, otherwise <c>false</c>.</returns>
         public static bool SendMail(MailMessage messageToSend, MailServerSettings settings, SmtpDeliveryMethod deliveryMethod = SmtpDeliveryMethod.Network)
         {
-            return AsyncUtil.CallSync(() => SendMailAsync(messageToSend, settings, deliveryMethod));
+            return SendMailAsync(messageToSend, settings, deliveryMethod).Result;
         }
 
         /// <summary>
