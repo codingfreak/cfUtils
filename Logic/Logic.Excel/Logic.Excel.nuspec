@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>codingfreaks.libs.cfUtils.cfExcelUtils</id>
+    <version>$version$</version>
+    <title>codingfreaks Excel Utility Collection</title>
+    <description>[codingfreaks] Excel utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>    
+    <summary>Contains extended classes and utilities useful for dealing with Microsoft Excel.</summary>
+    <releaseNotes>Initial release.</releaseNotes>
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <copyright>codingfreaks 2016</copyright>
+    <tags>codingfreaks,.NET,C#,Utilities,Excel</tags>
+    <dependencies>      
+      <dependency id="EPPlus" version="4.1.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\ReleaseNuget\cfUtils.cfExcelUtils.dll" target="lib\net\cfUtils.cfExcelUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfExcelUtils.xml" target="lib\net\cfUtils.cfExcelUtils.XML" />
+    <file src="bin\ReleaseNuget\cfUtils.cfExcelUtils.pdb" target="lib\net\cfUtils.cfExcelUtils.pdb" />
+  </files>
+</package>
