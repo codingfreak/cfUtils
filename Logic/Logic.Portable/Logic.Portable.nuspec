@@ -10,7 +10,7 @@
     <summary>Contains base classes and utilities useful for all kinds of projects in a portable manner.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added overloads in ConversionUtil to make lib more compatible.</releaseNotes>
+    <releaseNotes>Changed framework dependencies and target frameworks.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>
     <dependencies>
@@ -21,6 +21,21 @@
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\net\cfUtils.cfPortableUtils.dll" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\net\cfUtils.cfPortableUtils.xml" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\net\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\netstandard1.4\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\netstandard1.4\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\netstandard1.4\cfUtils.cfPortableUtils.xml" />   
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\MonoAndroid\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\MonoAndroid\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\MonoAndroid\cfUtils.cfPortableUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\Mono\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\Mono\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\Mono\cfUtils.cfPortableUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\MonoTouch\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\MonoTouch\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\MonoTouch\cfUtils.cfPortableUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.xml" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.dll" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.xml" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.pdb" />
