@@ -113,6 +113,7 @@
     <Compile Include="Interfaces\IContextResolver.cs" />
     <Compile Include="Misc\CustomAzureSqlExecutionStrategy.cs" />
     <Compile Include="Misc\OneLineDatabaseLogFormatter.cs" />
+    <Compile Include="Misc\SqlAzureDatabaseConfiguration.cs" />
     <Compile Include="Misc\SuspendableSqlAzureExecutionStrategy.cs" />
     <Compile Include="Structures\PagedResult.cs" />
     <Compile Include="Utilities\BaseUtil.cs" />
