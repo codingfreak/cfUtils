@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -28,6 +27,58 @@
         #endregion
 
         #region methods
+
+        /// <summary>
+        /// Make a http delete request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to call.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> DeleteSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            return await SendAsync(endpoint, HttpMethod.Delete, queryParams);
+        }
+
+        /// <summary>
+        /// Make a http delete request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> DeleteSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            var uri = GetUri(relativePath);
+            if (uri == null)
+            {
+                throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
+            }
+            return await SendAsync(uri, HttpMethod.Delete, queryParams);
+        }
+
+        /// <summary>
+        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
+        /// </summary>
+        /// <param name="endpoint">The api endpoint to call.</param>
+        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
+        public async Task<bool> DeleteSimpleAsync(Uri endpoint)
+        {
+            return await SendAsync(endpoint, HttpMethod.Delete);
+        }
+
+        /// <summary>
+        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
+        /// </summary>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
+        public async Task<bool> DeleteSimpleAsync(string relativePath)
+        {
+            var uri = GetUri(relativePath);
+            if (uri == null)
+            {
+                throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
+            }
+            return await SendAsync(uri, HttpMethod.Delete);
+        }
 
         /// <summary>
         /// Retrieves a new instance of an API client.
@@ -126,125 +177,30 @@
         }
 
         /// <summary>
-        /// Creates a http get query string that can be attached to an api endpoint.
+        /// Make a http patch request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
-        /// <param name="parameters">The parameters to convert to string.</param>
-        /// <param name="doUrlEncode">Set to <c>True</c> to url-encode the parameter values (but not the keys).</param>
-        /// <returns>A query string in the form "key1=value1&key2=value2"</returns>
-        public string ToQuerystring(IEnumerable<KeyValuePair<string, string>> parameters, bool doUrlEncode = true)
-        {            
-            var paramStrings = parameters.Select(pair => pair.Key + "=" + (doUrlEncode ?  Uri.EscapeUriString(pair.Value) : pair.Value));
-            return string.Join("&", paramStrings);
-        }
-
-        /// <summary>
-        /// Is called to add the 'debug'-header into the request of the given <paramref name="client" />.
-        /// </summary>
-        /// <param name="client">The mobile client which should be prepared.</param>
-        [Conditional("DEBUG")]
-        private static void AddDebugHeader(JsonApiClient client)
+        /// <param name="endpoint">The endpoint to call.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PatchSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            foreach (var k in DebugHeaders.Keys)
-            {
-                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
-            }
+            return await SendAsync(endpoint, new HttpMethod("PATCH"), queryParams);
         }
 
         /// <summary>
-        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
-        /// </summary>
-        /// <param name="endpoint">The api endpoint to call.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> DeleteSimpleAsync(Uri endpoint)
-        {
-            return await SendAsync(endpoint, HttpMethod.Delete);
-        }
-
-        /// <summary>
-        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
+        /// Make a http patch request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> DeleteSimpleAsync(string relativePath)
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PatchSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendAsync(uri, HttpMethod.Delete);
-        }
-
-        /// <summary>
-        /// Generates the authentication header with a given combination of <paramref name="username" /> and
-        /// <paramref name="password" />
-        /// </summary>
-        /// <param name="username">The username for authentication.</param>
-        /// <param name="password">The password for the user.</param>
-        /// <returns>The HTTP authentication header.</returns>
-        private static AuthenticationHeaderValue GetBasicCredentialsHeader(string username, string password)
-        {
-            var toEncode = username + ":" + password;
-            var toBase64 = Encoding.UTF8.GetBytes(toEncode);
-            var parameter = Convert.ToBase64String(toBase64);
-            return new AuthenticationHeaderValue("Basic", parameter);
-        }
-
-        /// <summary>
-        /// Retrieves an instance of this client ready to use.
-        /// </summary>
-        /// <remarks>
-        /// This method adds all needed headers automatically.
-        /// </remarks>
-        /// <param name="headers">User defined headers for this specific instance.</param>
-        /// <returns>The client to use for calls against the API.</returns>
-        private static JsonApiClient GetClient(Dictionary<string, string> headers = null)
-        {
-            if (BaseApiEndpoint == null)
-            {
-                throw new InvalidOperationException("No value for BaseApiEndpoint specified.");
-            }
-            var handler = new HttpClientHandler();
-            var client = new JsonApiClient(handler, true)
-            {
-                BaseAddress = BaseApiEndpoint
-            };
-            client.DefaultRequestHeaders.Clear();
-            if (Credentials != null)
-            {
-                client.DefaultRequestHeaders.Authorization = GetBasicCredentialsHeader(Credentials.UserName, Credentials.Password);
-            }
-            client.DefaultRequestHeaders.Accept.Clear();
-            // add media type for accept header
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            if (headers == null)
-            {
-                // use default headers when no special headers where given.
-                headers = DefaultHeaders;
-            }
-            foreach (var k in headers.Keys)
-            {
-                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
-            }
-            AddDebugHeader(client);
-            return client;
-        }
-
-        /// <summary>
-        /// Retrieves the absolute Uri by adding the <paramref name="relativePath" /> to the <see cref="BaseApiEndpoint".
-        /// </summary>
-        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <returns>The new absolute URL.</returns>
-        private static Uri GetUri(string relativePath)
-        {
-            try
-            {                
-                return new Uri($"{BaseApiEndpoint.ToString()}{relativePath}");
-            }
-            catch
-            {
-                return null;
-            }
+            return await SendAsync(uri, new HttpMethod("PATCH"), queryParams);
         }
 
         /// <summary>
@@ -272,8 +228,35 @@
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
-            }            
+            }
             return await SendAsync(uri, new HttpMethod("PATCH"), inputModel);
+        }
+
+        /// <summary>
+        /// Make a http post request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to call.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PostSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            return await SendAsync(endpoint, HttpMethod.Post, queryParams);
+        }
+
+        /// <summary>
+        /// Make a http post request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PostSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            var uri = GetUri(relativePath);
+            if (uri == null)
+            {
+                throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
+            }
+            return await SendAsync(uri, HttpMethod.Post, queryParams);
         }
 
         /// <summary>
@@ -334,6 +317,33 @@
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
             return await SendWithResultAsync<TInput, TResult>(uri, HttpMethod.Post, inputModel);
+        }
+
+        /// <summary>
+        /// Make a http put request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="endpoint">The endpoint to call.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PutSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            return await SendAsync(endpoint, HttpMethod.Put, queryParams);
+        }
+
+        /// <summary>
+        /// Make a http put request on the given endpoint with the given query parameters and return a bool indicating success.
+        /// </summary>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PutSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            var uri = GetUri(relativePath);
+            if (uri == null)
+            {
+                throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
+            }
+            return await SendAsync(uri, HttpMethod.Put, queryParams);
         }
 
         /// <summary>
@@ -463,6 +473,103 @@
             catch (Exception ex)
             {
                 throw new InvalidDataException("Unexpected data from server could not be deserialized.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a http get query string that can be attached to an api endpoint.
+        /// </summary>
+        /// <param name="parameters">The parameters to convert to string.</param>
+        /// <param name="doUrlEncode">Set to <c>True</c> to url-encode the parameter values (but not the keys).</param>
+        /// <returns>A query string in the form "key1=value1&key2=value2"</returns>
+        public string ToQuerystring(IEnumerable<KeyValuePair<string, string>> parameters, bool doUrlEncode = true)
+        {
+            var paramStrings = parameters.Select(pair => pair.Key + "=" + (doUrlEncode ? Uri.EscapeUriString(pair.Value) : pair.Value));
+            return string.Join("&", paramStrings);
+        }
+
+        /// <summary>
+        /// Is called to add the 'debug'-header into the request of the given <paramref name="client" />.
+        /// </summary>
+        /// <param name="client">The mobile client which should be prepared.</param>
+        [Conditional("DEBUG")]
+        private static void AddDebugHeader(JsonApiClient client)
+        {
+            foreach (var k in DebugHeaders.Keys)
+            {
+                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
+            }
+        }
+
+        /// <summary>
+        /// Generates the authentication header with a given combination of <paramref name="username" /> and
+        /// <paramref name="password" />
+        /// </summary>
+        /// <param name="username">The username for authentication.</param>
+        /// <param name="password">The password for the user.</param>
+        /// <returns>The HTTP authentication header.</returns>
+        private static AuthenticationHeaderValue GetBasicCredentialsHeader(string username, string password)
+        {
+            var toEncode = username + ":" + password;
+            var toBase64 = Encoding.UTF8.GetBytes(toEncode);
+            var parameter = Convert.ToBase64String(toBase64);
+            return new AuthenticationHeaderValue("Basic", parameter);
+        }
+
+        /// <summary>
+        /// Retrieves an instance of this client ready to use.
+        /// </summary>
+        /// <remarks>
+        /// This method adds all needed headers automatically.
+        /// </remarks>
+        /// <param name="headers">User defined headers for this specific instance.</param>
+        /// <returns>The client to use for calls against the API.</returns>
+        private static JsonApiClient GetClient(Dictionary<string, string> headers = null)
+        {
+            if (BaseApiEndpoint == null)
+            {
+                throw new InvalidOperationException("No value for BaseApiEndpoint specified.");
+            }
+            var handler = new HttpClientHandler();
+            var client = new JsonApiClient(handler, true)
+            {
+                BaseAddress = BaseApiEndpoint
+            };
+            client.DefaultRequestHeaders.Clear();
+            if (Credentials != null)
+            {
+                client.DefaultRequestHeaders.Authorization = GetBasicCredentialsHeader(Credentials.UserName, Credentials.Password);
+            }
+            client.DefaultRequestHeaders.Accept.Clear();
+            // add media type for accept header
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if (headers == null)
+            {
+                // use default headers when no special headers where given.
+                headers = DefaultHeaders;
+            }
+            foreach (var k in headers.Keys)
+            {
+                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
+            }
+            AddDebugHeader(client);
+            return client;
+        }
+
+        /// <summary>
+        /// Retrieves the absolute Uri by adding the <paramref name="relativePath" /> to the <see cref="BaseApiEndpoint".
+        /// </summary>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <returns>The new absolute URL.</returns>
+        private static Uri GetUri(string relativePath)
+        {
+            try
+            {
+                return new Uri($"{BaseApiEndpoint}{relativePath}");
+            }
+            catch
+            {
+                return null;
             }
         }
 
