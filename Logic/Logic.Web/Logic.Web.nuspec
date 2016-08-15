@@ -11,7 +11,7 @@
     <summary>Contains extended classes and utilities useful for all kinds of web projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <tags>codingfreaks,ASP.NET,Web,.NET,C#,Filters</tags>
-    <releaseNotes>API client is sealed and ConfigureAwait on it..</releaseNotes>
+    <releaseNotes>Moved API client to portable utils.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <dependencies>
       <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.17" />      

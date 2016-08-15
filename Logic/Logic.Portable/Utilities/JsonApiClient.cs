@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-
-namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Portable.Utilities
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -132,8 +132,8 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="doUrlEncode">Set to <c>True</c> to url-encode the parameter values (but not the keys).</param>
         /// <returns>A query string in the form "key1=value1&key2=value2"</returns>
         public string ToQuerystring(IEnumerable<KeyValuePair<string, string>> parameters, bool doUrlEncode = true)
-        {
-            var paramStrings = parameters.Select(pair => pair.Key + "=" + (doUrlEncode ? WebUtility.UrlEncode(pair.Value) : pair.Value));
+        {            
+            var paramStrings = parameters.Select(pair => pair.Key + "=" + (doUrlEncode ?  Uri.EscapeUriString(pair.Value) : pair.Value));
             return string.Join("&", paramStrings);
         }
 
@@ -144,11 +144,10 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         [Conditional("DEBUG")]
         private static void AddDebugHeader(JsonApiClient client)
         {
-            DebugHeaders.Keys.ToList().ForEach(
-                k =>
-                {
-                    client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
-                });
+            foreach (var k in DebugHeaders.Keys)
+            {
+                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
+            }
         }
 
         /// <summary>
@@ -223,11 +222,10 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
                 // use default headers when no special headers where given.
                 headers = DefaultHeaders;
             }
-            headers.Keys.ToList().ForEach(
-                k =>
-                {
-                    client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
-                });
+            foreach (var k in headers.Keys)
+            {
+                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
+            }
             AddDebugHeader(client);
             return client;
         }
@@ -240,8 +238,8 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         private static Uri GetUri(string relativePath)
         {
             try
-            {
-                return new Uri(Path.Combine(BaseApiEndpoint.ToString(), relativePath));
+            {                
+                return new Uri($"{BaseApiEndpoint.ToString()}{relativePath}");
             }
             catch
             {
@@ -274,7 +272,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
-            }
+            }            
             return await SendAsync(uri, new HttpMethod("PATCH"), inputModel);
         }
 

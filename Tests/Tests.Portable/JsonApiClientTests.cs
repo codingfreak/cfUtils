@@ -1,9 +1,9 @@
-﻿namespace codingfreaks.cfUtils.Tests.Web
+﻿namespace codingfreaks.cfUtils.Tests.Portable
 {
     using System;
     using System.Threading.Tasks;
 
-    using Logic.WebUtils.Utilities;
+    using Logic.Portable.Utilities;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
