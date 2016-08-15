@@ -9,13 +9,13 @@
     <owners>codingfreaks</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>    
     <summary>Contains extended classes and utilities useful for all kinds of projects.</summary>
-    <releaseNotes>New SQL default execution strategy.</releaseNotes>
+    <releaseNotes>Updated package references and rework on SuspendableSqlAzureExecution strategy.</releaseNotes>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <copyright>codingfreaks 2014-2016</copyright>
     <tags>codingfreaks,.NET,C#,Utilities</tags>
     <dependencies>
       <dependency id="EntityFramework" version="6.1.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.16" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.17" />
       <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.14" />
     </dependencies>
   </metadata>
