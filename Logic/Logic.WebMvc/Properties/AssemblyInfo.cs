@@ -3,6 +3,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("cfWebMvcUtils")]
 [assembly: AssemblyDescription("[codingfreaks] web utility library for MVC")]
-[assembly: AssemblyVersion("1.0.8.13")]
-[assembly: AssemblyFileVersion("1.0.8.13")]
+[assembly: AssemblyVersion("1.0.9.14")]
+[assembly: AssemblyFileVersion("1.0.9.14")]
 [assembly: ComVisible(false)]
