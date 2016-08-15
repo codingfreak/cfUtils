@@ -204,32 +204,30 @@
         }
 
         /// <summary>
-        /// Makes a simple http patch to a given endpoint with the provided data and returns a success status.
+        /// Make a http patch request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
-        /// <typeparam name="TInput">The type of the input data model.</typeparam>
-        /// <param name="endpoint">The api endpoint to call.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> PatchSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
+        /// <param name="endpoint">The endpoint to call.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PatchSimpleAsync<TInput>(Uri endpoint, TInput inputData)
         {
-            return await SendAsync(endpoint, new HttpMethod("PATCH"), inputModel);
+            return await SendAsync(endpoint, new HttpMethod("PATCH"), inputData);
         }
 
         /// <summary>
-        /// Makes a simple http patch to a given endpoint with the provided data and returns a success status.
+        /// Make a http patch request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
-        /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputModel)
+        /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
+        public async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputData)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendAsync(uri, new HttpMethod("PATCH"), inputModel);
+            return await SendAsync(uri, new HttpMethod("PATCH"), inputData);
         }
 
         /// <summary>
@@ -264,11 +262,11 @@
         /// </summary>
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <param name="endpoint">The api endpoint to call.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> PostSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
+        public async Task<bool> PostSimpleAsync<TInput>(Uri endpoint, TInput inputData)
         {
-            return await SendAsync(endpoint, HttpMethod.Post, inputModel);
+            return await SendAsync(endpoint, HttpMethod.Post, inputData);
         }
 
         /// <summary>
@@ -276,16 +274,16 @@
         /// </summary>
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputModel)
+        public async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputData)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendAsync(uri, HttpMethod.Post, inputModel);
+            return await SendAsync(uri, HttpMethod.Post, inputData);
         }
 
         /// <summary>
@@ -294,11 +292,11 @@
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="endpoint">The api endpoint to call.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PostWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
+        public async Task<TResult> PostWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputData)
         {
-            return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Post, inputModel);
+            return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Post, inputData);
         }
 
         /// <summary>
@@ -307,43 +305,43 @@
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
+        public async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputData)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendWithResultAsync<TInput, TResult>(uri, HttpMethod.Post, inputModel);
+            return await SendWithResultAsync<TInput, TResult>(uri, HttpMethod.Post, inputData);
         }
 
         /// <summary>
         /// Make a http put request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
         /// <param name="endpoint">The endpoint to call.</param>
-        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
-        public async Task<bool> PutSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<bool> PutSimpleAsync<TInput>(Uri endpoint, TInput inputData)
         {
-            return await SendAsync(endpoint, HttpMethod.Put, queryParams);
+            return await SendAsync(endpoint, HttpMethod.Put, inputData);
         }
 
         /// <summary>
         /// Make a http put request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <param name="queryParams">The parameters to include in the get request.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
-        public async Task<bool> PutSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<bool> PutSimpleAsync<TInput>(string relativePath, TInput inputData)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendAsync(uri, HttpMethod.Put, queryParams);
+            return await SendAsync(uri, HttpMethod.Put, inputData);
         }
 
         /// <summary>
@@ -352,11 +350,11 @@
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="endpoint">The api endpoint to call.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PutWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
+        public async Task<TResult> PutWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputData)
         {
-            return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Put, inputModel);
+            return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Put, inputData);
         }
 
         /// <summary>
@@ -365,16 +363,16 @@
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <param name="inputModel">The data to send to the endpoint.</param>
+        /// <param name="inputData">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
+        public async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputData)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
-            return await SendWithResultAsync<TInput, TResult>(uri, HttpMethod.Put, inputModel);
+            return await SendWithResultAsync<TInput, TResult>(uri, HttpMethod.Put, inputData);
         }
 
         /// <summary>
