@@ -156,7 +156,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// </summary>
         /// <param name="endpoint">The api endpoint to call.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> DeleteSimpleAsync(Uri endpoint)
+        public async Task<bool> DeleteSimpleAsync(Uri endpoint)
         {
             return await SendAsync(endpoint, HttpMethod.Delete);
         }
@@ -166,7 +166,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> DeleteSimpleAsync(string relativePath)
+        public async Task<bool> DeleteSimpleAsync(string relativePath)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
@@ -256,7 +256,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="endpoint">The api endpoint to call.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> PatchSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
+        public async Task<bool> PatchSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
         {
             return await SendAsync(endpoint, new HttpMethod("PATCH"), inputModel);
         }
@@ -268,7 +268,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputModel)
+        public async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputModel)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
@@ -285,7 +285,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="endpoint">The api endpoint to call.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> PostSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
+        public async Task<bool> PostSimpleAsync<TInput>(Uri endpoint, TInput inputModel)
         {
             return await SendAsync(endpoint, HttpMethod.Post, inputModel);
         }
@@ -297,7 +297,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        private async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputModel)
+        public async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputModel)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
@@ -315,7 +315,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="endpoint">The api endpoint to call.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        private async Task<TResult> PostWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
+        public async Task<TResult> PostWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
         {
             return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Post, inputModel);
         }
@@ -328,7 +328,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        private async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
+        public async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
@@ -346,7 +346,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="endpoint">The api endpoint to call.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        private async Task<TResult> PutWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
+        public async Task<TResult> PutWithResultAsync<TInput, TResult>(Uri endpoint, TInput inputModel)
         {
             return await SendWithResultAsync<TInput, TResult>(endpoint, HttpMethod.Put, inputModel);
         }
@@ -359,7 +359,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputModel">The data to send to the endpoint.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        private async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
+        public async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputModel)
         {
             var uri = GetUri(relativePath);
             if (uri == null)
@@ -376,7 +376,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="method">The http-method to use.</param>
         /// <param name="queryParams">Optional url parameters.</param>
         /// <returns><c>true</c> if the request was successful otherwise <c>false</c>.</returns>
-        private async Task<bool> SendAsync(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<bool> SendAsync(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message);
@@ -393,7 +393,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="inputData">The data to send to the service.</param>
         /// <param name="queryParams">Optional url parameters.</param>
         /// <returns><c>true</c> if the request was successful otherwise <c>false</c>.</returns>
-        private async Task<bool> SendAsync<TInput>(Uri endpoint, HttpMethod method, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<bool> SendAsync<TInput>(Uri endpoint, HttpMethod method, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var requestContent = GetJsonRequestContent(inputData);
             var message = new HttpRequestMessage(method, endpoint)
@@ -413,7 +413,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="method">The http-method to use.</param>
         /// <param name="queryParams">Optional url parameters.</param>
         /// <returns>The deserialzed result.</returns>
-        private async Task<TResult> SendWithResultAsync<TResult>(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<TResult> SendWithResultAsync<TResult>(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message);
@@ -444,7 +444,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         /// <param name="inputData">The data to send to the service.</param>
         /// <param name="queryParams">Optional url parameters.</param>
         /// <returns>The deserialzed result.</returns>
-        private async Task<TResult> SendWithResultAsync<TInput, TResult>(Uri endpoint, HttpMethod method, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<TResult> SendWithResultAsync<TInput, TResult>(Uri endpoint, HttpMethod method, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var requestContent = GetJsonRequestContent(inputData);
             var message = new HttpRequestMessage(method, endpoint)
