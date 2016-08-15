@@ -17,7 +17,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
     /// <summary>
     /// Handles consumption of the api.
     /// </summary>
-    public class JsonApiClient : HttpClient
+    public sealed class JsonApiClient : HttpClient
     {
         #region constructors and destructors
 
@@ -379,7 +379,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         public async Task<bool> SendAsync(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var message = new HttpRequestMessage(method, endpoint);
-            var responseMessage = await SendAsync(message);
+            var responseMessage = await SendAsync(message).ConfigureAwait(false);
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -400,7 +400,7 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
             {
                 Content = requestContent
             };
-            var responseMessage = await SendAsync(message);
+            var responseMessage = await SendAsync(message).ConfigureAwait(false);
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -416,14 +416,14 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
         public async Task<TResult> SendWithResultAsync<TResult>(Uri endpoint, HttpMethod method, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             var message = new HttpRequestMessage(method, endpoint);
-            var responseMessage = await SendAsync(message);
+            var responseMessage = await SendAsync(message).ConfigureAwait(false);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
             {
-                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
             }
@@ -451,14 +451,14 @@ namespace codingfreaks.cfUtils.Logic.WebUtils.Utilities
             {
                 Content = requestContent
             };
-            var responseMessage = await SendAsync(message);
+            var responseMessage = await SendAsync(message).ConfigureAwait(false);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
             {
-                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
             }
