@@ -487,6 +487,38 @@
         }
 
         /// <summary>
+        /// Uploads a blob using <see cref="MultipartFormDataContent" /> to a REST service using a POST and retrieves the result.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="endpoint">The endpoint fo the target service.</param>
+        /// <param name="originalFileName">The original filename including the ending.</param>
+        /// <param name="fileData">The serialized file data.</param>
+        /// <returns>The deserialzed result.</returns>
+        public async Task<TResult> UploadBytesAsync<TResult>(Uri endpoint, string originalFileName, byte[] fileData)
+        {
+            using (var content = new MultipartFormDataContent("Upload----" + Guid.NewGuid().ToString("N").Substring(8)))
+            {
+                var parts = originalFileName.Split('.');
+                content.Add(new StreamContent(new MemoryStream(fileData)), parts[0], originalFileName);
+                return await PostWithResultAsync<MultipartFormDataContent, TResult>(endpoint, content);
+            }
+        }
+
+        /// <summary>
+        /// Uploads a blob using <see cref="MultipartFormDataContent" /> to a REST service using a POST and retrieves the result.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <param name="originalFileName">The original filename including the ending.</param>
+        /// <param name="fileData">The serialized file data.</param>
+        /// <returns>The deserialzed result.</returns>
+        public async Task<TResult> UploadBytesAsync<TResult>(string relativePath, string originalFileName, byte[] fileData)
+        {
+            var uri = GetUri(relativePath);
+            return await UploadBytesAsync<TResult>(uri, originalFileName, fileData);
+        }
+
+        /// <summary>
         /// Is called to add the 'debug'-header into the request of the given <paramref name="client" />.
         /// </summary>
         /// <param name="client">The mobile client which should be prepared.</param>
