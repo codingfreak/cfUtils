@@ -493,11 +493,21 @@
         /// <param name="endpoint">The endpoint fo the target service.</param>
         /// <param name="originalFileName">The original filename including the ending.</param>
         /// <param name="fileData">The serialized file data.</param>
+        /// <param name="additionalData">Optional additional values to pass to the form-data.</param>
         /// <returns>The deserialzed result.</returns>
-        public async Task<TResult> UploadBytesAsync<TResult>(Uri endpoint, string originalFileName, byte[] fileData)
+        public async Task<TResult> UploadBytesAsync<TResult>(Uri endpoint, string originalFileName, byte[] fileData, Dictionary<string, string> additionalData = null)
         {
             using (var content = new MultipartFormDataContent("Upload----" + Guid.NewGuid().ToString("N").Substring(8)))
             {
+                content.Headers.ContentEncoding.Clear();
+                content.Headers.ContentEncoding.Add("utf8");
+                if (additionalData != null)
+                {
+                    foreach (var k in additionalData.Keys)
+                    {
+                        content.Add(name: k, content: new StringContent(additionalData[k]));
+                    }
+                }
                 var parts = originalFileName.Split('.');
                 content.Add(new StreamContent(new MemoryStream(fileData)), parts[0], originalFileName);
                 return await PostWithResultAsync<MultipartFormDataContent, TResult>(endpoint, content);
@@ -511,11 +521,12 @@
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="originalFileName">The original filename including the ending.</param>
         /// <param name="fileData">The serialized file data.</param>
+        /// <param name="additionalData">Optional additional values to pass to the form-data.</param>
         /// <returns>The deserialzed result.</returns>
-        public async Task<TResult> UploadBytesAsync<TResult>(string relativePath, string originalFileName, byte[] fileData)
+        public async Task<TResult> UploadBytesAsync<TResult>(string relativePath, string originalFileName, byte[] fileData, Dictionary<string, string> additionalData = null)
         {
             var uri = GetUri(relativePath);
-            return await UploadBytesAsync<TResult>(uri, originalFileName, fileData);
+            return await UploadBytesAsync<TResult>(uri, originalFileName, fileData, additionalData);
         }
 
         /// <summary>
