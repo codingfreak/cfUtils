@@ -10,11 +10,12 @@
     <summary>Contains base classes and utilities useful for all kinds of projects in a portable manner.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added conveniance methods to JsonApiClient.</releaseNotes>
+    <releaseNotes>New SimpleGeographyUtil in portable project.</releaseNotes>
     <copyright>codingfreaks 2015-2016</copyright>
     <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>
     <dependencies>
       <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+      <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
     </dependencies>
   </metadata>
   <files>
