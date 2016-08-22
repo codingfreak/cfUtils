@@ -580,7 +580,7 @@
             }
             foreach (var k in headers.Keys)
             {
-                client.DefaultRequestHeaders.Add(k, DefaultHeaders[k]);
+                client.DefaultRequestHeaders.Add(k, headers[k]);
             }
             AddDebugHeader(client);
             return client;
