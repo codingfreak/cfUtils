@@ -34,9 +34,9 @@
         /// <param name="endpoint">The endpoint to call.</param>
         /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
-        public async Task<bool> DeleteSimpleAsync(Uri endpoint, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        public async Task<bool> DeleteSimpleAsync(Uri endpoint)
         {
-            return await SendAsync(endpoint, HttpMethod.Delete, queryParams);
+            return await SendAsync(endpoint, HttpMethod.Delete);
         }
 
         /// <summary>
@@ -47,37 +47,12 @@
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
         public async Task<bool> DeleteSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
             }
             return await SendAsync(uri, HttpMethod.Delete, queryParams);
-        }
-
-        /// <summary>
-        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
-        /// </summary>
-        /// <param name="endpoint">The api endpoint to call.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> DeleteSimpleAsync(Uri endpoint)
-        {
-            return await SendAsync(endpoint, HttpMethod.Delete);
-        }
-
-        /// <summary>
-        /// Makes a simple http delete to a given endpoint with the provided data and returns a success status.
-        /// </summary>
-        /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
-        /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> DeleteSimpleAsync(string relativePath)
-        {
-            var uri = GetUri(relativePath);
-            if (uri == null)
-            {
-                throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
-            }
-            return await SendAsync(uri, HttpMethod.Delete);
         }
 
         /// <summary>
@@ -139,7 +114,7 @@
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
         public async Task<bool> GetSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -168,7 +143,7 @@
         /// <returns>An instance of <typeparamref name="TResult" />.</returns>
         public async Task<TResult> GetWithResultAsync<TResult>(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -195,7 +170,7 @@
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
         public async Task<bool> PatchSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -219,10 +194,11 @@
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
-        public async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputData)
+        public async Task<bool> PatchSimpleAsync<TInput>(string relativePath, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -249,7 +225,7 @@
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
         public async Task<bool> PostSimpleAsync(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -275,10 +251,11 @@
         /// <typeparam name="TInput">The type of the input data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns><c>True</c> if the operation was a success, <c>False</c> otherwise.</returns>
-        public async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputData)
+        public async Task<bool> PostSimpleAsync<TInput>(string relativePath, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -306,10 +283,11 @@
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputData)
+        public async Task<TResult> PostWithResultAsync<TInput, TResult>(string relativePath, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -333,10 +311,11 @@
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
-        public async Task<bool> PutSimpleAsync<TInput>(string relativePath, TInput inputData)
+        public async Task<bool> PutSimpleAsync<TInput>(string relativePath, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -364,10 +343,11 @@
         /// <typeparam name="TResult">The type of the result data model.</typeparam>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
         /// <param name="inputData">The data to send to the endpoint.</param>
+        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns>An instance of type <typeparamref name="TResult" />.</returns>
-        public async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputData)
+        public async Task<TResult> PutWithResultAsync<TInput, TResult>(string relativePath, TInput inputData, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             if (uri == null)
             {
                 throw new ArgumentException("Relative path is invalid.", nameof(relativePath));
@@ -480,7 +460,7 @@
         /// <param name="parameters">The parameters to convert to string.</param>
         /// <param name="doUrlEncode">Set to <c>True</c> to url-encode the parameter values (but not the keys).</param>
         /// <returns>A query string in the form "key1=value1&key2=value2"</returns>
-        public string ToQuerystring(IEnumerable<KeyValuePair<string, string>> parameters, bool doUrlEncode = true)
+        public static string ToQuerystring(IEnumerable<KeyValuePair<string, string>> parameters, bool doUrlEncode = true)
         {
             var paramStrings = parameters.Select(pair => pair.Key + "=" + (doUrlEncode ? Uri.EscapeUriString(pair.Value) : pair.Value));
             return string.Join("&", paramStrings);
@@ -522,10 +502,16 @@
         /// <param name="originalFileName">The original filename including the ending.</param>
         /// <param name="fileData">The serialized file data.</param>
         /// <param name="additionalData">Optional additional values to pass to the form-data.</param>
+        /// <param name="queryParams">Optional url parameters.</param>
         /// <returns>The deserialzed result.</returns>
-        public async Task<TResult> UploadBytesAsync<TResult>(string relativePath, string originalFileName, byte[] fileData, Dictionary<string, string> additionalData = null)
+        public async Task<TResult> UploadBytesAsync<TResult>(
+            string relativePath,
+            string originalFileName,
+            byte[] fileData,
+            Dictionary<string, string> additionalData = null,
+            IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
-            var uri = GetUri(relativePath);
+            var uri = GetUri(relativePath, queryParams);
             return await UploadBytesAsync<TResult>(uri, originalFileName, fileData, additionalData);
         }
 
@@ -598,15 +584,21 @@
         }
 
         /// <summary>
-        /// Retrieves the absolute Uri by adding the <paramref name="relativePath" /> to the <see cref="BaseApiEndpoint".
+        /// Retrieves the absolute Uri by adding the <paramref name="relativePath" /> to the <see cref="BaseApiEndpoint" />.
         /// </summary>
         /// <param name="relativePath">The relative URL part based on <see cref="BaseApiEndpoint" />.</param>
+        /// <param name="queryParams">Optional url parameters.</param>
         /// <returns>The new absolute URL.</returns>
-        private static Uri GetUri(string relativePath)
+        private static Uri GetUri(string relativePath, IEnumerable<KeyValuePair<string, string>> queryParams = null)
         {
             try
             {
-                return new Uri($"{BaseApiEndpoint}{relativePath}");
+                var query = string.Empty;
+                if ((queryParams != null) && queryParams.Any())
+                {
+                    query = $"?" +  ToQuerystring(queryParams);
+                }
+                return new Uri($"{BaseApiEndpoint}{relativePath}{query}");
             }
             catch
             {
