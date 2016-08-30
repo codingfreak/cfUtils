@@ -32,7 +32,6 @@
         /// Make a http delete request on the given endpoint with the given query parameters and return a bool indicating success.
         /// </summary>
         /// <param name="endpoint">The endpoint to call.</param>
-        /// <param name="queryParams">The parameters to include in the get request.</param>
         /// <returns><c>True</c> if the server said the request was successful, <c>False</c> otherwise.</returns>
         public async Task<bool> DeleteSimpleAsync(Uri endpoint)
         {
@@ -409,6 +408,7 @@
             }
             try
             {
+                LastResponseHeaders = responseMessage.Headers;
                 var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
@@ -596,7 +596,7 @@
                 var query = string.Empty;
                 if ((queryParams != null) && queryParams.Any())
                 {
-                    query = $"?" +  ToQuerystring(queryParams);
+                    query = $"?" + ToQuerystring(queryParams);
                 }
                 return new Uri($"{BaseApiEndpoint}{relativePath}{query}");
             }
@@ -636,6 +636,11 @@
         /// You can use <see cref="DebugHeaders" /> to add headers in DEBUG configuration.
         /// </remarks>
         public static Dictionary<string, string> DefaultHeaders { get; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// The response headers of the last request.
+        /// </summary>
+        public HttpResponseHeaders LastResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates an instance of the client configured for unit tests.
