@@ -365,8 +365,7 @@
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
-            LastResponse = responseMessage;
-            LastResponseHeaders = responseMessage.Headers;
+            HandleResponse(responseMessage);
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -388,8 +387,7 @@
                 Content = requestContent
             };
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
-            LastResponse = responseMessage;
-            LastResponseHeaders = responseMessage.Headers;
+            HandleResponse(responseMessage);
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -406,8 +404,7 @@
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
-            LastResponse = responseMessage;
-            LastResponseHeaders = responseMessage.Headers;
+            HandleResponse(responseMessage);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
@@ -423,11 +420,6 @@
                 throw new InvalidDataException("Unexpected data from server could not be deserialized.", ex);
             }
         }
-
-        /// <summary>
-        /// The last HTTP response.
-        /// </summary>
-        public HttpResponseMessage LastResponse { get; private set; }
 
         /// <summary>
         /// Sends a HTTP request of the given <paramref name="method" /> containing <paramref name="inputData" /> and retrieves a
@@ -448,8 +440,7 @@
                 Content = requestContent
             };
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
-            LastResponse = responseMessage;
-            LastResponseHeaders = responseMessage.Headers;
+            HandleResponse(responseMessage);
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
@@ -618,6 +609,19 @@
             }
         }
 
+        /// <summary>
+        /// Is called to handle each HTTP response internally.
+        /// </summary>
+        /// <param name="responseMessage">The HTTP reponse message.</param>
+        private void HandleResponse(HttpResponseMessage responseMessage)
+        {
+            LastResponseHeaders = new Dictionary<string, string>();
+            foreach (var header in responseMessage.Headers)
+            {
+                LastResponseHeaders.Add(header.Key, header.Value.ToString());
+            }
+        }
+
         #endregion
 
         #region properties
@@ -652,7 +656,7 @@
         /// <summary>
         /// The response headers of the last request.
         /// </summary>
-        public HttpResponseHeaders LastResponseHeaders { get; private set; }
+        public Dictionary<string, string> LastResponseHeaders { get; private set; }
 
         /// <summary>
         /// Creates an instance of the client configured for unit tests.
