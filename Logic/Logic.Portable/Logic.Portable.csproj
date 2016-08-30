@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures\DateSpanInfo.cs" />
     <Compile Include="Structures\DateSpanType.cs" />
+    <Compile Include="Structures\HttpResponseEventArgs.cs" />
     <Compile Include="Structures\LogEntryType.cs" />
     <Compile Include="Structures\MailServerSettings.cs" />
     <Compile Include="Structures\MonthInfo.cs" />

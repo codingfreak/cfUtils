@@ -13,11 +13,22 @@
 
     using Newtonsoft.Json;
 
+    using Structures;
+
     /// <summary>
     /// Handles consumption of the api.
     /// </summary>
     public sealed class JsonApiClient : HttpClient
     {
+        #region events
+
+        /// <summary>
+        /// Occurs when a HTTP response arrives.
+        /// </summary>
+        public event EventHandler<HttpResponseEventArgs> ResponseArrived;
+
+        #endregion
+
         #region constructors and destructors
 
         private JsonApiClient(HttpMessageHandler handler, bool disposeHandler) : base(handler, disposeHandler)
@@ -620,6 +631,7 @@
             {
                 LastResponseHeaders.Add(header.Key, header.Value.ToString());
             }
+            ResponseArrived?.Invoke(this, new HttpResponseEventArgs(responseMessage));
         }
 
         #endregion
