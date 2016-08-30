@@ -365,6 +365,8 @@
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
+            LastResponse = responseMessage;
+            LastResponseHeaders = responseMessage.Headers;
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -386,6 +388,8 @@
                 Content = requestContent
             };
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
+            LastResponse = responseMessage;
+            LastResponseHeaders = responseMessage.Headers;
             return responseMessage.IsSuccessStatusCode;
         }
 
@@ -402,13 +406,14 @@
         {
             var message = new HttpRequestMessage(method, endpoint);
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
+            LastResponse = responseMessage;
+            LastResponseHeaders = responseMessage.Headers;
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
             {
-                LastResponseHeaders = responseMessage.Headers;
                 var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
@@ -418,6 +423,11 @@
                 throw new InvalidDataException("Unexpected data from server could not be deserialized.", ex);
             }
         }
+
+        /// <summary>
+        /// The last HTTP response.
+        /// </summary>
+        public HttpResponseMessage LastResponse { get; private set; }
 
         /// <summary>
         /// Sends a HTTP request of the given <paramref name="method" /> containing <paramref name="inputData" /> and retrieves a
@@ -438,13 +448,14 @@
                 Content = requestContent
             };
             var responseMessage = await SendAsync(message).ConfigureAwait(false);
+            LastResponse = responseMessage;
+            LastResponseHeaders = responseMessage.Headers;
             if (!responseMessage.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
             {
-                LastResponseHeaders = responseMessage.Headers;
                 var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
