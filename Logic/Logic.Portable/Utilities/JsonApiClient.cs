@@ -629,7 +629,7 @@
             LastResponseHeaders = new Dictionary<string, string>();
             foreach (var header in responseMessage.Headers)
             {
-                LastResponseHeaders.Add(header.Key, header.Value.ToString());
+                LastResponseHeaders.Add(header.Key, string.Join(";", header.Value));
             }
             ResponseArrived?.Invoke(this, new HttpResponseEventArgs(responseMessage));
         }
