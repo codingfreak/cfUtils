@@ -444,6 +444,7 @@
             }
             try
             {
+                LastResponseHeaders = responseMessage.Headers;
                 var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
                 return responseModel;
