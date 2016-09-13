@@ -433,6 +433,40 @@
         }
 
         /// <summary>
+        /// Sends a HTTP request of the given <paramref name="method" /> and retrieves a deserialized result of type
+        /// <typeparamref name="TResult" />.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="endpoint">The endpoint fo the target service.</param>
+        /// <param name="method">The http-method to use.</param>
+        /// <param name="content">The HTTP content to send.</param>
+        /// <param name="queryParams">Optional url parameters.</param>
+        /// <returns>The deserialzed result.</returns>
+        public async Task<TResult> SendWithResultAsync<TResult>(Uri endpoint, HttpMethod method, HttpContent content, IEnumerable<KeyValuePair<string, string>> queryParams = null)
+        {
+            var message = new HttpRequestMessage(method, endpoint)
+            {
+                Content = content
+            };
+            var responseMessage = await SendAsync(message).ConfigureAwait(false);
+            HandleResponse(responseMessage);
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
+            }
+            try
+            {
+                var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var responseModel = JsonConvert.DeserializeObject<TResult>(responseContent);
+                return responseModel;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException("Unexpected data from server could not be deserialized.", ex);
+            }
+        }
+
+        /// <summary>
         /// Sends a HTTP request of the given <paramref name="method" /> containing <paramref name="inputData" /> and retrieves a
         /// deserialized result of type <typeparamref name="TResult" />.
         /// </summary>
@@ -504,7 +538,7 @@
                 }
                 var parts = originalFileName.Split('.');
                 content.Add(new StreamContent(new MemoryStream(fileData)), parts[0], originalFileName);
-                return await PostWithResultAsync<MultipartFormDataContent, TResult>(endpoint, content);
+                return await SendWithResultAsync<TResult>(endpoint, HttpMethod.Post, content);
             }
         }
 
