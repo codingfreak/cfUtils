@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9030A1C-8742-42C1-86ED-73E237BDFBD6}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\apikey.txt = .nuget\apikey.txt
 		.nuget\codingfreaks.nuget.targets = .nuget\codingfreaks.nuget.targets
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe

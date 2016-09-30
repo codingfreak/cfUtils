@@ -10,6 +10,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.key
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -255,3 +256,4 @@ paket-files/
 .idea/
 *.sln.iml
 /cfUtils/
+/.nuget/apikey.txt
