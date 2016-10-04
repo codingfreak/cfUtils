@@ -75,7 +75,7 @@ namespace codingfreaks.cfUtils.Logic.Azure
             try
             {
                 AuthenticationResult result = null;
-                var serviceName = targetService.ToString().TrimEnd('/');
+                var serviceName = targetService.ToString();
                 if (appKey.IsNullOrEmpty())
                 {
                     // use user auth
