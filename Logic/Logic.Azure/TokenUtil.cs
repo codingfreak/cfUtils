@@ -39,7 +39,7 @@ namespace codingfreaks.cfUtils.Logic.Azure
             var tenantDomain = ConfigurationUtil.Get<string>("ida:TenantDomain");
             var targetServiceUrl = ConfigurationUtil.Get<string>("ida:ServiceUrl");
             var clientId = ConfigurationUtil.Get<string>("ida:ClientId");
-            var appKey = ConfigurationUtil.Get<string>("ida:AppKey");
+            var appKey = ConfigurationUtil.Get<string>("ida:AppKey", null);
             var redirectUrl = ConfigurationUtil.Get<string>("ida:RedirectUrl");
             if (!url.IsNullOrEmpty() && !tenantDomain.IsNullOrEmpty() && !targetServiceUrl.IsNullOrEmpty() && !clientId.IsNullOrEmpty() && !redirectUrl.IsNullOrEmpty())
             {
@@ -71,7 +71,7 @@ namespace codingfreaks.cfUtils.Logic.Azure
         /// <returns>The authentication token.</returns>
         public static async Task<string> RetrieveTokenAsync(string authUrl, string tenantDomain, Uri targetService, string clientId, Uri redirectUrl, string appKey = null)
         {
-            var authenticationContext = new AuthenticationContext($"{authUrl}{tenantDomain}");
+            var authenticationContext = new AuthenticationContext($"{authUrl}/{tenantDomain}");
             try
             {
                 AuthenticationResult result = null;

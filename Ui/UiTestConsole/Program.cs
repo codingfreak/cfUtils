@@ -20,9 +20,16 @@
 
         static void Main(string[] args)
         {
-            TestMail();
+            //TestMail();
+            TestAzureToken();
             Console.WriteLine("Fertig");
             Console.ReadKey();
+        }
+
+        private static void TestAzureToken()
+        {
+            var token = TokenUtil.RetrieveTokenAsync().Result;
+            Console.WriteLine(token);
         }
 
         private static void TestMail()
