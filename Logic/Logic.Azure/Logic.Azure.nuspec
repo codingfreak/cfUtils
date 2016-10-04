@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Removed invalid slash-trailing in RetrieveTokenAsync.</releaseNotes>
+    <releaseNotes>Target-Service in TokenUtil is now a string.</releaseNotes>
     <tags>codingfreaks,Azure,.NET,C#,Storage,Queue</tags>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>

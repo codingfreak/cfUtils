@@ -8,10 +8,12 @@
     using System.Diagnostics;
 
     using System.Linq;
+    using System.Net;
     using System.Net.Mail;
     using System.Runtime.Remoting.Messaging;
 
     using Logic.Portable.Structures;
+    using Logic.Portable.Utilities;
     using Logic.Utils.Utilities;
 
     class Program
@@ -29,7 +31,13 @@
         private static void TestAzureToken()
         {
             var token = TokenUtil.RetrieveTokenAsync().Result;
-            Console.WriteLine(token);
+            var headers = new Dictionary<string, string>
+                {
+                    { HttpRequestHeader.Authorization.ToString(), "Bearer " + token }
+                };
+            var client = JsonApiClient.GetInstance(headers, new Uri("https://manage.office.com/api/v1.0/18ca94d4-b294-485e-b973-27ef77addb3e/activity/feed/"));            
+            var result = client.GetWithResultAsync<IEnumerable<dynamic>>("subscriptions/list").Result;
+            Console.WriteLine(result);
         }
 
         private static void TestMail()

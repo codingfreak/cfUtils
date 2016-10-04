@@ -42,19 +42,17 @@ namespace codingfreaks.cfUtils.Logic.Azure
             var appKey = ConfigurationUtil.Get<string>("ida:AppKey", null);
             var redirectUrl = ConfigurationUtil.Get<string>("ida:RedirectUrl");
             if (!url.IsNullOrEmpty() && !tenantDomain.IsNullOrEmpty() && !targetServiceUrl.IsNullOrEmpty() && !clientId.IsNullOrEmpty() && !redirectUrl.IsNullOrEmpty())
-            {
-                Uri targetServiceUri = null;
+            {                
                 Uri redirectUri = null;
                 try
-                {
-                    targetServiceUri = new Uri(targetServiceUrl);
+                {                    
                     redirectUri = new Uri(redirectUrl);
                 }
                 catch (Exception ex)
                 {
                     throw new FormatException("Some uri-parameters are not formed correctly.", ex);
                 }
-                return await RetrieveTokenAsync(url, tenantDomain, targetServiceUri, clientId, redirectUri, appKey).ConfigureAwait(false);
+                return await RetrieveTokenAsync(url, tenantDomain, targetServiceUrl, clientId, redirectUri, appKey).ConfigureAwait(false);
             }
             throw new ArgumentException("Some parameters are missing in configuration.");
         }
@@ -64,29 +62,28 @@ namespace codingfreaks.cfUtils.Logic.Azure
         /// </summary>
         /// <param name="authUrl">The root of the authority url.</param>
         /// <param name="tenantDomain">The domain name of the Azure tenant as the second part of the authority url.</param>
-        /// <param name="targetService">The url of the service that should be accessed.</param>
+        /// <param name="targetServiceUrl">The url of the service that should be accessed. Be sure to check trailing slashes!</param>
         /// <param name="clientId">The unique client id as it is configured in Azure Portal.</param>
         /// <param name="appKey">This value is optional and contains the App-Key-Secret if it is configured in azure portal.</param>
         /// <param name="redirectUrl">The redirect url as it is configured in Azure Portal.</param>
         /// <returns>The authentication token.</returns>
-        public static async Task<string> RetrieveTokenAsync(string authUrl, string tenantDomain, Uri targetService, string clientId, Uri redirectUrl, string appKey = null)
+        public static async Task<string> RetrieveTokenAsync(string authUrl, string tenantDomain, string targetServiceUrl, string clientId, Uri redirectUrl, string appKey = null)
         {
             var authenticationContext = new AuthenticationContext($"{authUrl}/{tenantDomain}");
             try
             {
-                AuthenticationResult result = null;
-                var serviceName = targetService.ToString();
+                AuthenticationResult result = null;                
                 if (appKey.IsNullOrEmpty())
                 {
                     // use user auth
                     var parameters = new PlatformParameters(PromptBehavior.Auto);
-                    result = await authenticationContext.AcquireTokenAsync(serviceName, clientId, redirectUrl, parameters).ConfigureAwait(false);
+                    result = await authenticationContext.AcquireTokenAsync(targetServiceUrl, clientId, redirectUrl, parameters).ConfigureAwait(false);
                 }
                 else
                 {
                     // use key auth
                     var clientCredential = new ClientCredential(clientId, appKey);
-                    result = await authenticationContext.AcquireTokenAsync(serviceName, clientCredential).ConfigureAwait(false);
+                    result = await authenticationContext.AcquireTokenAsync(targetServiceUrl, clientCredential).ConfigureAwait(false);
                 }
                 if (result == null)
                 {
