@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains wrapper logic for accessing Microsoft Azure services easily.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Package updates.</releaseNotes>
+    <releaseNotes>New TokenUtil provides easy access to bearer tokens.</releaseNotes>
     <tags>codingfreaks,Azure,.NET,C#,Storage,Queue</tags>
     <copyright>codingfreaks 2015-2016</copyright>
     <frameworkAssemblies>
