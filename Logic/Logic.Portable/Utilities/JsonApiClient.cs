@@ -418,6 +418,10 @@
             HandleResponse(responseMessage);
             if (!responseMessage.IsSuccessStatusCode)
             {
+                if (HandleNotFoundAsNull)
+                {
+                    return default(TResult);
+                }
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
@@ -452,6 +456,10 @@
             HandleResponse(responseMessage);
             if (!responseMessage.IsSuccessStatusCode)
             {
+                if (HandleNotFoundAsNull)
+                {
+                    return default(TResult);
+                }
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
@@ -488,6 +496,10 @@
             HandleResponse(responseMessage);
             if (!responseMessage.IsSuccessStatusCode)
             {
+                if (HandleNotFoundAsNull)
+                {
+                    return default(TResult);
+                }
                 throw new InvalidOperationException($"The server returned status code {responseMessage.StatusCode}");
             }
             try
@@ -642,7 +654,7 @@
             try
             {
                 var query = string.Empty;
-                if ((queryParams != null) && queryParams.Any())
+                if (queryParams != null && queryParams.Any())
                 {
                     query = $"?" + ToQuerystring(queryParams);
                 }
@@ -698,6 +710,15 @@
         /// You can use <see cref="DebugHeaders" /> to add headers in DEBUG configuration.
         /// </remarks>
         public static Dictionary<string, string> DefaultHeaders { get; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// Indicates whether 404 results on retrieving methods should not raise exceptions and return default of expected type
+        /// instead.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>false</c>.
+        /// </remarks>
+        public bool HandleNotFoundAsNull { get; set; }
 
         /// <summary>
         /// The response headers of the last request.
