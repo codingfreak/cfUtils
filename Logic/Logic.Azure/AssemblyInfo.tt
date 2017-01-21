@@ -6,7 +6,7 @@
 
 using System.Reflection;
 
-[assembly: AssemblyVersion("1.0.24.41")]
+[assembly: AssemblyVersion("1.0.25.42")]
 [assembly: AssemblyFileVersion("1.0.1.<#= this.RevisionNumber #>")]
 <#+
     int RevisionNumber = (int)(DateTime.UtcNow - new DateTime(2010,1,1)).TotalDays;
