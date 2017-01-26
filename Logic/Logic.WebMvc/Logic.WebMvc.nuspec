@@ -14,7 +14,7 @@
     <tags>codingfreaks,ASP.NET,MVC,Web,.NET,C#,Filters</tags>
     <copyright>codingfreaks 2015-2016</copyright>
     <dependencies>
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.14" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.32" />      
       <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
       <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
     </dependencies>

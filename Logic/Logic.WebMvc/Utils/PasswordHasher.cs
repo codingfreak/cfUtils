@@ -18,11 +18,7 @@ namespace codingfreaks.cfUtils.Logic.WebMvcUtils.Utils
     {
         #region explicit interfaces
 
-        /// <summary>
-        /// Hash a password
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns>The hashed password as a Base64 string.</returns>
+        /// <inheritdoc />
         public string HashPassword(string password)
         {
             byte[] salt;
@@ -42,12 +38,7 @@ namespace codingfreaks.cfUtils.Logic.WebMvcUtils.Utils
             return Convert.ToBase64String(dst);
         }
 
-        /// <summary>
-        /// Verifies that a password matches the hashed password
-        /// </summary>
-        /// <param name="hashedPassword">The hashed password.</param>
-        /// <param name="password">The given clear password.</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string password)
         {
             byte[] buffer4;
