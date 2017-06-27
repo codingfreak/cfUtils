@@ -16,8 +16,7 @@ namespace codingfreaks.cfUtils.Logic.Tests
     using PropertyChanged;
     using System.ComponentModel;
     
-    [GeneratedCode("Entity Framework", "6.1")]
-    [ImplementPropertyChanged]
+    [GeneratedCode("Entity Framework", "6.1")]    
     public partial class Person : IEntity
     {
     
