@@ -17,10 +17,10 @@
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="WindowsAzure.Storage" version="7.2.1" />
+      <dependency id="WindowsAzure.Storage" version="8.1.4" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.2.3" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.18" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.20" />
     </dependencies>
   </metadata>
   <files>
