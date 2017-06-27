@@ -57,12 +57,11 @@
     <CodeAnalysisIgnoreGeneratedCode>true</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.18.25, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.18\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="cfUtils.cfBaseUtils, Version=1.0.20.35, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfBaseUtils.1.0.20\lib\net\cfUtils.cfBaseUtils.dll</HintPath>
     </Reference>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.32.59, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.32\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.33.60, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.33\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
