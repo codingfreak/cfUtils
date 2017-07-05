@@ -111,6 +111,26 @@
         }
 
         /// <summary>
+        /// Retrieve the date of the week end for a given <paramref name="date" />.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <param name="culture">The culture to use or <c>null</c> if <see cref="CultureInfo.CurrentUICulture" /> should be taken.</param>
+        /// <returns>The date representing the last day of the week.</returns>
+        public static DateTime EndOfWeek(this DateTime date, CultureInfo culture = null)
+        {
+            if (culture == null)
+            {
+                culture = CultureInfo.CurrentUICulture;
+            }
+            var dateToTest = date;
+            while (dateToTest.DayOfWeek != culture.DateTimeFormat.FirstDayOfWeek)
+            {
+                dateToTest = dateToTest.AddDays(1);
+            }
+            return dateToTest.AddDays(-1).EndOfDay();
+        }
+
+        /// <summary>
         /// Retrieves the end of the quarter in which the given <paramref name="date" /> lays.
         /// </summary>
         /// <param name="date">The original date.</param>
