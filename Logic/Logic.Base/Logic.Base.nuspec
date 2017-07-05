@@ -17,7 +17,7 @@
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.33" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.34" />
     </dependencies>
   </metadata>
   <files>
