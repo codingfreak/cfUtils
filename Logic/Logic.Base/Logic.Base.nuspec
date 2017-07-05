@@ -11,13 +11,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <releaseNotes>Updated NuGet references.</releaseNotes>
-    <copyright>codingfreaks UG 2014-2016</copyright>
+    <copyright>codingfreaks UG 2014-2017</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.34" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.36" />
     </dependencies>
   </metadata>
   <files>
