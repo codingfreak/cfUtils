@@ -1,7 +1,7 @@
 ﻿namespace codingfreaks.cfUtils.Logic.Portable.Structures
 {
     /// <summary>
-    /// Represents a type a <see cref="DateSpanInfo"/> can be of.
+    /// Represents a type a <see cref="DateTimeSpanInfo"/> can be of.
     /// </summary>
     public enum DateSpanType
     {

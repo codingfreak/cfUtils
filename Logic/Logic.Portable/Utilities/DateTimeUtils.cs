@@ -3,10 +3,10 @@
     using System;
     using System.Linq;
 
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using Extensions;
 
     /// <summary>
-    /// Provides logic for the <see cref="DateTime"/> type.
+    /// Provides logic for the <see cref="DateTime" /> type.
     /// </summary>
     public static class DateTimeUtils
     {
@@ -20,7 +20,7 @@
         /// <returns>The amount of calendar days.</returns>
         public static int GetDaysForYears(int yearFrom, int yearTo)
         {
-            return Enumerable.Range(yearFrom, yearTo).Sum(i => (DateTime.IsLeapYear(i)) ? 366 : 365);
+            return Enumerable.Range(yearFrom, yearTo).Sum(i => DateTime.IsLeapYear(i) ? 366 : 365);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@
         /// Calculates the last day of a month.
         /// </summary>
         /// <param name="year">The year of the month.</param>
-        /// <param name="month">The month.</param>        
+        /// <param name="month">The month.</param>
         /// <returns>The date of the last day of the month.</returns>
         public static DateTime GetLastDayOfMonth(int year, int month)
         {
@@ -52,14 +52,43 @@
         }
 
         /// <summary>
-        /// Converts a timespan into a point in time on a given <paramref name="date"/>.
+        /// Calculates the last day of a month.
+        /// </summary>
+        /// <param name="year">The year of the month.</param>
+        /// <param name="month">The month.</param>
+        /// <returns>The date of the last day of the month.</returns>
+        public static DateTimeOffset GetOffsetLastDayOfMonth(int year, int month, TimeSpan utcOffset = default(TimeSpan))
+        {
+            var date = new DateTimeOffset(year, month, 28, 0, 0, 0, utcOffset);
+            while (date.Month == month)
+            {
+                date = date.AddDays(1);
+            }
+            return date.AddDays(-1).BeginOfDay();
+        }
+
+        /// <summary>
+        /// Converts a timespan into a point in time on a given <paramref name="date" />.
         /// </summary>
         /// <param name="span">The span to add to the day.</param>
         /// <param name="date">The date on which the span should occur.</param>
-        /// <returns>The time on the <paramref name="date"/> or the day after if the span is passed already.</returns>
+        /// <returns>The time on the <paramref name="date" /> or the day after if the span is passed already.</returns>
         public static DateTime GetTimeByTimespan(this TimeSpan span, DateTime date)
         {
             var now = DateTime.Now;
+            var desired = date.BeginOfDay().Add(span);
+            return desired < now ? date.AddDays(1).BeginOfDay().Add(span) : desired;
+        }
+
+        /// <summary>
+        /// Converts a timespan into a point in time on a given <paramref name="date" />.
+        /// </summary>
+        /// <param name="span">The span to add to the day.</param>
+        /// <param name="date">The date on which the span should occur.</param>
+        /// <returns>The time on the <paramref name="date" /> or the day after if the span is passed already.</returns>
+        public static DateTimeOffset GetOffsetTimeByTimespan(this TimeSpan span, DateTimeOffset date)
+        {
+            var now = DateTimeOffset.Now;
             var desired = date.BeginOfDay().Add(span);
             return desired < now ? date.AddDays(1).BeginOfDay().Add(span) : desired;
         }

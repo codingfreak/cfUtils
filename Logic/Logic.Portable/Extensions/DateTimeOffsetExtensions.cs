@@ -10,9 +10,9 @@
     using Utilities;
 
     /// <summary>
-    /// Provides extensions methods for the DateTime-caclulation area.
+    /// Provides extensions methods for the DateTimeOffset-caclulation area.
     /// </summary>
-    public static class DateTimeExtensions
+    public static class DateTimeOffsetExtensions
     {
         #region constants
 
@@ -34,9 +34,9 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The date representing the first moment.</returns>
-        public static DateTime BeginOfDay(this DateTime date)
+        public static DateTimeOffset BeginOfDay(this DateTimeOffset date)
         {
-            return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
+            return new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, date.Offset);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The starting time point of the correct half year.</returns>
-        public static DateTime BeginOfHalfYear(this DateTime date)
+        public static DateTimeOffset BeginOfHalfYear(this DateTimeOffset date)
         {
             return date.GetCalendarHalfYearInfo().DateStart;
         }
@@ -54,7 +54,7 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The starting time point of the correct quarter.</returns>
-        public static DateTime BeginOfQuarter(this DateTime date)
+        public static DateTimeOffset BeginOfQuarter(this DateTimeOffset date)
         {
             return date.GetCalendarQuarterInfo().DateStart;
         }
@@ -65,7 +65,7 @@
         /// <param name="date">The original date.</param>
         /// <param name="culture">The culture to use or <c>null</c> if <see cref="CultureInfo.CurrentUICulture" /> should be taken.</param>
         /// <returns>The date representing the first day of the week.</returns>
-        public static DateTime BeginOfWeek(this DateTime date, CultureInfo culture = null)
+        public static DateTimeOffset BeginOfWeek(this DateTimeOffset date, CultureInfo culture = null)
         {
             if (culture == null)
             {
@@ -85,9 +85,9 @@
         /// <param name="date">The original date.</param>
         /// <param name="newYear">The new year value.</param>
         /// <returns>The new date.</returns>
-        public static DateTime ChangeYear(this DateTime date, int newYear)
+        public static DateTimeOffset ChangeYear(this DateTimeOffset date, int newYear)
         {
-            return new DateTime(newYear, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond);
+            return new DateTimeOffset(newYear, date.Month, date.Day, date.Hour, date.Minute, date.Second, date.Millisecond, date.Offset);
         }
 
         /// <summary>
@@ -95,9 +95,9 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The date representing the last moment.</returns>
-        public static DateTime EndOfDay(this DateTime date)
+        public static DateTimeOffset EndOfDay(this DateTimeOffset date)
         {
-            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);
+            return new DateTimeOffset(date.Year, date.Month, date.Day, 23, 59, 59, 999, date.Offset);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The end time point of the correct half year.</returns>
-        public static DateTime EndOfHalfYear(this DateTime date)
+        public static DateTimeOffset EndOfHalfYear(this DateTimeOffset date)
         {
             return date.GetCalendarHalfYearInfo().DateEnd;
         }
@@ -115,7 +115,7 @@
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The end time point of the correct quarter.</returns>
-        public static DateTime EnfOfQuarter(this DateTime date)
+        public static DateTimeOffset EndOfQuarter(this DateTimeOffset date)
         {
             return date.GetCalendarQuarterInfo().DateEnd;
         }
@@ -125,37 +125,9 @@
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar half year information for the date.</returns>
-        public static DateTimeSpanInfo GetCalendarHalfYearInfo(this DateTime current)
+        public static DateTimeOffsetSpanInfo GetCalendarHalfYearInfo(this DateTimeOffset current)
         {
-            return current.Year.GetCalendarHalfYearsForYear().First(w => w.SpanNumber == current.GetHalfYearNumber());
-        }
-
-        /// <summary>
-        /// Returns a list of both half years of a given year.
-        /// </summary>
-        /// <param name="year">The year to examine.</param>
-        /// <returns>A list of meta-info objects describing the half-years.</returns>
-        public static IEnumerable<DateTimeSpanInfo> GetCalendarHalfYearsForYear(this int year)
-        {
-            var result = new List<DateTimeSpanInfo>();
-            var currentHalfyear = 0;
-            // 1. Get first and last day
-            var startDate = new DateTime(year, 1, 1);
-            var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all halfyear-informations
-            while (startDate < endDate)
-            {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarHalfyear,
-                        SpanNumber = ++currentHalfyear,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)
-                    });
-                startDate = startDate.AddMonths(6);
-            }
-            return result;
+            return current.Year.GetOffsetCalendarHalfYearsForYear(current.Offset).First(w => w.SpanNumber == current.DateTime.GetHalfYearNumber());
         }
 
         /// <summary>
@@ -163,37 +135,9 @@
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar month information for the date.</returns>
-        public static DateTimeSpanInfo GetCalendarMonthInfo(this DateTime current)
+        public static DateTimeOffsetSpanInfo GetCalendarMonthInfo(this DateTimeOffset current)
         {
-            return current.Year.GetCalendarMonthsForYear().First(w => w.SpanNumber == current.Month);
-        }
-
-        /// <summary>
-        /// Returns a list of all calendar months of a given year.
-        /// </summary>
-        /// <param name="year">The year to examine.</param>
-        /// <returns>A list of meta-info objects describing the months.</returns>
-        public static IEnumerable<DateTimeSpanInfo> GetCalendarMonthsForYear(this int year)
-        {
-            var result = new List<DateTimeSpanInfo>();
-            var currentMonth = 0;
-            // 1. Get first and last day
-            var startDate = new DateTime(year, 1, 1);
-            var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all week-informations
-            while (startDate < endDate)
-            {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarMonth,
-                        SpanNumber = ++currentMonth,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentMonth)
-                    });
-                startDate = startDate.AddMonths(1);
-            }
-            return result;
+            return current.Year.GetOffsetCalendarMonthsForYear().First(w => w.SpanNumber == current.Month);
         }
 
         /// <summary>
@@ -201,37 +145,9 @@
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar quarter information for the date.</returns>
-        public static DateTimeSpanInfo GetCalendarQuarterInfo(this DateTime current)
+        public static DateTimeOffsetSpanInfo GetCalendarQuarterInfo(this DateTimeOffset current)
         {
-            return current.Year.GetCalendarQuartersForYear().First(w => w.SpanNumber == current.GetQuarterNumber());
-        }
-
-        /// <summary>
-        /// Returns a list of all calendar quarters of a given year.
-        /// </summary>
-        /// <param name="year">The year to examine.</param>
-        /// <returns>A list of meta-info objects describing the quarters.</returns>
-        public static IEnumerable<DateTimeSpanInfo> GetCalendarQuartersForYear(this int year)
-        {
-            var result = new List<DateTimeSpanInfo>();
-            var currentQuarter = 0;
-            // 1. Get first and last day
-            var startDate = new DateTime(year, 1, 1);
-            var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all week-informations
-            while (startDate < endDate)
-            {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarQuarter,
-                        SpanNumber = ++currentQuarter,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)
-                    });
-                startDate = startDate.AddMonths(3);
-            }
-            return result;
+            return current.Year.GetOffsetCalendarQuartersForYear().First(w => w.SpanNumber == current.DateTime.GetQuarterNumber());
         }
 
         /// <summary>
@@ -239,9 +155,96 @@
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar week information for the date.</returns>
-        public static DateTimeSpanInfo GetCalendarWeekInfo(this DateTime current)
+        public static DateTimeOffsetSpanInfo GetCalendarWeekInfo(this DateTimeOffset current)
         {
-            return current.Year.GetCalendarWeeksForYear().First(w => w.SpanNumber == current.GetWeekNumber());
+            return current.Year.GetOffsetCalendarWeeksForYear(null, current.Offset).First(w => w.SpanNumber == current.DateTime.GetWeekNumber());
+        }
+
+        /// <summary>
+        /// Returns a list of both half years of a given year.
+        /// </summary>
+        /// <param name="year">The year to examine.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
+        /// <returns>A list of meta-info objects describing the half-years.</returns>
+        public static IEnumerable<DateTimeOffsetSpanInfo> GetOffsetCalendarHalfYearsForYear(this int year, TimeSpan utcOffset = default(TimeSpan))
+        {
+            var result = new List<DateTimeOffsetSpanInfo>();
+            var currentHalfyear = 0;
+            // 1. Get first and last day
+            var startDate = new DateTimeOffset(year, 1, 1, 0, 0, 0, utcOffset);
+            var endDate = new DateTimeOffset(year + 1, 1, 1, 0, 0, 0, utcOffset);
+            // 2. Collect all halfyear-informations
+            while (startDate < endDate)
+            {
+                result.Add(
+                    new DateTimeOffsetSpanInfo
+                    {
+                        SpanType = DateSpanType.CalendarHalfyear,
+                        SpanNumber = ++currentHalfyear,
+                        DateStart = startDate,
+                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 5, utcOffset)
+                    });
+                startDate = startDate.AddMonths(6);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a list of all calendar months of a given year.
+        /// </summary>
+        /// <param name="year">The year to examine.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
+        /// <returns>A list of meta-info objects describing the months.</returns>
+        public static IEnumerable<DateTimeOffsetSpanInfo> GetOffsetCalendarMonthsForYear(this int year, TimeSpan utcOffset = default(TimeSpan))
+        {
+            var result = new List<DateTimeOffsetSpanInfo>();
+            var currentMonth = 0;
+            // 1. Get first and last day
+            var startDate = new DateTimeOffset(year, 1, 1, 0, 0, 0, utcOffset);
+            var endDate = new DateTimeOffset(year + 1, 1, 1, 0, 0, 0, utcOffset);
+            // 2. Collect all week-informations
+            while (startDate < endDate)
+            {
+                result.Add(
+                    new DateTimeOffsetSpanInfo
+                    {
+                        SpanType = DateSpanType.CalendarMonth,
+                        SpanNumber = ++currentMonth,
+                        DateStart = startDate,
+                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, currentMonth, utcOffset)
+                    });
+                startDate = startDate.AddMonths(1);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a list of all calendar quarters of a given year.
+        /// </summary>
+        /// <param name="year">The year to examine.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
+        /// <returns>A list of meta-info objects describing the quarters.</returns>
+        public static IEnumerable<DateTimeOffsetSpanInfo> GetOffsetCalendarQuartersForYear(this int year, TimeSpan utcOffset = default(TimeSpan))
+        {
+            var result = new List<DateTimeOffsetSpanInfo>();
+            var currentQuarter = 0;
+            // 1. Get first and last day
+            var startDate = new DateTimeOffset(year, 1, 1, 0, 0, 0, utcOffset);
+            var endDate = new DateTimeOffset(year + 1, 1, 1, 0, 0, 0, utcOffset);
+            // 2. Collect all week-informations
+            while (startDate < endDate)
+            {
+                result.Add(
+                    new DateTimeOffsetSpanInfo
+                    {
+                        SpanType = DateSpanType.CalendarQuarter,
+                        SpanNumber = ++currentQuarter,
+                        DateStart = startDate,
+                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, currentQuarter + 2)
+                    });
+                startDate = startDate.AddMonths(3);
+            }
+            return result;
         }
 
         /// <summary>
@@ -249,23 +252,24 @@
         /// </summary>
         /// <param name="year">The year to examine.</param>
         /// <param name="culture">The culture to use or <c>null</c> if <see cref="CultureInfo.CurrentUICulture" /> should be taken.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
         /// <returns>A list of meta-info objects describing the weeks.</returns>
-        public static IEnumerable<DateTimeSpanInfo> GetCalendarWeeksForYear(this int year, CultureInfo culture = null)
+        public static IEnumerable<DateTimeOffsetSpanInfo> GetOffsetCalendarWeeksForYear(this int year, CultureInfo culture = null, TimeSpan utcOffset = default(TimeSpan))
         {
             if (culture == null)
             {
                 culture = CultureInfo.CurrentUICulture;
             }
-            var result = new List<DateTimeSpanInfo>();
+            var result = new List<DateTimeOffsetSpanInfo>();
             var currentWeek = 0;
             // 1. Get first and last day
-            var startDate = year.GetFirstDayOfYear(culture);
-            var endDate = (year + 1).GetFirstDayOfYear(culture);
+            var startDate = year.GetOffsetFirstDayOfYear(culture, utcOffset);
+            var endDate = (year + 1).GetOffsetFirstDayOfYear(culture, utcOffset);
             // 2. Collect all week-informations
             while (startDate < endDate)
             {
                 result.Add(
-                    new DateTimeSpanInfo
+                    new DateTimeOffsetSpanInfo
                     {
                         SpanType = DateSpanType.CalendarWeek,
                         SpanNumber = ++currentWeek,
@@ -283,14 +287,15 @@
         /// </summary>
         /// <param name="year">The year to examine.</param>
         /// <param name="culture">The culture to use or <c>null</c> if <see cref="CultureInfo.CurrentUICulture" /> should be taken.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
         /// <returns>The first day of the year.</returns>
-        public static DateTime GetFirstDayOfYear(this int year, CultureInfo culture = null)
+        public static DateTimeOffset GetOffsetFirstDayOfYear(this int year, CultureInfo culture = null, TimeSpan utcOffset = default(TimeSpan))
         {
             if (culture == null)
             {
                 culture = CultureInfo.CurrentUICulture;
             }
-            var startDate = new DateTime(year, 1, 1).AddDays(-10);
+            var startDate = new DateTimeOffset(year, 1, 1, 0, 0, 0, utcOffset).AddDays(-10);
             var firstDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
             // 1. find the start-day
             while (startDate.GetWeekNumber(culture) != 1)
@@ -306,92 +311,12 @@
         }
 
         /// <summary>
-        /// Returns the calendar half year of a given date.
-        /// </summary>
-        /// <param name="date">The date to examine.</param>
-        /// <returns>The number of the calendar half year.</returns>
-        public static int GetHalfYearNumber(this DateTime date)
-        {
-            return date.Month < 7 ? 1 : 2;
-        }
-
-        /// <summary>
-        /// Returns the calendar quarter of a given date.
-        /// </summary>
-        /// <param name="date">The date to examine.</param>
-        /// <returns>The number of the calendar quarter.</returns>
-        public static int GetQuarterNumber(this DateTime date)
-        {
-            return (int)Math.Ceiling((double)date.Month / 3);
-        }
-
-        /// <summary>
-        /// Returns a string which contains the relative date span from the dtmBase-view. It returns words like 'tomorrow',
-        /// 'yesterday' ...
-        /// </summary>
-        /// <remarks>
-        /// <list type="bullet">
-        /// <listheader>
-        /// You need the following keys in your resource-file:
-        /// </listheader>
-        /// <item>
-        /// <term>RelativeDateSpanToday</term><description>Today</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanYesterday</term><description>Yesterday</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanTomorrow</term><description>Tomorrow</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanBeforeYesterday</term><description>before 2 days</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanAfterTomorrow</term><description>in 2 days</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanDaysBefore</term><description>before {0} days</description>
-        /// </item>
-        /// <item>
-        /// <term>RelativeDateSpanDaysAfter</term><description>in {0} days</description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// <param name="current">The date from which to look.</param>
-        /// <param name="compareDate">The date to compare with dtmBase.</param>
-        /// <param name="resourceType">The target resource where the search should occur.</param>
-        /// <returns>A resource-based string matching the time span.</returns>
-        public static string GetRelativeDateSpanText(this DateTime current, DateTime compareDate, int resourceType = 0)
-        {
-            current = current.Date;
-            compareDate = compareDate.Date;
-            var dayDiff = current.Subtract(compareDate).Days;
-            var inPast = dayDiff < 0;
-            dayDiff = Math.Abs(dayDiff);
-            if (dayDiff == 0)
-            {
-                // it is today
-                return PortableResourceUtil.Get<string>("RelativeDateSpanToday", resourceType);
-            }
-            if (dayDiff == 1)
-            {
-                return inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanYesterday", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanTomorrow", resourceType);
-            }
-            if (dayDiff == 2)
-            {
-                return inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanBeforeYesterday", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanAfterTomorrow", resourceType);
-            }
-            var strPattern = inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanDaysBefore", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanDaysAfter", resourceType);
-            return string.Format(strPattern, dayDiff);
-        }
-
-        /// <summary>
         /// Returns the calendar week of a given date.
         /// </summary>
         /// <param name="date">The date to examine.</param>
         /// <param name="culture">The culture to use or <c>null</c> if <see cref="CultureInfo.CurrentUICulture" /> should be taken.</param>
         /// <returns>The number of the calendar week.</returns>
-        public static int GetWeekNumber(this DateTime date, CultureInfo culture = null)
+        public static int GetWeekNumber(this DateTimeOffset date, CultureInfo culture = null)
         {
             if (culture == null)
             {
@@ -400,7 +325,7 @@
             var calendar = culture.Calendar;
             var weekRule = culture.DateTimeFormat.CalendarWeekRule;
             var firstDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
-            return calendar.GetWeekOfYear(date, weekRule, firstDayOfWeek);
+            return calendar.GetWeekOfYear(date.DateTime, weekRule, firstDayOfWeek);
         }
 
         /// <summary>
@@ -416,7 +341,7 @@
         /// is given.
         /// </param>
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInFuture" /> is <c>null</c>.</returns>
-        public static int? GetYearsDifference(this DateTime? dateInFuture, DateTime? dateInPast = null)
+        public static int? GetYearsDifference(this DateTimeOffset? dateInFuture, DateTimeOffset? dateInPast = null)
         {
             if (dateInFuture == null)
             {
@@ -439,12 +364,12 @@
         /// is given.
         /// </param>
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInFuture" /> is <c>null</c>.</returns>
-        public static int? GetYearsDifference(this DateTime dateInFuture, DateTime? dateInPast = null)
+        public static int? GetYearsDifference(this DateTimeOffset dateInFuture, DateTimeOffset? dateInPast = null)
         {
             if (!dateInPast.HasValue)
             {
                 // if no past-date is given, take current date
-                dateInPast = DateTime.Now;
+                dateInPast = DateTimeOffset.Now;
             }
             var totalDays = dateInFuture.Subtract(dateInPast.Value).TotalDays;
             if (totalDays.Equals(365d))
@@ -468,7 +393,7 @@
         /// is given.
         /// </param>
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInPast" /> is <c>null</c>.</returns>
-        public static int? GetYearsTilDifference(this DateTime? dateInPast, DateTime? dateInFuture = null)
+        public static int? GetYearsTilDifference(this DateTimeOffset? dateInPast, DateTimeOffset? dateInFuture = null)
         {
             if (dateInPast == null)
             {
@@ -491,35 +416,14 @@
         /// is given.
         /// </param>
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInPast" /> is <c>null</c>.</returns>
-        public static int? GetYearsTilDifference(this DateTime dateInPast, DateTime? dateInFuture = null)
+        public static int? GetYearsTilDifference(this DateTimeOffset dateInPast, DateTimeOffset? dateInFuture = null)
         {
             if (!dateInFuture.HasValue)
             {
                 // if no future-date is given, take current date
-                dateInFuture = DateTime.Now;
+                dateInFuture = DateTimeOffset.Now;
             }
             return (int)(dateInFuture.Value.Subtract(dateInPast).TotalDays / DaysPerYear);
-        }
-
-        /// <summary>
-        /// Calculates a time value for a given decimal <paramref name="time" />.
-        /// </summary>
-        /// <param name="time">The time in decimal notation.</param>
-        /// <returns>The date-time.</returns>
-        public static DateTime ToDateTime(this decimal time)
-        {
-            var hours = (int)time;
-            if (hours < 0 || hours > 23)
-            {
-                throw new ArgumentException("Can not convert this decimal to a time!");
-            }
-            var minutes = time - Convert.ToDecimal(hours);
-            var minutesToUse = (int)(60 * minutes);
-            if (minutesToUse < 0 || minutesToUse > 59)
-            {
-                throw new ArgumentException("Can not convert this decimal to a time!");
-            }
-            return DateTime.Parse(string.Format(CultureInfo.InvariantCulture, "{0}:{1}", hours, minutesToUse));
         }
 
         /// <summary>
@@ -527,7 +431,7 @@
         /// </summary>
         /// <param name="date">The date to convert.</param>
         /// <returns>A decimal value. For 16:30 it will return 16.5 e.g.</returns>
-        public static decimal ToDecimalTime(this DateTime date)
+        public static decimal ToDecimalTime(this DateTimeOffset date)
         {
             var minute = Math.Round((decimal)date.Minute / 60, 2);
             return date.Hour + minute;
@@ -538,7 +442,7 @@
         /// </summary>
         /// <param name="date">The date or <c>null</c>.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToLongDateString(this DateTime? date)
+        public static string ToLongDateString(this DateTimeOffset? date)
         {
             return date?.ToString("D") ?? string.Empty;
         }
@@ -548,7 +452,7 @@
         /// </summary>
         /// <param name="date">The date or <c>null</c>.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToLongTimeString(this DateTime? date)
+        public static string ToLongTimeString(this DateTimeOffset? date)
         {
             return date?.ToString("T") ?? string.Empty;
         }
@@ -558,7 +462,7 @@
         /// </summary>
         /// <param name="date">The date or <c>null</c>.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToShortDateString(this DateTime? date)
+        public static string ToShortDateString(this DateTimeOffset? date)
         {
             return date?.ToString("d") ?? string.Empty;
         }
@@ -568,7 +472,7 @@
         /// </summary>
         /// <param name="date">The date or <c>null</c>.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToShortTimeString(this DateTime? date)
+        public static string ToShortTimeString(this DateTimeOffset? date)
         {
             return date?.ToString("t") ?? string.Empty;
         }
@@ -580,7 +484,7 @@
         /// <param name="date">The date or <c>null</c>.</param>
         /// <param name="format">The format pattern to use.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToString(this DateTime? date, string format)
+        public static string ToString(this DateTimeOffset? date, string format)
         {
             return date?.ToString(format) ?? string.Empty;
         }
@@ -593,7 +497,7 @@
         /// <param name="format">The format pattern to use.</param>
         /// <param name="provider">The format provider to use.</param>
         /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToString(this DateTime? date, string format, IFormatProvider provider)
+        public static string ToString(this DateTimeOffset? date, string format, IFormatProvider provider)
         {
             return date?.ToString(format, provider) ?? string.Empty;
         }

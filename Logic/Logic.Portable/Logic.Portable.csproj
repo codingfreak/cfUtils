@@ -2,7 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\.nuget\codingfreaks.nuget.targets" Condition="Exists('$(SolutionDir)\.nuget\codingfreaks.nuget.targets')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>    
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</ProjectGuid>
@@ -68,12 +68,14 @@
     </Compile>
     <Compile Include="Attributes\LocalizedEnumMemberAttribute.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Extensions\DateTimeOffsetExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Structures\DateSpanInfo.cs" />
+    <Compile Include="Structures\DateTimeOffsetSpanInfo.cs" />
+    <Compile Include="Structures\DateTimeSpanInfo.cs" />
     <Compile Include="Structures\DateSpanType.cs" />
     <Compile Include="Structures\HttpResponseEventArgs.cs" />
     <Compile Include="Structures\LogEntryType.cs" />
