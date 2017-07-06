@@ -50,6 +50,16 @@
         }
 
         /// <summary>
+        /// Retrieves the start of the month in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct month.</returns>
+        public static DateTimeOffset BeginOfMonth(this DateTimeOffset date)
+        {
+            return date.GetCalendarMonthInfo().DateStart;
+        }
+
+        /// <summary>
         /// Retrieves the start of the quarter in which the given <paramref name="date" /> lays.
         /// </summary>
         /// <param name="date">The original date.</param>
@@ -77,6 +87,16 @@
                 dateToTest = dateToTest.AddDays(-1);
             }
             return dateToTest.BeginOfDay();
+        }
+
+        /// <summary>
+        /// Retrieves the start of the year in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct year.</returns>
+        public static DateTimeOffset BeginOfYear(this DateTimeOffset date)
+        {
+            return new DateTimeOffset(date.Year, 1, 1, 0, 0, 0, date.Offset);
         }
 
         /// <summary>
@@ -111,6 +131,16 @@
         }
 
         /// <summary>
+        /// Retrieves the start of the month in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct month.</returns>
+        public static DateTimeOffset EndOfMonth(this DateTimeOffset date)
+        {
+            return date.GetCalendarMonthInfo().DateEnd;
+        }
+
+        /// <summary>
         /// Retrieves the end of the quarter in which the given <paramref name="date" /> lays.
         /// </summary>
         /// <param name="date">The original date.</param>
@@ -138,6 +168,16 @@
                 dateToTest = dateToTest.AddDays(1);
             }
             return dateToTest.AddDays(-1).EndOfDay();
+        }
+
+        /// <summary>
+        /// Retrieves the start of the year in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct year.</returns>
+        public static DateTimeOffset EndOfYear(this DateTimeOffset date)
+        {
+            return new DateTimeOffset(date.Year, 12, 31, 23, 59, 59, 999, date.Offset);
         }
 
         /// <summary>

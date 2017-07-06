@@ -50,6 +50,16 @@
         }
 
         /// <summary>
+        /// Retrieves the start of the month in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct month.</returns>
+        public static DateTime BeginOfMonth(this DateTime date)
+        {
+            return date.GetCalendarMonthInfo().DateStart;
+        }
+
+        /// <summary>
         /// Retrieves the start of the quarter in which the given <paramref name="date" /> lays.
         /// </summary>
         /// <param name="date">The original date.</param>
@@ -77,6 +87,16 @@
                 dateToTest = dateToTest.AddDays(-1);
             }
             return dateToTest.BeginOfDay();
+        }
+
+        /// <summary>
+        /// Retrieves the start of the year in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct year.</returns>
+        public static DateTime BeginOfYear(this DateTime date)
+        {
+            return new DateTime(date.Year, 1, 1, 0, 0, 0);
         }
 
         /// <summary>
@@ -111,6 +131,16 @@
         }
 
         /// <summary>
+        /// Retrieves the start of the month in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct month.</returns>
+        public static DateTime EndOfMonth(this DateTime date)
+        {
+            return date.GetCalendarMonthInfo().DateEnd;
+        }
+
+        /// <summary>
         /// Retrieve the date of the week end for a given <paramref name="date" />.
         /// </summary>
         /// <param name="date">The original date.</param>
@@ -128,6 +158,16 @@
                 dateToTest = dateToTest.AddDays(1);
             }
             return dateToTest.AddDays(-1).EndOfDay();
+        }
+
+        /// <summary>
+        /// Retrieves the start of the year in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct year.</returns>
+        public static DateTime EndOfYear(this DateTime date)
+        {
+            return new DateTime(date.Year, 12, 31, 23, 59, 59, 999);
         }
 
         /// <summary>

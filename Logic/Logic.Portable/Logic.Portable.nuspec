@@ -10,7 +10,7 @@
     <summary>Contains base classes and utilities useful for all kinds of projects in a portable manner.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added DateTimeOffset extensions and added some convenience extensions in date time too.</releaseNotes>
+    <releaseNotes>Added more methods to datetime logics.</releaseNotes>
     <copyright>codingfreaks 2015-2017</copyright>
     <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>
     <dependencies>
