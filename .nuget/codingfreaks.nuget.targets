@@ -46,7 +46,7 @@
     </GetVersionParts>
     <Message Text="Build: $(BuildVersionNumber)" Importance="High" />
   </Target>
-  <Target Name="cfUpgradeVersion">
+  <Target Name="cfUpgradeVersion" Condition="'$(Configuration)' == '$(NugetReleaseName)'" >
     <Message Text="Extension path: $(ExtensionTasksPath)" Importance="Low" />
     <Message Text="Upgrading version including build." Importance="High" Condition="'$(Configuration)' == '$(NugetReleaseName)'" />
     <Message Text="Upgrading version excluding build." Importance="High" Condition="'$(Configuration)' != '$(NugetReleaseName)'" />        

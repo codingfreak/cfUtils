@@ -27,15 +27,15 @@ namespace codingfreaks.cfUtils.Tests.Core.Utilities
             var test = new List<Tuple<string, int, bool, bool>>
             {
                 Tuple.Create("google.de", 80, false, true),
-                Tuple.Create("google.de", 80, true, true),
-                Tuple.Create("sdfdsfsdfsdfsdf.de", 10, true, true),
+                Tuple.Create("google.de", 80, true, false),
+                Tuple.Create("sdfdsfsdfsdfsdf.de", 10, true, false),
                 Tuple.Create("sdfdsfsdfsdfsdf.de", 10, false, false)
             };
             // act and assert
             test.ForEach(
                 run =>
                 {
-                    var result = NetworkUtil.IsPortOpened(run.Item1, run.Item2, 1, run.Item3);
+                    var result = NetworkUtil.IsPortOpened(run.Item1, run.Item2, 2, run.Item3);
                     Assert.AreEqual(run.Item4, result);
                 });
         }

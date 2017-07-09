@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9030A1C-8742-42C1-86ED-73E237BDFBD6}"
 	ProjectSection(SolutionItems) = preProject
@@ -51,6 +51,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Excel", "Logic\Logic.Excel\Logic.Excel.csproj", "{22662C9E-EBFE-4CC7-AE10-4C98545D4B21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Web", "Tests\Tests.Web\Tests.Web.csproj", "{D92C7FD4-7AA2-4930-8EB1-D555F3FBB454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Redis", "Logic\Logic.Redis\Logic.Redis.csproj", "{61EF9E0F-EEF7-4087-8806-B05ABB162329}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +145,12 @@ Global
 		{D92C7FD4-7AA2-4930-8EB1-D555F3FBB454}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D92C7FD4-7AA2-4930-8EB1-D555F3FBB454}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
 		{D92C7FD4-7AA2-4930-8EB1-D555F3FBB454}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,5 +170,6 @@ Global
 		{0C5AF187-0626-4A55-8ED6-26FD20955D0B} = {F3E8372F-C729-4D7F-92A4-B9C38965CBC0}
 		{22662C9E-EBFE-4CC7-AE10-4C98545D4B21} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 		{D92C7FD4-7AA2-4930-8EB1-D555F3FBB454} = {4798BD11-CD22-4A48-85B2-580DCC568BC2}
+		{61EF9E0F-EEF7-4087-8806-B05ABB162329} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 	EndGlobalSection
 EndGlobal
