@@ -12,11 +12,7 @@
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <releaseNotes>Added more methods to datetime logics.</releaseNotes>
     <copyright>codingfreaks 2015-2017</copyright>
-    <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>
-    <dependencies>
-      <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
-      <dependency id="Microsoft.Bcl.Build" version="1.0.21" />
-    </dependencies>
+    <tags>codingfreaks,.NET,C#,Portable,Utilities,Extensions</tags>    
   </metadata>
   <files>
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\net\cfUtils.cfPortableUtils.dll" />
@@ -37,8 +33,8 @@
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.dll" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.pdb" />
     <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\Xamarin.iOS10\cfUtils.cfPortableUtils.xml" />
-    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.dll" />
-    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.xml" />
-    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\portable-net45+win+wpa81\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\portable-net45+win8+wp8+wpa81+uap10.0+netcoreapp1.1\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\portable-net45+win8+wp8+wpa81+uap10.0+netcoreapp1.1\cfUtils.cfPortableUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\portable-net45+win8+wp8+wpa81+uap10.0+netcoreapp1.1\cfUtils.cfPortableUtils.pdb" />
   </files>
 </package>

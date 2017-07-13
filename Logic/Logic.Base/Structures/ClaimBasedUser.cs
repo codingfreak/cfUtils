@@ -8,6 +8,8 @@
     using codingfreaks.cfUtils.Logic.Base.Extensions;
     using codingfreaks.cfUtils.Logic.Portable.Utilities;
 
+    using Utilities;
+
     /// <summary>
     /// Represents a user read from ClaimsPrincipal.
     /// </summary>

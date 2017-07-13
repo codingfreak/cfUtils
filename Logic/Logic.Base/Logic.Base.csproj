@@ -56,8 +56,8 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.37.65, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.37\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
+    <Reference Include="cfUtils.cfPortableUtils, Version=1.0.39.67, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\codingfreaks.libs.cfUtils.cfPortableUtils.1.0.39\lib\net\cfUtils.cfPortableUtils.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -111,6 +111,7 @@
     <Compile Include="Utilities\ConsoleUtil.cs" />
     <Compile Include="Utilities\CsvUtil.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Utilities\EnumUtil.cs" />
     <Compile Include="Utilities\FtpUtil.cs" />
     <Compile Include="Utilities\IniFileUtil.cs" />
     <Compile Include="Utilities\NetworkUtil.cs" />

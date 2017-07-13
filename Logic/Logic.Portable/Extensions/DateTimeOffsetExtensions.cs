@@ -207,7 +207,7 @@
         /// <returns>The calendar quarter information for the date.</returns>
         public static DateTimeOffsetSpanInfo GetCalendarQuarterInfo(this DateTimeOffset current)
         {
-            return current.Year.GetOffsetCalendarQuartersForYear().First(w => w.SpanNumber == current.DateTime.GetQuarterNumber());
+            return current.Year.GetOffsetCalendarQuartersForYear(current.Offset).First(w => w.SpanNumber == current.DateTime.GetQuarterNumber());
         }
 
         /// <summary>
@@ -242,7 +242,7 @@
                         SpanType = DateSpanType.CalendarHalfyear,
                         SpanNumber = ++currentHalfyear,
                         DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 5, utcOffset)
+                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 5, utcOffset).EndOfDay()
                     });
                 startDate = startDate.AddMonths(6);
             }
@@ -300,7 +300,7 @@
                         SpanType = DateSpanType.CalendarQuarter,
                         SpanNumber = ++currentQuarter,
                         DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, currentQuarter + 2)
+                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 2, utcOffset).EndOfDay()
                     });
                 startDate = startDate.AddMonths(3);
             }
@@ -334,7 +334,7 @@
                         SpanType = DateSpanType.CalendarWeek,
                         SpanNumber = ++currentWeek,
                         DateStart = startDate,
-                        DateEnd = startDate.AddDays(6)
+                        DateEnd = startDate.AddDays(6).EndOfDay()
                     });
                 startDate = startDate.AddDays(7);
             }

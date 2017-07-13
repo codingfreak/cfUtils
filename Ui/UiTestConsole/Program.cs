@@ -8,6 +8,7 @@
 
     using Logic.Azure;
     using Logic.Base.Utilities;
+    using Logic.Portable.Extensions;
     using Logic.Portable.Structures;
     using Logic.Portable.Utilities;
     using Logic.Utils.Utilities;
@@ -20,9 +21,17 @@
         {
             //TestMail();
             //TestAzureToken();
-            TestPing();
+            //TestPing();
+            TestDates();
             Console.WriteLine("Fertig");
             Console.ReadKey();
+        }
+
+        private static void TestDates()
+        {
+            var now = DateTimeOffset.Now;
+            Console.WriteLine(now.BeginOfWeek());
+            Console.WriteLine(now.EndOfWeek());
         }
 
         private static void TestAzureToken()

@@ -10,14 +10,14 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Enhancements on network util.</releaseNotes>
+    <releaseNotes>Nuget updates and new classes from portable library.</releaseNotes>
     <copyright>codingfreaks UG 2014-2017</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>      
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.37" />
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.39" />
     </dependencies>
   </metadata>
   <files>

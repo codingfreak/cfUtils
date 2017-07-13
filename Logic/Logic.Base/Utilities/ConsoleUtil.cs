@@ -119,7 +119,7 @@
         public static void PrintShortArgumentHelp(ApplicationInfo appInfo)
         {
             // Step 1: Build the calling convention line
-            var exeName = Portable.Utilities.ReflectionUtil.GetAssemblyTitle(appInfo.AssemblyInfo) + ".exe ";
+            var exeName = ReflectionUtil.GetAssemblyTitle(appInfo.AssemblyInfo) + ".exe ";
             var callingBuilder = new StringBuilder(exeName);
             var shortSampleBuilder = new StringBuilder(exeName);
             var sampleBuilder = new StringBuilder(exeName);
@@ -186,11 +186,11 @@
         public static void ShowAppHeader(Assembly assemblyInfo)
         {
             ShowAppHeader(
-                Portable.Utilities.ReflectionUtil.GetAssemblyProduct(assemblyInfo),
-                Portable.Utilities.ReflectionUtil.GetAssemblyDescription(assemblyInfo),
-                Portable.Utilities.ReflectionUtil.GetAssemblyVersion(assemblyInfo),
-                Portable.Utilities.ReflectionUtil.GetAssemblyCopyright(assemblyInfo),
-                Portable.Utilities.ReflectionUtil.GetAssemblyCompany(assemblyInfo));
+                ReflectionUtil.GetAssemblyProduct(assemblyInfo),
+                ReflectionUtil.GetAssemblyDescription(assemblyInfo),
+                ReflectionUtil.GetAssemblyVersion(assemblyInfo),
+                ReflectionUtil.GetAssemblyCopyright(assemblyInfo),
+                ReflectionUtil.GetAssemblyCompany(assemblyInfo));
         }
 
         /// <summary>

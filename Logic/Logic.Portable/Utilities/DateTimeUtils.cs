@@ -56,6 +56,7 @@
         /// </summary>
         /// <param name="year">The year of the month.</param>
         /// <param name="month">The month.</param>
+        /// <param name="utcOffset">The optional offset to keep for the result.</param>
         /// <returns>The date of the last day of the month.</returns>
         public static DateTimeOffset GetOffsetLastDayOfMonth(int year, int month, TimeSpan utcOffset = default(TimeSpan))
         {
