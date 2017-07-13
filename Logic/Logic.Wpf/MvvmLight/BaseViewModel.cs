@@ -43,6 +43,38 @@
                 // design mode
                 // ReSharper disable once VirtualMemberCallInConstructor
                 InitDesignTimeData();
+                PropertyChanged += (s, e) =>
+                {
+                    OnInternalPropertyChanged(e.PropertyName);
+                };
+            }
+        }
+
+        #endregion
+
+        #region explicit interfaces
+
+        /// <summary>
+        /// Gets an error message indicating what is wrong with this object.
+        /// </summary>
+        /// <returns>
+        /// An error message indicating what is wrong with this object. The default is an empty string ("").
+        /// </returns>
+        public string Error => string.Empty;
+
+        /// <summary>
+        /// Gets the error message for the property with the given name.
+        /// </summary>
+        /// <returns>
+        /// The error message for the property. The default is an empty string ("").
+        /// </returns>
+        /// <param name="columnName">The name of the property whose error message to get. </param>
+        public string this[string columnName]
+        {
+            get
+            {
+                CollectErrors();
+                return Errors.ContainsKey(columnName) ? Errors[columnName] : string.Empty;
             }
         }
 
@@ -82,6 +114,14 @@
         /// Can be overridden by derived types to react on the finisihing of error-collections.
         /// </summary>
         protected virtual void OnErrorsCollected()
+        {
+        }
+
+        /// <summary>
+        /// Is called whenever a property of this instance has changed it's value.
+        /// </summary>
+        /// <param name="propertyName">The name of the changed property.</param>
+        protected virtual void OnInternalPropertyChanged(string propertyName)
         {
         }
 
@@ -130,14 +170,6 @@
         #region properties
 
         /// <summary>
-        /// Gets an error message indicating what is wrong with this object.
-        /// </summary>
-        /// <returns>
-        /// An error message indicating what is wrong with this object. The default is an empty string ("").
-        /// </returns>
-        public string Error => string.Empty;
-
-        /// <summary>
         /// Indicates whether this instance has any errors.
         /// </summary>
         public bool HasErrors => Errors.Any();
@@ -149,22 +181,6 @@
         /// Exists for convenient binding only.
         /// </remarks>
         public bool IsOk => !HasErrors;
-
-        /// <summary>
-        /// Gets the error message for the property with the given name.
-        /// </summary>
-        /// <returns>
-        /// The error message for the property. The default is an empty string ("").
-        /// </returns>
-        /// <param name="columnName">The name of the property whose error message to get. </param>
-        public string this[string columnName]
-        {
-            get
-            {
-                CollectErrors();
-                return Errors.ContainsKey(columnName) ? Errors[columnName] : string.Empty;
-            }
-        }
 
         /// <summary>
         /// Retrieves a list of all properties with attributes required for <see cref="IDataErrorInfo" /> automation.
