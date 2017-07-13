@@ -79,6 +79,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -106,6 +107,7 @@
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\StringToUIntConverter.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
+    <Compile Include="MvvmLight\BaseViewModel.cs" />
     <Compile Include="MvvmLight\BroadcastViewModelBase.cs" />
     <Compile Include="MvvmLight\PropertyChangedMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
