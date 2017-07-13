@@ -23,18 +23,26 @@
 
         #region constructors and destructors
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         protected BaseViewModel()
         {
             if (!IsInDesignModeStatic && !IsInDesignMode)
             {
                 DispatcherHelper.Initialize();
-            }
-            else
-            {
                 // ReSharper disable once VirtualMemberCallInConstructor
                 InitCommands();
                 // ReSharper disable once VirtualMemberCallInConstructor
                 InitMessenger();
+                // ReSharper disable once VirtualMemberCallInConstructor
+                InitRuntimeData();
+            }
+            else
+            {
+                // design mode
+                // ReSharper disable once VirtualMemberCallInConstructor
+                InitDesignTimeData();
             }
         }
 
@@ -50,9 +58,23 @@
         }
 
         /// <summary>
+        /// Is called during runtime to enable initialization of all design time data.
+        /// </summary>
+        protected virtual void InitDesignTimeData()
+        {
+        }
+
+        /// <summary>
         /// Is called during runtime to enable initialization of the MVVM messenger.
         /// </summary>
         protected virtual void InitMessenger()
+        {
+        }
+
+        /// <summary>
+        /// Is called during runtime to enable initialization of all runtime data.
+        /// </summary>
+        protected virtual void InitRuntimeData()
         {
         }
 
