@@ -13,7 +13,7 @@
     /// <summary>
     /// Abstract base class for view models.
     /// </summary>
-    public abstract class BaseViewModel : ViewModelBase
+    public abstract class BaseViewModel : ViewModelBase, IDataErrorInfo
     {
         #region constants
 
