@@ -10,13 +10,14 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>Contains extended classes and utilities useful for all kinds of web projects using ASP.NET MVC.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Package updates.</releaseNotes>
+    <releaseNotes>Added replacement logic for JsonResult.</releaseNotes>
     <tags>codingfreaks,ASP.NET,MVC,Web,.NET,C#,Filters</tags>
-    <copyright>codingfreaks 2015-2016</copyright>
+    <copyright>codingfreaks 2015-2017</copyright>
     <dependencies>
-      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.32" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfPortableUtils" version="1.0.39" />      
       <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
       <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
+      <dependency id="Newtonsoft.Json" version="10.0.3" />
     </dependencies>
   </metadata>
   <files>
