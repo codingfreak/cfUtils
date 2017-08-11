@@ -675,6 +675,11 @@
             LastResponseHeaders = new Dictionary<string, string>();
             foreach (var header in responseMessage.Headers)
             {
+                if (LastResponseHeaders.ContainsKey(header.Key))
+                {
+                    // header already contained
+                    continue;                    
+                }
                 LastResponseHeaders.Add(header.Key, string.Join(";", header.Value));
             }
             ResponseArrived?.Invoke(this, new HttpResponseEventArgs(responseMessage));
