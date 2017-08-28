@@ -140,6 +140,7 @@
             {
                 OnPropertyChanged(nameof(CurrentItem));
             };
+            BindingOperations.EnableCollectionSynchronization(Items, ListLock);
         }
 
         /// <summary>
@@ -177,6 +178,11 @@
         #region properties
 
         /// <summary>
+        /// The amount of data items currently present.
+        /// </summary>
+        public int Count => Items?.Count ?? 0;
+
+        /// <summary>
         /// Gets/sets the current selected item.
         /// </summary>
         public TItem CurrentItem
@@ -198,6 +204,11 @@
         /// The internal list of data.
         /// </summary>
         private ObservableCollection<TItem> Items { get; set; }
+
+        /// <summary>
+        /// Is used by the cynchronization logic for multithreading.
+        /// </summary>
+        private object ListLock { get; } = new object();
 
         #endregion
     }
