@@ -91,6 +91,16 @@
         }
 
         /// <summary>
+        /// Retrieves the index of the first occurrence <paramref name="item" /> in the internal data collection or -1.
+        /// </summary>
+        /// <param name="item">The item to look for.</param>
+        /// <returns>The index or -1 if items is <c>null</c>.</returns>
+        public int IndexOf([NotNull] TItem item)
+        {
+            return Items?.IndexOf(item) ?? -1;
+        }
+
+        /// <summary>
         /// Resets the <see cref="Items" /> and <see cref="ItemsView" /> in one step.
         /// </summary>
         /// <param name="items">The items to take as the current data source.</param>
@@ -144,6 +154,46 @@
         }
 
         /// <summary>
+        /// Removes a given <paramref name="item" /> from the internal data collection.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        public void Remove([NotNull] TItem item)
+        {
+            Items?.Remove(item);
+        }
+
+        /// <summary>
+        /// Replaces all matches of <paramref name="matchPredicate" /> in the internal data collection with the
+        /// <paramref name="newItem" />.
+        /// </summary>
+        /// <param name="newItem">The item which to insert instead of the old item(s).</param>
+        /// <param name="matchPredicate">A predicate which will retrieve the old items to replace.</param>
+        public void Replace(TItem newItem, Func<TItem, bool> matchPredicate)
+        {
+            if (!Items.Any())
+            {
+                // nothing to do
+                return;
+            }
+            var item = Items.FirstOrDefault(matchPredicate);
+            var lastIndex = -1;
+            while (item != null)
+            {
+                var index = Items.IndexOf(item);
+                if (index <= 0 || index == lastIndex)
+                {
+                    // either the item wasn't found or it is the same as the
+                    // last item
+                    break;
+                }
+                // retrieve index and replace item
+                lastIndex = index;
+                Items[index] = newItem;
+                item = Items.FirstOrDefault(matchPredicate);
+            }
+        }
+
+        /// <summary>
         /// Performs a complete nulling of items.
         /// </summary>
         public void Reset()
@@ -194,6 +244,41 @@
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Gets/sets the item on a given <paramref name="index" />.
+        /// </summary>
+        /// <param name="index">The 0-based index of the item.</param>
+        /// <exception cref="InvalidOperationException">Is thrown when the internal data collection is <c>null</c>.</exception>
+        public TItem this[int index]
+        {
+            get
+            {
+                if (Items == null)
+                {
+                    throw new InvalidOperationException("Items not initialized yet.");
+                }
+                return Items[index];
+            }
+            set
+            {
+                if (Items == null)
+                {
+                    throw new InvalidOperationException("Items not initialized yet.");
+                }
+                Items[index] = value;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves an enumerable version of the internal data collection.
+        /// </summary>
+        public IEnumerable<TItem> ItemsEnum => Items?.AsEnumerable();
+
+        /// <summary>
+        /// Retrieves a queryable version of the internal data collection.
+        /// </summary>
+        public IQueryable<TItem> ItemsQuery => Items?.AsQueryable();
 
         /// <summary>
         /// The bindable view of the internal <see cref="Items" />.
