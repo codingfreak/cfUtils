@@ -12,9 +12,13 @@
 
     /// <inheritdoc />
     /// <summary>
-    /// Complete wrapper for <see cref="ListCollectionView"/> making it easy to connect internal data with bindable view representation.
+    /// Complete wrapper for <see cref="ListCollectionView" /> making it easy to connect internal data with bindable view
+    /// representation.
     /// </summary>
-    /// <typeparam name="TItem">The type of each element in <see cref="P:codingfreaks.cfUtils.Logic.Wpf.Components.ContainedCollectionView`1.Items" />.</typeparam>
+    /// <typeparam name="TItem">
+    /// The type of each element in
+    /// <see cref="P:codingfreaks.cfUtils.Logic.Wpf.Components.ContainedCollectionView`1.Items" />.
+    /// </typeparam>
     public class ContainedCollectionView<TItem> : INotifyPropertyChanged
         where TItem : INotifyPropertyChanged
     {
@@ -50,11 +54,56 @@
         #region methods
 
         /// <summary>
+        /// Adds a single <paramref name="item" /> to the internal data collection.
+        /// </summary>
+        /// <param name="item"></param>
+        public void Add(TItem item)
+        {
+            if (Items == null)
+            {
+                InitItems(Enumerable.Empty<TItem>());
+            }
+            item.PropertyChanged += OnItemPropertyChanged;
+            Items.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a bunch of <paramref name="items" /> to the internal data collection.
+        /// </summary>
+        /// <remarks>
+        /// Calls <see cref="Add" /> for each item internally.
+        /// </remarks>
+        /// <param name="items">The items to add.</param>
+        public void AddRange(IEnumerable<TItem> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Clears the internal list of items.
+        /// </summary>
+        public void Clear()
+        {
+            Items?.Clear();
+        }
+
+        /// <summary>
         /// Resets the <see cref="Items" /> and <see cref="ItemsView" /> in one step.
         /// </summary>
         /// <param name="items">The items to take as the current data source.</param>
-        public void InitItems(IEnumerable<TItem> items)
+        /// <param name="performResetBefore">
+        /// If set tot <c>true</c> <see cref="Reset" /> will be called before any init (defaults
+        /// to <c>true</c>).
+        /// </param>
+        public void InitItems(IEnumerable<TItem> items, bool performResetBefore = true)
         {
+            if (performResetBefore)
+            {
+                Reset();
+            }
             Items = new ObservableCollection<TItem>(items);
             // connect events for any added item
             foreach (var item in Items)
@@ -91,6 +140,16 @@
             {
                 OnPropertyChanged(nameof(CurrentItem));
             };
+        }
+
+        /// <summary>
+        /// Performs a complete nulling of items.
+        /// </summary>
+        public void Reset()
+        {
+            Clear();
+            Items = null;
+            ItemsView = null;
         }
 
         /// <summary>
