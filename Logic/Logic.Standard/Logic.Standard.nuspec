@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>codingfreaks.libs.cfUtils.cfStandardUtils</id>
+    <version>$version$</version>
+    <title>codingfreaks .NET Standard Utility Collection</title>
+    <description>[codingfreaks] .NET Standard utility library</description>
+    <authors>codingfreaks</authors>
+    <owners>codingfreaks</owners>
+    <summary>Contains base classes and utilities useful for all kinds of projects compiled in .NET Standard.</summary>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>        
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <releaseNotes>Brought all items from cfPortableUtils in.</releaseNotes>
+    <copyright>codingfreaks 2017</copyright>
+    <tags>codingfreaks,.NET,C#,Standard,Utilities,Extensions</tags>    
+  </metadata>
+  <files>
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\net\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\net\cfUtils.cfPortableUtils.xml" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\net\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.dll" target="lib\netstandard1.4\cfUtils.cfPortableUtils.dll" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.pdb" target="lib\netstandard1.4\cfUtils.cfPortableUtils.pdb" />
+    <file src="bin\ReleaseNuget\cfUtils.cfPortableUtils.xml" target="lib\netstandard1.4\cfUtils.cfPortableUtils.xml" />       
+  </files>
+</package>
