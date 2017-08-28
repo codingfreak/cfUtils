@@ -100,6 +100,7 @@
     <Compile Include="..\..\_Shared\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Components\ContainedCollectionView.cs" />
     <Compile Include="Components\OptimizedBindingList.cs" />
     <Compile Include="Components\OptimizedObservableCollection.cs" />
     <Compile Include="Converters\ExtendedBooleanToVisibilityConverter.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="MvvmLight\BaseViewModel.cs" />
     <Compile Include="MvvmLight\BroadcastViewModelBase.cs" />
     <Compile Include="MvvmLight\PropertyChangedMessage.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
