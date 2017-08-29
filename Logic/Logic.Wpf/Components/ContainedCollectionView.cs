@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Data;
+    using System.Windows.Threading;
 
     using Annotations;
 
@@ -237,11 +238,24 @@
         /// </summary>
         public TItem CurrentItem
         {
-            get => (TItem)ItemsView.CurrentItem;
+            get
+            {
+                var result = default(TItem);
+                Dispatcher.CurrentDispatcher.Invoke(
+                    () =>
+                    {
+                        result = (TItem)ItemsView.CurrentItem;
+                    });
+                return result;
+            }
             set
             {
-                ItemsView.MoveCurrentTo(value);
-                OnPropertyChanged();
+                Dispatcher.CurrentDispatcher.Invoke(
+                    () =>
+                    {
+                        ItemsView.MoveCurrentTo(value);
+                        OnPropertyChanged();
+                    });                
             }
         }
 
