@@ -6,6 +6,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Windows;
     using System.Windows.Data;
     using System.Windows.Threading;
 
@@ -241,7 +242,7 @@
             get
             {
                 var result = default(TItem);
-                Dispatcher.CurrentDispatcher.Invoke(
+                Application.Current.Dispatcher.Invoke(
                     () =>
                     {
                         result = (TItem)ItemsView.CurrentItem;
@@ -250,7 +251,7 @@
             }
             set
             {
-                Dispatcher.CurrentDispatcher.Invoke(
+                Application.Current.Dispatcher.Invoke(
                     () =>
                     {
                         ItemsView.MoveCurrentTo(value);
