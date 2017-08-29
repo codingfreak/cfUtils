@@ -46,7 +46,7 @@
         /// <param name="items">The list of items.</param>
         public ContainedCollectionView(IEnumerable<TItem> items)
         {
-            InitItems(items);
+            InitItems(items ?? Enumerable.Empty<TItem>());
         }
 
         #endregion
