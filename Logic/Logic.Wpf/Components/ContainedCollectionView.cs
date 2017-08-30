@@ -8,7 +8,6 @@
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Data;
-    using System.Windows.Threading;
 
     using Annotations;
 
@@ -156,6 +155,19 @@
         }
 
         /// <summary>
+        /// Reacts on any property change of any item in <see cref="Items" />.
+        /// </summary>
+        /// <param name="sender">The item that has a changed property.</param>
+        /// <param name="e">The event args.</param>
+        public virtual void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (RefreshViewOnItemChange)
+            {
+                ItemsView.Refresh();
+            }
+        }
+
+        /// <summary>
         /// Removes a given <paramref name="item" /> from the internal data collection.
         /// </summary>
         /// <param name="item">The item to remove.</param>
@@ -215,16 +227,6 @@
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        /// <summary>
-        /// Reacts on any property change of any item in <see cref="Items" />.
-        /// </summary>
-        /// <param name="sender">The item that has a changed property.</param>
-        /// <param name="e">The event args.</param>
-        private void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            ItemsView.Refresh();
-        }
-
         #endregion
 
         #region properties
@@ -256,7 +258,7 @@
                     {
                         ItemsView.MoveCurrentTo(value);
                         OnPropertyChanged();
-                    });                
+                    });
             }
         }
 
@@ -299,6 +301,12 @@
         /// The bindable view of the internal <see cref="Items" />.
         /// </summary>
         public ListCollectionView ItemsView { get; set; }
+
+        /// <summary>
+        /// If set to <c>true</c> a refresh on <see cref="ItemsView" /> will be called every time a property of one
+        /// of the item changes.
+        /// </summary>
+        public bool RefreshViewOnItemChange { get; set; }
 
         /// <summary>
         /// The internal list of data.
