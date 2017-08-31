@@ -68,10 +68,12 @@
         /// <param name="items">The list of items.</param>
         /// <param name="fastPreviewRows">The amount of items to show first.</param>
         public ContainedCollectionView(IEnumerable<TItem> items, int fastPreviewRows)
-        {
+        {            
             FastPreviewRows = fastPreviewRows;
             InitItems(items ?? Enumerable.Empty<TItem>());
         }
+
+        private bool _isInPreview;
 
         #endregion
 
@@ -105,7 +107,12 @@
             {
                 Add(item);
             }
-            Items.CollectionChanged += OnItemsCollectionChanged;
+            Items.CollectionChanged += OnItemsCollectionChanged;              
+            if (_isInPreview)
+            {
+                ItemsView.Refresh();
+            }
+            _fullView.Refresh();
         }
 
         /// <summary>
@@ -151,11 +158,13 @@
             Items.CollectionChanged += OnItemsCollectionChanged;
             // create the bindable view representation of the data
             _fullView = CollectionViewSource.GetDefaultView(Items) as ListCollectionView;
+            _isInPreview = false;
             if (FastPreviewRows.HasValue && FastPreviewRows.Value > 0)
             {
                 // start with a 
+                _isInPreview = true;
                 var view = new ListCollectionView(Items.Take(FastPreviewRows.Value).ToList());
-                SetItemsView(view);
+                SetItemsView(view);                
             }
             else
             {
@@ -238,8 +247,9 @@
             if (!FastPreviewRows.HasValue || FastPreviewRows.Value <= 0)
             {
                 return;
-            }
+            }            
             SetItemsView(_fullView);
+            _isInPreview = false;
         }
 
         /// <summary>
@@ -252,6 +262,11 @@
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Handler for the collection changed event of the internal data collection.
+        /// </summary>
+        /// <param name="sender">The internal data collection.</param>
+        /// <param name="e">The event args.</param>
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
