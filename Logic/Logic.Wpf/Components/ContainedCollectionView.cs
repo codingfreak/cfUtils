@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -23,6 +24,12 @@
     public class ContainedCollectionView<TItem> : INotifyPropertyChanged
         where TItem : INotifyPropertyChanged
     {
+        #region member vars
+
+        private ListCollectionView _fullView;
+
+        #endregion
+
         #region events
 
         /// <summary>
@@ -47,6 +54,17 @@
         /// <param name="items">The list of items.</param>
         public ContainedCollectionView(IEnumerable<TItem> items)
         {
+            InitItems(items ?? Enumerable.Empty<TItem>());
+        }
+
+        /// <summary>
+        /// Constructor to use when data should be passed directly and pass.
+        /// </summary>
+        /// <param name="items">The list of items.</param>
+        /// <param name="fastPreviewRows">The amount of items to show first.</param>
+        public ContainedCollectionView(IEnumerable<TItem> items, int fastPreviewRows)
+        {
+            FastPreviewRows = fastPreviewRows;
             InitItems(items ?? Enumerable.Empty<TItem>());
         }
 
@@ -77,10 +95,12 @@
         /// <param name="items">The items to add.</param>
         public void AddRange(IEnumerable<TItem> items)
         {
+            Items.CollectionChanged -= OnItemsCollectionChanged;
             foreach (var item in items)
             {
                 Add(item);
             }
+            Items.CollectionChanged += OnItemsCollectionChanged;
         }
 
         /// <summary>
@@ -116,42 +136,27 @@
                 Reset();
             }
             Items = new ObservableCollection<TItem>(items);
+            BindingOperations.EnableCollectionSynchronization(Items, ListLock);
             // connect events for any added item
             foreach (var item in Items)
             {
                 item.PropertyChanged += OnItemPropertyChanged;
             }
             // ensure that future items are connected and items that are removed are disconnected from events
-            Items.CollectionChanged += (s, e) =>
-            {
-                if (e.NewItems != null)
-                {
-                    foreach (INotifyPropertyChanged added in e.NewItems)
-                    {
-                        added.PropertyChanged += OnItemPropertyChanged;
-                    }
-                }
-                if (e.OldItems != null)
-                {
-                    foreach (INotifyPropertyChanged removed in e.OldItems)
-                    {
-                        removed.PropertyChanged -= OnItemPropertyChanged;
-                    }
-                }
-            };
+            Items.CollectionChanged += OnItemsCollectionChanged;
             // create the bindable view representation of the data
-            ItemsView = CollectionViewSource.GetDefaultView(Items) as ListCollectionView;
-            if (ItemsView == null)
+            _fullView = CollectionViewSource.GetDefaultView(Items) as ListCollectionView;
+            if (FastPreviewRows.HasValue && FastPreviewRows.Value > 0)
             {
-                // very strange because it indicates that GetDefaultView could not be casted to ListCollectionView
-                return;
+                // start with a 
+                var view = new ListCollectionView(Items.Take(FastPreviewRows.Value).ToList());
+                SetItemsView(view);
             }
-            // ensure that the CurrentItem property will notify about the fact that the view changed it's current item
-            ItemsView.CurrentChanged += (s, e) =>
+            else
             {
-                OnPropertyChanged(nameof(CurrentItem));
-            };
-            BindingOperations.EnableCollectionSynchronization(Items, ListLock);
+                // just show all records at once
+                SetItemsView(_fullView);
+            }
         }
 
         /// <summary>
@@ -218,6 +223,21 @@
         }
 
         /// <summary>
+        /// Forces the <see cref="ItemsView" /> to use the view containing all items.
+        /// </summary>
+        /// <remarks>
+        /// See <see cref="FastPreviewRows" /> for details of this.
+        /// </remarks>
+        public void SwitchToFullView()
+        {
+            if (!FastPreviewRows.HasValue || FastPreviewRows.Value <= 0)
+            {
+                return;
+            }
+            SetItemsView(_fullView);
+        }
+
+        /// <summary>
         /// Raises the <see cref="PropertyChanged" /> event if any listener is active.
         /// </summary>
         /// <param name="propertyName">The name of the changed property (passed in automatically).</param>
@@ -225,6 +245,43 @@
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (INotifyPropertyChanged added in e.NewItems)
+                {
+                    added.PropertyChanged += OnItemPropertyChanged;
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (INotifyPropertyChanged removed in e.OldItems)
+                {
+                    removed.PropertyChanged -= OnItemPropertyChanged;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ItemsView" /> and hooks all needed logic in.
+        /// </summary>
+        /// <param name="view">The view to apply.</param>
+        private void SetItemsView(ListCollectionView view)
+        {
+            Application.Current.Dispatcher.Invoke(() => ItemsView = view);
+            if (ItemsView == null)
+            {
+                // very strange because it indicates that GetDefaultView could not be casted to ListCollectionView
+                return;
+            }
+            // ensure that the CurrentItem property will notify about the fact that the view changed it's current item
+            ItemsView.CurrentChanged += (s, e) =>
+            {
+                OnPropertyChanged(nameof(CurrentItem));
+            };
         }
 
         #endregion
@@ -261,6 +318,16 @@
                     });
             }
         }
+
+        /// <summary>
+        /// If set to a value greater than 0 this will create a view which previews
+        /// the amount of rows before binding against all others.
+        /// </summary>
+        /// <remarks>
+        /// The caller has to decide when to call <see cref="SwitchToFullView" /> to jump off
+        /// from the preview.
+        /// </remarks>
+        public int? FastPreviewRows { get; set; }
 
         /// <summary>
         /// Gets/sets the item on a given <paramref name="index" />.

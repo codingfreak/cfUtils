@@ -32,16 +32,17 @@ namespace codingfreaks.cfUtils.Ui.WindowsApp.ViewModel
                             Lastname = Guid.NewGuid().ToString("N")
                         });
                 }
-                People = new ContainedCollectionView<Person>(list);                
+                People = new ContainedCollectionView<Person>(list, 10);                
                 People.ItemsView.CurrentChanged += (s, e) =>
                 {
                     Task.Run(
                         () =>
                         {
                             var item = People.CurrentItem;
-                            Trace.WriteLine(item.Firstname);
+                            Trace.WriteLine(item.Firstname);                            
                         });
                 };
+                Task.Delay(2000).ContinueWith(t => People.SwitchToFullView());
             }
         }
 
