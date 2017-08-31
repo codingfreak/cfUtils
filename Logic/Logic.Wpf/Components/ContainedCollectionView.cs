@@ -33,6 +33,11 @@
         #region events
 
         /// <summary>
+        /// Occurs after the <see cref="ItemsView"/> has go a new value.
+        /// </summary>
+        public event EventHandler ItemsViewChanged;
+
+        /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -272,6 +277,8 @@
         private void SetItemsView(ListCollectionView view)
         {
             Application.Current.Dispatcher.Invoke(() => ItemsView = view);
+            // inform about the change
+            ItemsViewChanged?.Invoke(this, EventArgs.Empty);
             if (ItemsView == null)
             {
                 // very strange because it indicates that GetDefaultView could not be casted to ListCollectionView
@@ -281,7 +288,7 @@
             ItemsView.CurrentChanged += (s, e) =>
             {
                 OnPropertyChanged(nameof(CurrentItem));
-            };
+            };           
         }
 
         #endregion
