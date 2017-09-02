@@ -6,7 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     /// <summary>
     /// Simulates an alarm clock using events.

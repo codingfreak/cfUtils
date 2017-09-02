@@ -6,7 +6,7 @@
     using System.Threading;
 
     using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     using Utilities;
 

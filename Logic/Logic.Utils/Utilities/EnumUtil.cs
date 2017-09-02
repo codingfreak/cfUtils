@@ -6,8 +6,8 @@
 
     using Base.Utilities;
 
-    using Portable.Attributes;
-    using Portable.Utilities;
+    using Standard.Attributes;
+    using Standard.Utilities;
     using System.Runtime.Serialization;
 
     /// <summary>

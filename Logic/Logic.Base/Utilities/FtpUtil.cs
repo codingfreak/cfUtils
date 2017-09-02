@@ -10,8 +10,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using Portable.Extensions;
-    using Portable.Utilities;
+    using Standard.Extensions;
+    using Standard.Utilities;
 
     using Structures;
 

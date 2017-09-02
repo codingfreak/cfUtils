@@ -3,7 +3,7 @@
     using System;
 
     using codingfreaks.cfUtils.Logic.Base.EventArguments;
-    using codingfreaks.cfUtils.Logic.Portable.Structures;
+    using codingfreaks.cfUtils.Logic.Standard.Structures;
 
     /// <summary>
     /// Must be implemented by all logging-components.

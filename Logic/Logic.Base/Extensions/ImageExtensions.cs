@@ -7,7 +7,7 @@
     using System.IO;
     using System.Linq;
 
-    using Portable.Extensions;
+    using Standard.Extensions;
 
     /// <summary>
     /// Provides helper methods for dealing with images.

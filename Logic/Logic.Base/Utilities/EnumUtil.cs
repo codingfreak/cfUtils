@@ -8,8 +8,8 @@ namespace codingfreaks.cfUtils.Logic.Base.Utilities
     using System.Linq;
     using System.Runtime.Serialization;
 
-    using Portable.Attributes;
-    using Portable.Utilities;
+    using Standard.Attributes;
+    using Standard.Utilities;
 
     /// <summary>
     /// Provides logic for easy access to <see cref="Enum"/>s.

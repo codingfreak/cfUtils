@@ -14,9 +14,9 @@
 
     using Enumerations;
 
-    using Portable.Extensions;
-    using Portable.Structures;
-    using Portable.Utilities;
+    using Standard.Extensions;
+    using Standard.Structures;
+    using Standard.Utilities;
 
     /// <summary>
     /// Provides helper methods for mailing-features.

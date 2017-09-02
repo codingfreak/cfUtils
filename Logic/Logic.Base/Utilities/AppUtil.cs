@@ -7,7 +7,7 @@
     using System.Linq;
 
     using codingfreaks.cfUtils.Logic.Base.Structures;
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using codingfreaks.cfUtils.Logic.Standard.Extensions;
 
     /// <summary>
     /// Provides useful helper methods for applications.

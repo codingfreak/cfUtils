@@ -6,7 +6,7 @@
     using System.Configuration;
     using System.Globalization;
 
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     /// <summary>
     /// Provides logic for accessing .NET configurations.

@@ -5,7 +5,7 @@
     using System.Data.Common;
     using System.Threading.Tasks;
 
-    using Portable.Utilities;
+    using Standard.Utilities;
 
     /// <summary>
     /// Contains logic for accessing relational databases.

@@ -4,7 +4,7 @@
 
     using Interfaces;
 
-    using Portable.Structures;
+    using Standard.Structures;
 
     /// <summary>
     /// Will be passed by the <see cref="ILogger.LogCreated"/> event.

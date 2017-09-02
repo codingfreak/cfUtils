@@ -1,25 +1,61 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">	
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />-->
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
     <AssemblyName>cfUtils.cfStandardUtils</AssemblyName>
     <RootNamespace>codingfreaks.cfUtils.Logic.Standard</RootNamespace>
+    <ExtensionTasksPath>$(SolutionDir)packages\MSBuild.Extension.Pack.1.9.0\tools\net40</ExtensionTasksPath>
+    <NugetReleaseName>ReleaseNuget</NugetReleaseName>
+    <ApiKeyFile>$(SolutionDir).nuget\apikey.txt</ApiKeyFile>
+    <Configurations>Debug;Release;ReleaseNuget</Configurations>
+    <PackagePath>$(MSBuildProjectDirectory)\bin\$(PackageId).$(Version).nupkg</PackagePath>
+    <NugetSource>https://api.nuget.org/v3/index.json</NugetSource>
   </PropertyGroup>
-
+  
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="MSBump" Version="2.3.0" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />    
   </ItemGroup>
 
+  <Target Name="HandleVersion" BeforeTargets="Build" Condition="'$(Configuration)' == '$(NugetReleaseName)'">
+    <BumpVersion ProjectPath="$(ProjectPath)" BumpPatch="True">
+      <Output TaskParameter="NewVersion" PropertyName="Version" />
+      <Output TaskParameter="NewVersion" PropertyName="PackageVersion" />
+    </BumpVersion>
+  </Target>
+      
+  <Target Name="GetApiKey" Condition="'$(Configuration)|$(Platform)' == '$(NugetReleaseName)|AnyCPU'" AfterTargets="Build">
+    <Message Text="API key file: $(ApiKeyFile)" Importance="Low" />
+    <ReadLinesFromFile File="$(ApiKeyFile)">
+      <Output TaskParameter="Lines" ItemName="NuGetApiKey" />
+    </ReadLinesFromFile>    
+  </Target>
+  
+  <Target Name="PackPackage" Condition="'$(Configuration)|$(Platform)' == '$(NugetReleaseName)|AnyCPU'" AfterTargets="GetApiKey">
+    <Exec Command="dotnet pack -c $(NugetReleaseName) --no-build" />
+    <Message Text="Pack done!!!" />
+  </Target>
+  
+  <Target Name="PushPackage" Condition="'$(Configuration)|$(Platform)' == '$(NugetReleaseName)|AnyCPU'" AfterTargets="PackPackage">
+    <Exec Command="dotnet nuget push &quot;$(MSBuildProjectDirectory)\bin\$(Configuration)\$(PackageId).$(Version).nupkg&quot; -k @(NuGetApiKey) -s $(NugetSource)" />
+  </Target>
+  
+  <Target Name="DeletePackage" Condition="'$(Configuration)|$(Platform)' == '$(NugetReleaseName)|AnyCPU'" AfterTargets="PushPackage">        
+    <Exec Command="del &quot;$(MSBuildProjectDirectory)\bin\$(Configuration)\$(PackageId).$(Version).nupkg&quot;" />
+  </Target>
   
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <PackageId>codingfreaks.libs.cfUtils.cfStandardUtils</PackageId>
-    <PackageVersion>$version$</PackageVersion>
+    <TargetFramework>netstandard1.2</TargetFramework>
+    <PackageId>codingfreaks.libs.cfUtils.cfStandardUtils</PackageId>    
     <Authors>codingfreaks</Authors>
     <Description>[codingfreaks] .NET Standard utility library</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <PackageReleaseNotes>Changed standard target to 1.2 to support 4.5.1 too.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/codingfreak/cfUtils/tree/master/Logic/Logic.Standard</PackageProjectUrl>
     <Copyright>codingfreaks 2017</Copyright>
     <PackageTags>codingfreaks,.NET,C#,Standard,Utilities,Extensions</PackageTags>
-	<IconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</IconUrl>
-</PropertyGroup>
+    <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
+	  <Version>1.0.3</Version>
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup> 
 </Project>

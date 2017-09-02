@@ -5,7 +5,7 @@
     using System.IO;
     using System.Linq;
 
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     /// <summary>
     /// Provides logic for handling Windows INI files.

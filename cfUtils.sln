@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E9030A1C-8742-42C1-86ED-73E237BDFBD6}"
 	ProjectSection(SolutionItems) = preProject
@@ -159,8 +159,8 @@ Global
 		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
-		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.ReleaseNuget|Any CPU.ActiveCfg = ReleaseNuget|Any CPU
+		{42CB3823-3D2C-4EBF-A3A7-CF6E9B21DAC3}.ReleaseNuget|Any CPU.Build.0 = ReleaseNuget|Any CPU
 		{5243D7B2-A6FE-4B16-93DD-978D02E3CCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5243D7B2-A6FE-4B16-93DD-978D02E3CCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5243D7B2-A6FE-4B16-93DD-978D02E3CCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU

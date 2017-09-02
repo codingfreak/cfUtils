@@ -9,7 +9,7 @@
 
     using Enumerations;
 
-    using Portable.Utilities;
+    using Standard.Utilities;
 
     /// <summary>
     /// Contains helper-methods for working against the network on the TCP-level.

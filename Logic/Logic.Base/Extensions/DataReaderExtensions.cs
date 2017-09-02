@@ -4,7 +4,7 @@
     using System.Data;
 
     using codingfreaks.cfUtils.Logic.Base.Utilities;
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     /// <summary>
     /// Provides extension methods for <see cref="IDataReader" />

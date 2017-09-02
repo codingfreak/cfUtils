@@ -11,7 +11,7 @@
     using System.Security.Permissions;
     using System.Text;
 
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
+    using codingfreaks.cfUtils.Logic.Standard.Utilities;
 
     /// <summary>
     /// Provides logic wrappers for simple calls to the namespace <see cref="System.Security"/>.
