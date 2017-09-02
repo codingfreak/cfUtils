@@ -6,7 +6,7 @@
 
     using Microsoft.WindowsAzure.Storage.Table;
 
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using Standard.Extensions;
 
     /// <summary>
     /// Defines the structure of one line in the WADLogTable in Azure.

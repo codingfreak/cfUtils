@@ -9,7 +9,7 @@ namespace codingfreaks.cfUtils.Logic.Azure
 
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
-    using Portable.Extensions;
+    using Standard.Extensions;
 
     /// <summary>
     /// Encapsulates logic for retrieving access token from Azure AAD.

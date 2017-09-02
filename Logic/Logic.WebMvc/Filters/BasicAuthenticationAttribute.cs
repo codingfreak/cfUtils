@@ -5,7 +5,7 @@
     using System.Text;
     using System.Web.Mvc;
 
-    using Portable.Extensions;
+    using Standard.Extensions;
 
     /// <summary>
     /// Can be used to force the client to enter a fixed <see cref="Username"/> and <see cref="Password"/> as

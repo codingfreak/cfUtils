@@ -10,7 +10,7 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Switched from cfPortable to cfStandard.</releaseNotes>
+    <releaseNotes>Updated .NET Core package reference.</releaseNotes>
     <copyright>codingfreaks UG 2014-2017</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
@@ -18,7 +18,8 @@
     </frameworkAssemblies>
     <dependencies>
       <dependency id="NETStandard.Library" version="2.0.0" />
-      <dependency id="codingfreaks.libs.cfUtils.cfStandardUtils" version="1.0.3" />
+      <dependency id="Microsoft.NETCore.Platforms" version="2.0.0" />
+      <dependency id="codingfreaks.libs.cfUtils.cfStandardUtils" version="1.0.3" />      
     </dependencies>
   </metadata>
   <files>

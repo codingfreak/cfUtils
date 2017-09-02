@@ -17,11 +17,11 @@
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="WindowsAzure.Storage" version="8.1.4" />
+      <dependency id="WindowsAzure.Storage" version="8.4.0" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.2.3" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.26" />
-      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="3.14.1" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.30" />
+      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="3.16.0" />
     </dependencies>
   </metadata>
   <files>

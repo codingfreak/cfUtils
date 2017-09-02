@@ -24,8 +24,8 @@
     using Microsoft.WindowsAzure.Storage.Table.Protocol;
     using Microsoft.WindowsAzure.Storage.Table.Queryable;
 
-    using Portable.Extensions;
-    using Portable.Utilities;
+    using Standard.Extensions;
+    using Standard.Utilities;
 
     /// <summary>
     /// Provides easy access to Azure storage accounts.
