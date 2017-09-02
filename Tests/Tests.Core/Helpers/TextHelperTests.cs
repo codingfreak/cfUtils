@@ -1,12 +1,12 @@
 ﻿namespace codingfreaks.cfUtils.Tests.Core.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Logic.Standard.Extensions;
 
-    using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
     /// Contains test-methods
@@ -17,7 +17,7 @@
         #region methods
 
         /// <summary>
-        /// Tests the functionallity of the <see cref="StringExtensions.IsValidEmailAddress"/> method.
+        /// Tests the functionallity of the <see cref="StringExtensions.IsValidEmailAddress" /> method.
         /// </summary>
         [TestMethod]
         public void IsValidEmailAddressTest()

@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+
+    using Logic.Standard.Extensions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
-
     /// <summary>
-    /// Test methods for <see cref="EnumerableExtensions"/>.
+    /// Test methods for <see cref="EnumerableExtensions" />.
     /// </summary>
     [TestClass]
     public class EnumerableExtensionTests
@@ -16,7 +17,7 @@
         #region methods
 
         /// <summary>
-        /// Tests the correctness of the <see cref="EnumerableExtensions.GetIndexOf{T}(IEnumerable{T}, Func{T,bool})"/> method.
+        /// Tests the correctness of the <see cref="EnumerableExtensions.GetIndexOf{T}(IEnumerable{T}, Func{T,bool})" /> method.
         /// </summary>
         [TestMethod]
         public void GetIndexOfTest()

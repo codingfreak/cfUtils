@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
 
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
+    using Logic.Standard.Extensions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
     /// <summary>
-    /// Test methods for <see cref="DateTimeExtensions"/>.
+    /// Test methods for <see cref="DateTimeExtensions" />.
     /// </summary>
     [TestClass]
     public class DateTimeExtensionTests
@@ -50,7 +50,7 @@
             // arrange            
             var tests = new List<Tuple<DateTime, int, DateTime, DateTime>>
             {
-                Tuple.Create(new DateTime(2015, 6, 11), 1, new DateTime(2015, 1, 1), new DateTime(2015, 6, 30)),             
+                Tuple.Create(new DateTime(2015, 6, 11), 1, new DateTime(2015, 1, 1), new DateTime(2015, 6, 30)),
                 Tuple.Create(new DateTime(2015, 8, 11), 2, new DateTime(2015, 7, 1), new DateTime(2015, 12, 31))
             };
             // act & assert

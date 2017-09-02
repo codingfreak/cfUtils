@@ -8,9 +8,9 @@
 
     using Logic.Azure;
     using Logic.Base.Utilities;
-    using Logic.Portable.Extensions;
-    using Logic.Portable.Structures;
-    using Logic.Portable.Utilities;
+    using Logic.Standard.Extensions;
+    using Logic.Standard.Structures;
+    using Logic.Standard.Utilities;
     using Logic.Utils.Utilities;
 
     internal class Program

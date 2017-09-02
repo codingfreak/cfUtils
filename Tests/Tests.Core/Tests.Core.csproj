@@ -143,9 +143,9 @@
       <Project>{3C63B977-7ACD-4A7B-B196-10A815D4866D}</Project>
       <Name>Logic.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
-      <Project>{38B4CDDF-5457-441A-84D0-3826F5D0E1AA}</Project>
-      <Name>Logic.Portable</Name>
+    <ProjectReference Include="..\..\Logic\Logic.Standard\Logic.Standard.csproj">
+      <Project>{42cb3823-3d2c-4ebf-a3a7-cf6e9b21dac3}</Project>
+      <Name>Logic.Standard</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logic\Logic.Tests\Logic.Tests.csproj">
       <Project>{8CE28847-7194-499B-B3E1-8691427F0B6C}</Project>

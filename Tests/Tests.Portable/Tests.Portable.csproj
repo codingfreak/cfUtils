@@ -73,12 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Logic\Logic.Portable\Logic.Portable.csproj">
-      <Project>{38b4cddf-5457-441a-84d0-3826f5d0e1aa}</Project>
-      <Name>Logic.Portable</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Choose>

@@ -4,15 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Logic.Standard.Extensions;
+    using Logic.Standard.Utilities;
+
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using codingfreaks.cfUtils.Logic.Base.Extensions;
-    using codingfreaks.cfUtils.Logic.Base.Utilities;
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
-    using codingfreaks.cfUtils.Logic.Portable.Utilities;
-
     /// <summary>
-    /// Provides test methods for the type <see cref="DateTimeExtensions"/>.
+    /// Provides test methods for the type <see cref="DateTimeExtensions" />.
     /// </summary>
     [TestClass]
     public class DateTimeUtilsTests
@@ -20,7 +18,7 @@
         #region methods
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.BeginOfDay"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.BeginOfDay" />.
         /// </summary>
         [TestMethod]
         public void BeginOfDayTest()
@@ -37,7 +35,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.EndOfDay"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.EndOfDay" />.
         /// </summary>
         [TestMethod]
         public void EndOfDayTest()
@@ -54,7 +52,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.GetCalendarWeeksForYear"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.GetCalendarWeeksForYear" />.
         /// </summary>
         [TestMethod]
         public void GetCalendarWeeksForYearTest()
@@ -71,7 +69,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.GetFirstDayOfYear"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.GetFirstDayOfYear" />.
         /// </summary>
         [TestMethod]
         public void GetFirstDayOfYearTest()
@@ -87,7 +85,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeUtils.GetLastDayOfMonth"/>.
+        /// Tests the functionallity of <see cref="DateTimeUtils.GetLastDayOfMonth" />.
         /// </summary>
         [TestMethod]
         public void GetLastDayOfMonthTest()
@@ -105,7 +103,8 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.GetYearsDifference(System.DateTime,System.Nullable{System.DateTime})"/>.
+        /// Tests the functionallity of
+        /// <see cref="DateTimeExtensions.GetYearsDifference(System.DateTime,System.Nullable{System.DateTime})" />.
         /// </summary>
         /// <remarks>
         /// This method was tested in the year 2014.
@@ -125,7 +124,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.ToDateTime"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.ToDateTime" />.
         /// </summary>
         [TestMethod]
         public void ToDateTimeTest()
@@ -142,7 +141,7 @@
         }
 
         /// <summary>
-        /// Tests the functionallity of <see cref="DateTimeExtensions.ToDecimalTime"/>.
+        /// Tests the functionallity of <see cref="DateTimeExtensions.ToDecimalTime" />.
         /// </summary>
         [TestMethod]
         public void ToDecimalTimeTest()

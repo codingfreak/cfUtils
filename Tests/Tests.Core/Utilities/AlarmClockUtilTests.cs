@@ -1,25 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace codingfreaks.cfUtils.Tests.Core.Utilities
+﻿namespace codingfreaks.cfUtils.Tests.Core.Utilities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
 
-    using codingfreaks.cfUtils.Logic.Base.Utilities;
+    using Logic.Base.Utilities;
+    using Logic.Standard.Extensions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-    using codingfreaks.cfUtils.Logic.Portable.Extensions;
-
     /// <summary>
-    /// Contains unit tests for the type <see cref="AlarmClockUtil"/>.
+    /// Contains unit tests for the type <see cref="AlarmClockUtil" />.
     /// </summary>
     [TestClass]
     public class AlarmClockUtilTests
     {
+        #region methods
+
+        /// <summary>
+        /// Tests the start method.
+        /// </summary>
+        [TestMethod]
+        public void TestRevolvingStart()
+        {
+            // arrange
+            var util = new AlarmClockUtil();
+            var now = DateTime.Now;
+            var nextStart = now.AddHours(1);
+            var current = now.Subtract(now.BeginOfDay());
+            var times = new List<TimeSpan>
+            {
+                TimeSpan.FromSeconds(current.TotalSeconds + 10),
+                TimeSpan.FromSeconds(current.TotalSeconds + 3600)
+            };
+            var handle = new AutoResetEvent(false);
+            util.AlarmOccured += (s, e) => handle.Set();
+            // act             
+            util.Start(times, false);
+            handle.WaitOne();
+            // assert
+            Assert.IsTrue(nextStart.Subtract(util.NextPlannedStart).TotalSeconds <= 0.001d);
+            Assert.IsTrue(util.IsRunning);
+            util.Dispose();
+        }
 
         /// <summary>
         /// Tests the start method.
@@ -48,33 +73,6 @@ namespace codingfreaks.cfUtils.Tests.Core.Utilities
         }
 
         /// <summary>
-        /// Tests the start method.
-        /// </summary>
-        [TestMethod]
-        public void TestRevolvingStart()
-        {
-            // arrange
-            var util = new AlarmClockUtil();            
-            var now = DateTime.Now;
-            var nextStart = now.AddHours(1);
-            var current = now.Subtract(now.BeginOfDay());
-            var times = new List<TimeSpan>
-            {
-                TimeSpan.FromSeconds(current.TotalSeconds + 10),
-                TimeSpan.FromSeconds(current.TotalSeconds + 3600)
-            };
-            var handle = new AutoResetEvent(false);
-            util.AlarmOccured += (s, e) => handle.Set();            
-            // act             
-            util.Start(times, false);
-            handle.WaitOne();
-            // assert
-            Assert.IsTrue(nextStart.Subtract(util.NextPlannedStart).TotalSeconds <= 0.001d);
-            Assert.IsTrue(util.IsRunning);
-            util.Dispose();
-        }
-
-        /// <summary>
         /// Tests if exception handling on empty parameters is corrrect.
         /// </summary>
         [TestMethod]
@@ -84,7 +82,7 @@ namespace codingfreaks.cfUtils.Tests.Core.Utilities
             var util = new AlarmClockUtil();
             var tests = new List<Tuple<IEnumerable<TimeSpan>, Type>>
             {
-                Tuple.Create(Enumerable.Empty<TimeSpan>(), typeof(ArgumentException)), 
+                Tuple.Create(Enumerable.Empty<TimeSpan>(), typeof(ArgumentException)),
                 Tuple.Create((IEnumerable<TimeSpan>)null, typeof(ArgumentNullException))
             };
             // act & assert
@@ -92,9 +90,10 @@ namespace codingfreaks.cfUtils.Tests.Core.Utilities
                 t =>
                 {
                     NUnit.Framework.Assert.Throws(t.Item2, () => util.Start(t.Item1));
-                });  
+                });
             util.Dispose();
         }
 
+        #endregion
     }
 }
