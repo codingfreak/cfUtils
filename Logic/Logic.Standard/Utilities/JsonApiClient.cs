@@ -680,7 +680,14 @@
                     // header already contained
                     continue;                    
                 }
-                LastResponseHeaders.Add(header.Key, string.Join(";", header.Value));
+                // for some reason the contains key is not working sometimes
+                try
+                {
+                    LastResponseHeaders.Add(header.Key, string.Join(";", header.Value));
+                }
+                catch
+                {                    
+                }                
             }
             ResponseArrived?.Invoke(this, new HttpResponseEventArgs(responseMessage));
         }

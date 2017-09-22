@@ -50,12 +50,14 @@
     <Authors>codingfreaks</Authors>
     <Description>[codingfreaks] .NET Standard utility library</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Changed standard target to 1.2 to support 4.5.1 too.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed error in JsonApiClient.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/codingfreak/cfUtils/tree/master/Logic/Logic.Standard</PackageProjectUrl>
     <Copyright>codingfreaks 2017</Copyright>
     <PackageTags>codingfreaks,.NET,C#,Standard,Utilities,Extensions</PackageTags>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
-	  <Version>1.0.3</Version>
+	  <Version>1.0.4</Version>
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <AssemblyVersion>1.0.3.0</AssemblyVersion>
+	  <FileVersion>1.0.3.0</FileVersion>
   </PropertyGroup> 
 </Project>
