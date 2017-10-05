@@ -18,6 +18,7 @@
     /// <summary>
     /// Handles consumption of the api.
     /// </summary>
+    [Obsolete("Use RestSharp as a wrapper instead of this. This type is no longer maintained!")]
     public sealed class JsonApiClient : HttpClient
     {
         #region events
