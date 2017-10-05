@@ -3,6 +3,6 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("cfAzureUtils")]
 [assembly: AssemblyDescription("[codingfreaks] Azure utility library")]
-[assembly: AssemblyVersion("1.0.33.59")]
-[assembly: AssemblyFileVersion("1.0.33.59")]
+[assembly: AssemblyVersion("1.0.34.60")]
+[assembly: AssemblyFileVersion("1.0.34.60")]
 [assembly: ComVisible(false)]
