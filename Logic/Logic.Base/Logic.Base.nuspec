@@ -10,16 +10,16 @@
     <summary>Contains base classes and utilities useful for all kinds of projects.</summary>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>        
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
-    <releaseNotes>Added parameterless ctor in BasePagedResult and updated NuGets..</releaseNotes>
+    <releaseNotes>Made Request setable for JsonNet in BasePagedResult and updated NuGets.</releaseNotes>
     <copyright>codingfreaks UG 2014-2017</copyright>
     <tags>codingfreaks,.NET,C#,Utilities,Extensions</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="NETStandard.Library" version="2.0.0" />
+      <dependency id="NETStandard.Library" version="2.0.1" />
       <dependency id="Microsoft.NETCore.Platforms" version="2.0.0" />
-      <dependency id="codingfreaks.libs.cfUtils.cfStandardUtils" version="1.0.5" />      
+      <dependency id="codingfreaks.libs.cfUtils.cfStandardUtils" version="1.0.6" />      
     </dependencies>
   </metadata>
   <files>

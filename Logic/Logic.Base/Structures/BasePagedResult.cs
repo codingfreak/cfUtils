@@ -99,7 +99,7 @@
         /// <summary>
         /// The request injected by the constructor.
         /// </summary>
-        public PagedRequest Request { get; }
+        public PagedRequest Request { get; set; }
 
         #endregion
     }
