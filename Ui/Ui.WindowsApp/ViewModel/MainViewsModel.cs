@@ -8,6 +8,7 @@ namespace codingfreaks.cfUtils.Ui.WindowsApp.ViewModel
     using System.Windows;
 
     using GalaSoft.MvvmLight;
+    using GalaSoft.MvvmLight.Command;
 
     using Logic.Wpf.Components;
 
@@ -28,6 +29,7 @@ namespace codingfreaks.cfUtils.Ui.WindowsApp.ViewModel
                     list.Add(
                         new Person()
                         {
+                            Id = i,
                             Firstname = Guid.NewGuid().ToString("N"),
                             Lastname = Guid.NewGuid().ToString("N")
                         });
@@ -43,12 +45,26 @@ namespace codingfreaks.cfUtils.Ui.WindowsApp.ViewModel
                         });
                 };
                 Task.Delay(2000).ContinueWith(t => People.SwitchToFullView());
+                TestCommand = new RelayCommand(
+                    () =>
+                    {
+                        var newItem = new Person()
+                        {
+                            Id = 0,
+                            Firstname = Guid.NewGuid().ToString("N"),
+                            Lastname = Guid.NewGuid().ToString("N")
+                        };
+                        People.Replace(newItem, m => m.Id == newItem.Id);
+                    });
             }
         }
 
         #endregion
+        
 
 
         public ContainedCollectionView<Person> People { get; set; }
+
+        public RelayCommand TestCommand { get; private set; }
     }
 }

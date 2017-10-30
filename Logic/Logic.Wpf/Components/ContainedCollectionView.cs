@@ -213,7 +213,7 @@
             while (item != null)
             {
                 var index = Items.IndexOf(item);
-                if (index <= 0 || index == lastIndex)
+                if (index < 0 || index == lastIndex)
                 {
                     // either the item wasn't found or it is the same as the
                     // last item

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:codingfreaks.cfUtils.Ui.WindowsApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid>
-        <DataGrid ItemsSource="{Binding People.ItemsView}" IsSynchronizedWithCurrentItem="True"/>
-    </Grid>
+    <DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Top" Content="test" Command="{Binding TestCommand}"></Button>
+        <DataGrid DockPanel.Dock="Bottom" ItemsSource="{Binding People.ItemsView}" IsSynchronizedWithCurrentItem="True"/>
+    </DockPanel>
 </Window>

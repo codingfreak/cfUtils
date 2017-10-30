@@ -11,7 +11,7 @@
     <summary>Contains extended classes and utilities useful for WPF projects.</summary>
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <tags>codingfreaks,WPF,.NET,C#,Converter,MVVM,MvvmLight</tags>
-    <releaseNotes>Optimizations on ContainedCollectionView.</releaseNotes>
+    <releaseNotes>Bugfix on Replace method in ContainedCollectionView.</releaseNotes>
     <copyright>codingfreaks 2015-2017</copyright>
     <dependencies>
       <dependency id="MvvmLightLibs" version="5.3.0" />      
