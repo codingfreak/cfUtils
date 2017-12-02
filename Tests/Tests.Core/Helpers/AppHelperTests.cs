@@ -27,10 +27,11 @@
             // ApplicationInfo provided in the next step should result in a valid or invalid result.
             var testValues = new Dictionary<string[], bool>
             {
-                { new[] { "testValue1", "testValue2", "-v=1", "-x=true", "-flagParam" }, true },
-                { new[] { "testValue1", "testValue2", "-version=1", "-someOption=true", "-flagParam" }, true },
-                { new[] { "testValue1", "testValue2", "-v=1", "-x=true" }, true },
-                { new[] { "testValue1", "-version=1", "-x=true", "-flagParam" }, false }
+                { new[] { "testValue1", "1", "-v=1", "-x=true", "-flagParam" }, true },
+                { new[] { "testValue1", "1", "-version=1", "-someOption=true", "-flagParam" }, true },
+                { new[] { "testValue1", "1", "-v=1", "-x=true" }, true },
+                { new[] { "testValue1", "-version=1", "-x=true", "-flagParam" }, false },
+                { new[] { "testValue1", "1-10", "-foo=1,12", "-x=true", "-flagParam" }, true },
             };
             // Generate the ApplicationInfo to test against
             var appInfo = GetTestAppInfo();
@@ -48,9 +49,9 @@
             // the amount of arguments the MapCommandArguments should return.
             var testValues = new Dictionary<string[], int>
             {
-                { new[] { "testValue1", "testValue2", "-v=1", "-x=true", "-flagParam" }, 5 },
-                { new[] { "testValue1", "testValue2", "-version=1", "-someOption=true", "-flagParam" }, 5 },
-                { new[] { "testValue1", "testValue2", "-v=1", "-x=true" }, 4 },
+                { new[] { "testValue1", "1", "-v=1", "-x=true", "-flagParam" }, 5 },
+                { new[] { "testValue1", "1", "-version=1", "-someOption=true", "-flagParam" }, 5 },
+                { new[] { "testValue1", "1", "-v=1", "-x=true" }, 4 },
                 { new[] { "testValue1", "-version=1", "-x=true", "-flagParam" }, 0 }
             };
             // Generate the ApplicationInfo to test against
@@ -78,8 +79,11 @@
                         Abbreviation = "a2",
                         ArgumentName = "argument2",
                         IsMandatory = true,
+                        IsNumeric = true,
+                        CanBeCommaSeparated = true,
+                        CanBeRanged = true,
                         OrderPosition = 2
-                    },
+                    },                   
                     new CommandlineArgumentInfo
                     {
                         Abbreviation = "v",
@@ -97,6 +101,13 @@
                         Abbreviation = "f",
                         ArgumentName = "flagParam",
                         IsFlag = true
+                    },
+                    new CommandlineArgumentInfo
+                    {                        
+                        ArgumentName = "foo",                        
+                        IsNumeric = true,
+                        CanBeRanged = true,
+                        CanBeCommaSeparated = true
                     }
                 },
                 ParameterDelimiter = '=',

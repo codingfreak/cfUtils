@@ -58,7 +58,7 @@
       <NuSpecPath>$(ProjectDir)$(ProjectName).nuspec</NuSpecPath>
       <NuGetVersion>$(MajorVersionNumber).$(MinorVersionNumber).$(BuildVersionNumber)</NuGetVersion>
       <NuGetPackage>$(ProjectDir)$(NuGetPraefix)$(AssemblyName).$(MajorVersionNumber).$(MinorVersionNumber).$(BuildVersionNumber).nupkg</NuGetPackage>      
-      <NuGetPushCommand>"$(NugetToolsPath)\NuGet.exe" push "$(NuGetPackage)" -apikey "@(NuGetApiKey) -Source nuget.org"</NuGetPushCommand>
+      <NuGetPushCommand>"$(NugetToolsPath)\NuGet.exe" push "$(NuGetPackage)" -apikey "@(NuGetApiKey)" -Source nuget.org</NuGetPushCommand>
     </PropertyGroup>
     <Message Text="Building Nuget Package with version $(NugetVersion)" Importance="High" Condition="Exists('$(NuSpecPath)')" />
     <Message Text="Skipping NuGet Packaging because spec was NOT found under $(NuSpecPath)" Importance="High" Condition="!Exists('$(NuSpecPath)')" />

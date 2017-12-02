@@ -243,8 +243,7 @@
             }
             if (currentArgInfo.IsNumeric)
             {
-                long tmp;
-                if (currentArgInfo.CanBeCommaSeparated)
+                if (currentArgInfo.CanBeCommaSeparated && val.Contains(","))
                 {
                     // we have to check all values
                     var values = val.Split(',').ToList();
@@ -253,31 +252,31 @@
                         return false;
                     }
                     var result = true;
-                    values.ForEach(v => result &= long.TryParse(v.Trim(), out tmp));
+                    values.ForEach(v => result &= long.TryParse(v.Trim(), out _));
                     return result;
                 }
-                if (currentArgInfo.CanBeRanged)
+                if (currentArgInfo.CanBeRanged && val.Contains("-"))
                 {
                     var values = val.Split('-').ToList();
-                    if (values.Any())
+                    if (!values.Any())
                     {
-                        if (long.TryParse(values[0], out var fromValue) && long.TryParse(values[1], out var toValue))
-                        {
-                            if (fromValue < toValue)
-                            {
-                                return true;
-                            }
-                        }
-                        // it can be ranged, it contains a '-' but the values are invalid
-                        return false;
+                        return long.TryParse(val, out _);
                     }
+                    if (long.TryParse(values[0], out var fromValue) && long.TryParse(values[1], out var toValue))
+                    {
+                        if (fromValue < toValue)
+                        {
+                            return true;
+                        }
+                    }
+                    // it can be ranged, it contains a '-' but the values are invalid
+                    return false;
                 }
-                return long.TryParse(val, out tmp);
+                return long.TryParse(val, out _);
             }
             if (currentArgInfo.IsBool)
             {
-                bool tmp;
-                return bool.TryParse(val, out tmp);
+                return bool.TryParse(val, out _);
             }
             if (currentArgInfo.IsUri)
             {
