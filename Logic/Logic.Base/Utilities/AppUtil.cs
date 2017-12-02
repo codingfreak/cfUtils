@@ -41,9 +41,7 @@
         {
             var result = new List<string>();
             var argsFound = new List<CommandlineArgumentInfo>();
-
             var pos = 0;
-
             args.ToList().ForEach(
                 arg =>
                 {
@@ -86,7 +84,7 @@
                     }
                     if (currentArgInfo == null)
                     {
-                        result.Add(string.Format("Can not associate parameter {0} ({1})!", pos, givenName));
+                        result.Add($"Can not associate parameter {pos} ({givenName})!");
                     }
                     else
                     {
@@ -102,7 +100,7 @@
                                 else
                                 {
                                     // for some reason we couldn't use the value
-                                    result.Add(string.Format("The value for parameter {0} could not be matched!", pos));
+                                    result.Add($"The value for parameter {pos} could not be matched!");
                                 }
                             }
                         }
@@ -111,12 +109,11 @@
                             if (!currentArgInfo.IsFlag)
                             {
                                 // this is not a flag-parameter so we need to provide some value, which didn't happen
-                                result.Add(string.Format("No value for parameter {0} provided!", pos));
+                                result.Add($"No value for parameter {pos} provided!");
                             }
                         }
                     }
                 });
-
             // Now check if all mandatory parameters are given
             var mandatoriesAllGiven = true;
             appInfo.CommandlineArgumentInfos.Where(a => a.IsMandatory).ToList().ForEach(
@@ -247,7 +244,7 @@
             if (currentArgInfo.IsNumeric)
             {
                 long tmp;
-                if (currentArgInfo.IsCommaSeparated)
+                if (currentArgInfo.CanBeCommaSeparated)
                 {
                     // we have to check all values
                     var values = val.Split(',').ToList();
@@ -258,6 +255,22 @@
                     var result = true;
                     values.ForEach(v => result &= long.TryParse(v.Trim(), out tmp));
                     return result;
+                }
+                if (currentArgInfo.CanBeRanged)
+                {
+                    var values = val.Split('-').ToList();
+                    if (values.Any())
+                    {
+                        if (long.TryParse(values[0], out var fromValue) && long.TryParse(values[1], out var toValue))
+                        {
+                            if (fromValue < toValue)
+                            {
+                                return true;
+                            }
+                        }
+                        // it can be ranged, it contains a '-' but the values are invalid
+                        return false;
+                    }
                 }
                 return long.TryParse(val, out tmp);
             }
