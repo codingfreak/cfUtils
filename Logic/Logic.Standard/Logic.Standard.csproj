@@ -20,7 +20,8 @@
   <Target Name="HandleVersion" BeforeTargets="Build" Condition="'$(Configuration)' == '$(NugetReleaseName)'">
     <BumpVersion ProjectPath="$(ProjectPath)" BumpPatch="True">
       <Output TaskParameter="NewVersion" PropertyName="Version" />
-      <Output TaskParameter="NewVersion" PropertyName="PackageVersion" />
+      <Output TaskParameter="NewVersion" PropertyName="AssemblyVersion" />
+      <Output TaskParameter="NewVersion" PropertyName="FileVersion" />
     </BumpVersion>
   </Target>
       
@@ -50,14 +51,14 @@
     <Authors>codingfreaks</Authors>
     <Description>[codingfreaks] .NET Standard utility library</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Fixed error in JsonApiClient.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed versioning mismatch.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/codingfreak/cfUtils/tree/master/Logic/Logic.Standard</PackageProjectUrl>
-    <Copyright>codingfreaks 2017</Copyright>
+    <Copyright>codingfreaks 2017-2018</Copyright>
     <PackageTags>codingfreaks,.NET,C#,Standard,Utilities,Extensions</PackageTags>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
-	  <Version>1.0.6</Version>
+	  <Version>1.0.8</Version>
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-	  <AssemblyVersion>1.0.3.0</AssemblyVersion>
-	  <FileVersion>1.0.3.0</FileVersion>
+	  <AssemblyVersion>1.0.8.0</AssemblyVersion>
+	  <FileVersion>1.0.8.0</FileVersion>
   </PropertyGroup> 
 </Project>
