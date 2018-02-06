@@ -12,16 +12,16 @@
     <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
     <releaseNotes>Updated package references.</releaseNotes>
     <tags>codingfreaks,Azure,.NET,C#,Storage,Queue</tags>
-    <copyright>codingfreaks 2015-2017</copyright>
+    <copyright>codingfreaks 2015-2018</copyright>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
     </frameworkAssemblies>
     <dependencies>
-      <dependency id="WindowsAzure.Storage" version="8.4.0" />
+      <dependency id="WindowsAzure.Storage" version="8.7.0" />
       <dependency id="Microsoft.WindowsAzure.ConfigurationManager" version="3.2.3" />
       <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
-      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.31" />
-      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="3.17.0" />
+      <dependency id="codingfreaks.libs.cfUtils.cfBaseUtils" version="1.0.35" />
+      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="3.19.1" />
     </dependencies>
   </metadata>
   <files>
