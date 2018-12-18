@@ -123,12 +123,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Logic\Logic.Wpf\Logic.Wpf.csproj">
-      <Project>{84eee92f-21d4-4044-9c4f-efd439ee6481}</Project>
-      <Name>Logic.Wpf</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
