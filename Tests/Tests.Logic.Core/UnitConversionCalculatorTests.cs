@@ -53,7 +53,8 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
             // arrange
             var values = new List<(double centimeter, double inch)>
             {
-                (2.54, 1)
+                (2.54, 1),
+                (500, 196.85)
             };
             // act && assert
             values.ForEach(
@@ -61,6 +62,30 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
                 {
                     var result = UnitConversionCalculator.ConvertCentimetersToInches(v.centimeter);
                     Assert.AreEqual(v.inch, result, 0.001, "Expected result is not inside the expected range.");
+                });
+        }
+
+        /// <summary>
+        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertKilogramToPounds" />.
+        /// </summary>
+        /// <remarks>
+        /// Uses an accuracy of 0.01.
+        /// </remarks>
+        [TestMethod]
+        public void ConvertKilogramsToPoundTest()
+        {
+            // arrange
+            var values = new List<(double kilogram, double pound)>
+            {
+                (100, 220.462),
+                (423, 932.55)
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    var result = UnitConversionCalculator.ConvertKilogramToPounds(v.kilogram);
+                    Assert.AreEqual(v.pound, result, 0.01, "Expected result is not inside the expected range.");
                 });
         }
 

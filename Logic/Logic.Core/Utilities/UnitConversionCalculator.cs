@@ -35,7 +35,7 @@
         /// </summary>
         /// <param name="kiloGram">The weight in kg.</param>
         /// <returns>The weight in lbs.</returns>
-        public static double ConvertKilogramToPounds(int kiloGram)
+        public static double ConvertKilogramToPounds(double kiloGram)
         {
             return kiloGram * Constants.PoundPerKilogram;
         }
