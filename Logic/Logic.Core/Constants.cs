@@ -33,7 +33,7 @@
         /// <summary>
         /// Defines how many feets are included in one meter.
         /// </summary>
-        public const double FeetsPerMeter = 3.28084;
+        public const double FeetPerMeter = 3.28084;
 
         /// <summary>
         /// Defines how many inches are included in one centimeter.
@@ -81,7 +81,7 @@
         public const double SecondsPerDay = 86400;
 
         /// <summary>
-        /// Defines the prroximate amount of seconds per calendar month.
+        /// Defines the approximate amount of seconds per calendar month.
         /// </summary>
         public const double SecondsPerMonth = 2592000;
 

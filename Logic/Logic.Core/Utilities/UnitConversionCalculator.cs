@@ -67,7 +67,7 @@
         /// <returns>The distance in ft.</returns>
         public static double ConvertMetersToFeet(double meters)
         {
-            return meters * Constants.FeetsPerMeter;
+            return meters * Constants.FeetPerMeter;
         }
 
         /// <summary>

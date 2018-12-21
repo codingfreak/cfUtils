@@ -17,7 +17,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         #region methods
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertAccelerationToGForce" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertAccelerationToGForce" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.0001.
@@ -43,7 +43,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertCentimetersToInches" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertCentimetersToInches" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.001.
@@ -68,7 +68,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertKilogramToPounds" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertKilogramToPounds" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -93,7 +93,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertMetersPerSecondToKilometersPerHour" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertMetersPerSecondToKilometersPerHour" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -118,7 +118,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertMetersPerSecondToMilesPerHour" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertMetersPerSecondToMilesPerHour" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -143,7 +143,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertMetersToFeet" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertMetersToFeet" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -168,7 +168,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertMetersToMiles" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertMetersToMiles" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -194,7 +194,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.ConvertMetersToYards" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.ConvertMetersToYards" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.
@@ -220,7 +220,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="UnitConversionCalculator.GetApplePlaceString" />.
+        /// Tests the correct functionality of <see cref="UnitConversionCalculator.GetApplePlaceString" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.01.

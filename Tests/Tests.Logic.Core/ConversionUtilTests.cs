@@ -23,7 +23,7 @@
         #region methods
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="ConversionUtil.GetFormattedAltitude" />.
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedAltitude" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.0001.
@@ -49,7 +49,7 @@
         }
 
         /// <summary>
-        /// Tests the correct functionallity of <see cref="ConversionUtil.GetFormattedDistance" />.
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedDistance" />.
         /// </summary>
         /// <remarks>
         /// Uses an accuracy of 0.0001.
