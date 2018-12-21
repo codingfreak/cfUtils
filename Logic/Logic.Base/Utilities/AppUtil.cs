@@ -50,7 +50,7 @@
                     string givenName = null;
                     if (arg.Contains(appInfo.ParameterDelimiter))
                     {
-                        // the delimeter was found in this argument -> split it out
+                        // the delimiter was found in this argument -> split it out
                         var parts = arg.Split(appInfo.ParameterDelimiter);
                         if (parts.Length == 2)
                         {

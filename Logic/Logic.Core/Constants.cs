@@ -16,6 +16,11 @@
         public const double AccelerationToG = 0.1019367991845056;
 
         /// <summary>
+        /// The average amount of days per calendar year.
+        /// </summary>
+        public const double DaysPerYear = 365.2425;
+
+        /// <summary>
         /// Conversion unit to get degrees from radians.
         /// </summary>
         public const double DegreesToRadians = Math.PI / 180.0;

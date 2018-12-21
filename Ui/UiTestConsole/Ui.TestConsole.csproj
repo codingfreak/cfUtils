@@ -122,24 +122,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Logic\Logic.Azure\Logic.Azure.csproj">
-      <Project>{9213f9e3-2a7e-4890-8a3c-bc91ace4d235}</Project>
-      <Name>Logic.Azure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Base\Logic.Base.csproj">
-      <Project>{3C63B977-7ACD-4A7B-B196-10A815D4866D}</Project>
-      <Name>Logic.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Standard\Logic.Standard.csproj">
-      <Project>{42cb3823-3d2c-4ebf-a3a7-cf6e9b21dac3}</Project>
-      <Name>Logic.Standard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logic\Logic.Utils\Logic.Utils.csproj">
-      <Project>{88f51888-a010-41e2-9bfa-3d612b38f3af}</Project>
-      <Name>Logic.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

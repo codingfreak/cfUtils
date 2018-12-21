@@ -1,11 +1,12 @@
-﻿namespace codingfreaks.cfUtils.Logic.Standard.Extensions
+﻿namespace codingfreaks.cfUtils.Logic.Core.Extensions
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Linq.Expressions;
 
-    using Structures;
+    using Models;
 
     using Utilities;
 
@@ -30,23 +31,13 @@
         #region methods
 
         /// <summary>
-        /// Retrieve the first posible moment of a given <paramref name="date" />.
+        /// Retrieve the first possible moment of a given <paramref name="date" />.
         /// </summary>
         /// <param name="date">The original date.</param>
         /// <returns>The date representing the first moment.</returns>
         public static DateTime BeginOfDay(this DateTime date)
         {
             return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0);
-        }
-
-        /// <summary>
-        /// Retrieves the start of the half year in which the given <paramref name="date" /> lays.
-        /// </summary>
-        /// <param name="date">The original date.</param>
-        /// <returns>The starting time point of the correct half year.</returns>
-        public static DateTime BeginOfHalfYear(this DateTime date)
-        {
-            return date.GetCalendarHalfYearInfo().DateStart;
         }
 
         /// <summary>
@@ -67,6 +58,16 @@
         public static DateTime BeginOfQuarter(this DateTime date)
         {
             return date.GetCalendarQuarterInfo().DateStart;
+        }
+
+        /// <summary>
+        /// Retrieves the start of the term in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The starting time point of the correct term.</returns>
+        public static DateTime BeginOfTerm(this DateTime date)
+        {
+            return date.GetCalendarTermInfo().DateStart;
         }
 
         /// <summary>
@@ -121,16 +122,6 @@
         }
 
         /// <summary>
-        /// Retrieves the end of the half year in which the given <paramref name="date" /> lays.
-        /// </summary>
-        /// <param name="date">The original date.</param>
-        /// <returns>The end time point of the correct half year.</returns>
-        public static DateTime EndOfHalfYear(this DateTime date)
-        {
-            return date.GetCalendarHalfYearInfo().DateEnd;
-        }
-
-        /// <summary>
         /// Retrieves the start of the month in which the given <paramref name="date" /> lays.
         /// </summary>
         /// <param name="date">The original date.</param>
@@ -138,6 +129,16 @@
         public static DateTime EndOfMonth(this DateTime date)
         {
             return date.GetCalendarMonthInfo().DateEnd;
+        }
+
+        /// <summary>
+        /// Retrieves the end of the term in which the given <paramref name="date" /> lays.
+        /// </summary>
+        /// <param name="date">The original date.</param>
+        /// <returns>The end time point of the correct term.</returns>
+        public static DateTime EndOfTerm(this DateTime date)
+        {
+            return date.GetCalendarTermInfo().DateEnd;
         }
 
         /// <summary>
@@ -181,45 +182,7 @@
         }
 
         /// <summary>
-        /// Retrieves informations on the calendar half year of a given <paramref name="current" /> date.
-        /// </summary>
-        /// <param name="current">The date to extend.</param>
-        /// <returns>The calendar half year information for the date.</returns>
-        public static DateTimeSpanInfo GetCalendarHalfYearInfo(this DateTime current)
-        {
-            return current.Year.GetCalendarHalfYearsForYear().First(w => w.SpanNumber == current.GetHalfYearNumber());
-        }
-
-        /// <summary>
-        /// Returns a list of both half years of a given year.
-        /// </summary>
-        /// <param name="year">The year to examine.</param>
-        /// <returns>A list of meta-info objects describing the half-years.</returns>
-        public static IEnumerable<DateTimeSpanInfo> GetCalendarHalfYearsForYear(this int year)
-        {
-            var result = new List<DateTimeSpanInfo>();
-            var currentHalfyear = 0;
-            // 1. Get first and last day
-            var startDate = new DateTime(year, 1, 1);
-            var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all halfyear-informations
-            while (startDate < endDate)
-            {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarHalfyear,
-                        SpanNumber = ++currentHalfyear,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)
-                    });
-                startDate = startDate.AddMonths(6);
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// Retrieves informations on the calendar month of a given <paramref name="current" /> date.
+        /// Retrieves information on the calendar month of a given <paramref name="current" /> date.
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar month information for the date.</returns>
@@ -237,10 +200,10 @@
         {
             var result = new List<DateTimeSpanInfo>();
             var currentMonth = 0;
-            // 1. Get first and last day
+            // Get first and last day
             var startDate = new DateTime(year, 1, 1);
             var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all week-informations
+            // Collect all week-information
             while (startDate < endDate)
             {
                 result.Add(
@@ -257,7 +220,7 @@
         }
 
         /// <summary>
-        /// Retrieves informations on the calendar quarter of a given <paramref name="current" /> date.
+        /// Retrieves information on the calendar quarter of a given <paramref name="current" /> date.
         /// </summary>
         /// <param name="current">The date to extend.</param>
         /// <returns>The calendar quarter information for the date.</returns>
@@ -275,10 +238,10 @@
         {
             var result = new List<DateTimeSpanInfo>();
             var currentQuarter = 0;
-            // 1. Get first and last day
+            // Get first and last day
             var startDate = new DateTime(year, 1, 1);
             var endDate = new DateTime(year + 1, 1, 1);
-            // 2. Collect all week-informations
+            // Collect all week-information
             while (startDate < endDate)
             {
                 result.Add(
@@ -290,6 +253,44 @@
                         DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)
                     });
                 startDate = startDate.AddMonths(3);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves information on the calendar term of a given <paramref name="current" /> date.
+        /// </summary>
+        /// <param name="current">The date to extend.</param>
+        /// <returns>The calendar term information for the date.</returns>
+        public static DateTimeSpanInfo GetCalendarTermInfo(this DateTime current)
+        {
+            return current.Year.GetCalendarTermsForYear().First(w => w.SpanNumber == current.GetTermNumber());
+        }
+
+        /// <summary>
+        /// Returns a list of both Terms of a given year.
+        /// </summary>
+        /// <param name="year">The year to examine.</param>
+        /// <returns>A list of meta-info objects describing the half-years.</returns>
+        public static IEnumerable<DateTimeSpanInfo> GetCalendarTermsForYear(this int year)
+        {
+            var result = new List<DateTimeSpanInfo>();
+            var currentTerm = 0;
+            // Get first and last day
+            var startDate = new DateTime(year, 1, 1);
+            var endDate = new DateTime(year + 1, 1, 1);
+            // Collect all term-information
+            while (startDate < endDate)
+            {
+                result.Add(
+                    new DateTimeSpanInfo
+                    {
+                        SpanType = DateSpanType.CalendarTerm,
+                        SpanNumber = ++currentTerm,
+                        DateStart = startDate,
+                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)
+                    });
+                startDate = startDate.AddMonths(6);
             }
             return result;
         }
@@ -318,10 +319,10 @@
             }
             var result = new List<DateTimeSpanInfo>();
             var currentWeek = 0;
-            // 1. Get first and last day
+            // Get first and last day
             var startDate = year.GetFirstDayOfYear(culture);
             var endDate = (year + 1).GetFirstDayOfYear(culture);
-            // 2. Collect all week-information
+            // Collect all week-information
             while (startDate < endDate)
             {
                 result.Add(
@@ -352,27 +353,17 @@
             }
             var startDate = new DateTime(year, 1, 1).AddDays(-10);
             var firstDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek;
-            // 1. find the start-day
+            // find the start-day
             while (startDate.GetWeekNumber(culture) != 1)
             {
                 startDate = startDate.AddDays(1);
             }
-            // 2. Go back to nearest start-date
+            // Go back to nearest start-date
             while (startDate.DayOfWeek != firstDayOfWeek)
             {
                 startDate = startDate.AddDays(-1);
             }
             return startDate.BeginOfDay();
-        }
-
-        /// <summary>
-        /// Returns the calendar half year of a given date.
-        /// </summary>
-        /// <param name="date">The date to examine.</param>
-        /// <returns>The number of the calendar half year.</returns>
-        public static int GetHalfYearNumber(this DateTime date)
-        {
-            return date.Month < 7 ? 1 : 2;
         }
 
         /// <summary>
@@ -392,7 +383,7 @@
         /// <remarks>
         /// <list type="bullet">
         /// <listheader>
-        /// You need the following keys in your resource-file:
+        /// You need the following keys in the <paramref name="resourceResolver" />:
         /// </listheader>
         /// <item>
         /// <term>RelativeDateSpanToday</term><description>Today</description>
@@ -419,30 +410,41 @@
         /// </remarks>
         /// <param name="current">The date from which to look.</param>
         /// <param name="compareDate">The date to compare with dtmBase.</param>
-        /// <param name="resourceType">The target resource where the search should occur.</param>
+        /// <param name="resourceResolver">An expression that takes a key as the argument and retrieves a text.</param>
         /// <returns>A resource-based string matching the time span.</returns>
-        public static string GetRelativeDateSpanText(this DateTime current, DateTime compareDate, int resourceType = 0)
+        public static string GetRelativeDateSpanText(this DateTime current, DateTime compareDate, Expression<Func<string, string>> resourceResolver)
         {
             current = current.Date;
             compareDate = compareDate.Date;
             var dayDiff = current.Subtract(compareDate).Days;
             var inPast = dayDiff < 0;
             dayDiff = Math.Abs(dayDiff);
+            var resolver = resourceResolver.Compile();
             if (dayDiff == 0)
             {
                 // it is today
-                return PortableResourceUtil.Get<string>("RelativeDateSpanToday", resourceType);
+                return resolver.Invoke("RelativeDateSpanToday");
             }
             if (dayDiff == 1)
             {
-                return inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanYesterday", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanTomorrow", resourceType);
+                return inPast ? resolver.Invoke("RelativeDateSpanYesterday") : resolver.Invoke("RelativeDateSpanTomorrow");
             }
             if (dayDiff == 2)
             {
-                return inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanBeforeYesterday", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanAfterTomorrow", resourceType);
+                return inPast ? resolver.Invoke("RelativeDateSpanBeforeYesterday") : resolver.Invoke("RelativeDateSpanAfterTomorrow");
             }
-            var strPattern = inPast ? PortableResourceUtil.Get<string>("RelativeDateSpanDaysBefore", resourceType) : PortableResourceUtil.Get<string>("RelativeDateSpanDaysAfter", resourceType);
+            var strPattern = inPast ? resolver.Invoke("RelativeDateSpanDaysBefore") : resolver.Invoke("RelativeDateSpanDaysAfter");
             return string.Format(strPattern, dayDiff);
+        }
+
+        /// <summary>
+        /// Returns the calendar term of a given date.
+        /// </summary>
+        /// <param name="date">The date to examine.</param>
+        /// <returns>The number of the calendar term.</returns>
+        public static int GetTermNumber(this DateTime date)
+        {
+            return date.Month < 7 ? 1 : 2;
         }
 
         /// <summary>
@@ -478,12 +480,7 @@
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInFuture" /> is <c>null</c>.</returns>
         public static int? GetYearsDifference(this DateTime? dateInFuture, DateTime? dateInPast = null)
         {
-            if (dateInFuture == null)
-            {
-                // we cannot calculate because future date is null already
-                return null;
-            }
-            return GetYearsDifference(dateInFuture.Value, dateInPast);
+            return dateInFuture == null ? null : GetYearsDifference(dateInFuture.Value, dateInPast);
         }
 
         /// <summary>
@@ -530,12 +527,7 @@
         /// <returns>The difference in total years or <c>null</c> if <paramref name="dateInPast" /> is <c>null</c>.</returns>
         public static int? GetYearsTilDifference(this DateTime? dateInPast, DateTime? dateInFuture = null)
         {
-            if (dateInPast == null)
-            {
-                // we cannot calculate because future date is null already
-                return null;
-            }
-            return GetYearsTilDifference(dateInPast.Value, dateInFuture);
+            return dateInPast == null ? null : GetYearsTilDifference(dateInPast.Value, dateInFuture);
         }
 
         /// <summary>
@@ -566,24 +558,25 @@
         /// </summary>
         /// <param name="time">The time in decimal notation.</param>
         /// <returns>The date-time.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Is thrown if the <paramref name="time"/> results in an invalid time.</exception>
         public static DateTime ToDateTime(this decimal time)
         {
             var hours = (int)time;
             if (hours < 0 || hours > 23)
             {
-                throw new ArgumentException("Can not convert this decimal to a time!");
+                throw new ArgumentOutOfRangeException(nameof(time), "Can not convert this decimal to a time!");
             }
             var minutes = time - Convert.ToDecimal(hours);
             var minutesToUse = (int)(60 * minutes);
             if (minutesToUse < 0 || minutesToUse > 59)
             {
-                throw new ArgumentException("Can not convert this decimal to a time!");
+                throw new ArgumentOutOfRangeException(nameof(time), "Can not convert this decimal to a time!");
             }
             return DateTime.Parse(string.Format(CultureInfo.InvariantCulture, "{0}:{1}", hours, minutesToUse));
         }
 
         /// <summary>
-        /// Returns the decimal represenation of hour and minute of a given <paramref name="date" />.
+        /// Returns the decimal representation of hour and minute of a given <paramref name="date" />.
         /// </summary>
         /// <param name="date">The date to convert.</param>
         /// <returns>A decimal value. For 16:30 it will return 16.5 e.g.</returns>
@@ -614,26 +607,6 @@
         }
 
         /// <summary>
-        /// Retrieves the system short date string for the given nullable <paramref name="date" />.
-        /// </summary>
-        /// <param name="date">The date or <c>null</c>.</param>
-        /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToShortDateString(this DateTime? date)
-        {
-            return date?.ToString("d") ?? string.Empty;
-        }
-
-        /// <summary>
-        /// Retrieves the system short time string for the given nullable <paramref name="date" />.
-        /// </summary>
-        /// <param name="date">The date or <c>null</c>.</param>
-        /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
-        public static string ToShortTimeString(this DateTime? date)
-        {
-            return date?.ToString("t") ?? string.Empty;
-        }
-
-        /// <summary>
         /// Retrieves the string representation for a given nullable <paramref name="date" /> depending on a given
         /// <paramref name="format" />.
         /// </summary>
@@ -656,6 +629,26 @@
         public static string ToNullableString(this DateTime? date, string format, IFormatProvider provider)
         {
             return date?.ToString(format, provider) ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Retrieves the system short date string for the given nullable <paramref name="date" />.
+        /// </summary>
+        /// <param name="date">The date or <c>null</c>.</param>
+        /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
+        public static string ToShortDateString(this DateTime? date)
+        {
+            return date?.ToString("d") ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Retrieves the system short time string for the given nullable <paramref name="date" />.
+        /// </summary>
+        /// <param name="date">The date or <c>null</c>.</param>
+        /// <returns>The formatted date or <see cref="string.Empty" /> if the <paramref name="date" /> is <c>null</c>.</returns>
+        public static string ToShortTimeString(this DateTime? date)
+        {
+            return date?.ToString("t") ?? string.Empty;
         }
 
         #endregion
