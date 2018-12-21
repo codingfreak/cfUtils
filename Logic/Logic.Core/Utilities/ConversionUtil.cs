@@ -10,6 +10,15 @@
     /// </summary>
     public class ConversionUtil
     {
+        #region constants
+
+        /// <summary>
+        /// The tolerance on comparison operations.
+        /// </summary>
+        private const double CompareTolerance = 0.000000001;
+
+        #endregion
+
         #region methods
 
         /// <summary>
@@ -20,6 +29,11 @@
         /// <returns>The converted amount of altitude.</returns>
         public static double GetAltitude(string localeId, double meters)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            if (Math.Abs(meters) < CompareTolerance)
+            {
+                return meters;
+            }
             return GetRegion(localeId).IsMetric ? meters : UnitConversionCalculator.ConvertMetersToFeet(meters);
         }
 
@@ -27,9 +41,10 @@
         /// Retrieves the correct altitude unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetAltitudeUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricAltitudeUnit : ImperialAltitudeUnit;
         }
 
@@ -41,6 +56,11 @@
         /// <returns>The converted amount of distance.</returns>
         public static double GetDistance(string localeId, double meters)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            if (Math.Abs(meters) < CompareTolerance)
+            {
+                return meters;
+            }
             return GetRegion(localeId).IsMetric ? meters * Constants.KilometersPerMeter : UnitConversionCalculator.ConvertMetersToMiles(meters);
         }
 
@@ -48,9 +68,10 @@
         /// Retrieves the correct distance unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetDistanceUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricDistanceUnit : ImperialDistanceUnit;
         }
 
@@ -64,6 +85,7 @@
         /// <returns>The formatted altitude-text.</returns>
         public static string GetFormattedAltitude(string localeId, double meters, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetFormattedValue(localeId, meters, GetAltitude, GetAltitudeUnit, decimalPlaces);
         }
 
@@ -80,6 +102,7 @@
         /// <returns>The formatted distance-text.</returns>
         public static string GetFormattedDistance(string localeId, double meters, bool enforceBigUnit, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             var distance = GetDistance(localeId, meters);
             var unit = GetDistanceUnit(localeId);
             if (distance < 1 && !enforceBigUnit)
@@ -101,6 +124,7 @@
         /// <returns>The formatted height-text.</returns>
         public static string GetFormattedHeight(string localeId, double centiMeters, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetFormattedValue(localeId, centiMeters, GetHeight, GetHeightUnit, decimalPlaces);
         }
 
@@ -112,6 +136,7 @@
         /// <returns>The timespan-string.</returns>
         public static string GetFormattedSeconds(string localeId, long seconds)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             var span = TimeSpan.FromSeconds(seconds);
             return span.ToString("c", new CultureInfo(localeId));
         }
@@ -126,6 +151,7 @@
         /// <returns>The formatted speed-text.</returns>
         public static string GetFormattedSpeed(string localeId, double metersPerSecond, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetFormattedValue(localeId, metersPerSecond, GetSpeed, GetSpeedUnit, decimalPlaces);
         }
 
@@ -137,6 +163,7 @@
         /// <returns>The formatted altitude-text.</returns>
         public static string GetFormattedTimespan(string localeId, TimeSpan value)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return value.ToString("c", new CultureInfo(localeId));
         }
 
@@ -150,6 +177,7 @@
         /// <returns>The formatted weight-text.</returns>
         public static string GetFormattedWeight(string localeId, double kiloGrams, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetFormattedValue(localeId, kiloGrams, GetWeight, GetWeightUnit, decimalPlaces);
         }
 
@@ -161,6 +189,7 @@
         /// <returns>The converted amount of height.</returns>
         public static double GetHeight(string localeId, double centiMeters)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? centiMeters : UnitConversionCalculator.ConvertCentimetersToInches(centiMeters);
         }
 
@@ -168,9 +197,10 @@
         /// Retrieves the correct height unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetHeightUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricHeightUnit : ImperialHeightUnit;
         }
 
@@ -181,6 +211,7 @@
         /// <returns>The HTML-version.</returns>
         public static string GetOptimizedTimeHtmlString(string original)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => original);
             var parts = original.Split(' ');
             return parts.Length == 2 ? $"{parts[0]} <span style=\"font-size:0.8em\">{parts[1]}</span>" : original;
         }
@@ -193,6 +224,7 @@
         /// <returns>The converted amount of distance.</returns>
         public static double GetSmallDistance(string localeId, double meters)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? meters : UnitConversionCalculator.ConvertMetersToYards(meters);
         }
 
@@ -200,9 +232,10 @@
         /// Retrieves the correct distance unit for small distances text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetSmallDistanceUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricDistanceSmallUnit : ImperialDistanceSmallUnit;
         }
 
@@ -215,6 +248,7 @@
         /// <returns>The speaking text.</returns>
         public static string GetSpeakingTimeString(string localeId, long seconds, Func<string, string> resourceResolver = null)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             if (resourceResolver == null)
             {
                 resourceResolver = key => "?";
@@ -269,6 +303,7 @@
         /// <returns>The speaking text.</returns>
         public static string GetSpeakingTimeStringShort(string localeId, long seconds, Func<string, string> resourceResolver = null)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             if (resourceResolver == null)
             {
                 resourceResolver = key => "?";
@@ -316,6 +351,7 @@
         /// <returns>The speaking text in HTML.</returns>
         public static string GetSpeakingTimeStringShortHtml(string localeId, long seconds, string classNameUnits, Func<string, string> resourceResolver = null)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             if (resourceResolver == null)
             {
                 resourceResolver = key => "?";
@@ -361,6 +397,11 @@
         /// <returns>The converted amount of speed.</returns>
         public static double GetSpeed(string localeId, double metersPerSecond)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            if (Math.Abs(metersPerSecond) < CompareTolerance)
+            {
+                return 0;
+            }
             if (string.IsNullOrEmpty(localeId))
             {
                 throw new ArgumentException("localeId");
@@ -374,9 +415,10 @@
         /// Retrieves the correct speed unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetSpeedUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricSpeedUnit : ImperialSpeedUnit;
         }
 
@@ -388,6 +430,11 @@
         /// <returns>The converted amount of weight.</returns>
         public static double GetWeight(string localeId, double kiloGrams)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            if (Math.Abs(kiloGrams) < CompareTolerance)
+            {
+                return 0;
+            }
             return GetRegion(localeId).IsMetric ? kiloGrams : UnitConversionCalculator.ConvertKilogramToPounds(kiloGrams);
         }
 
@@ -395,9 +442,10 @@
         /// Retrieves the correct weight unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <returns>The correkt unit.</returns>
+        /// <returns>The correct unit.</returns>
         public static string GetWeightUnit(string localeId)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricWeightUnit : ImperialWeightUnit;
         }
 
@@ -413,6 +461,7 @@
         /// <returns>The returnable text-representation of the calculated value.</returns>
         private static string GetFormattedValue(string localeId, double value, Func<string, double, double> calcMethod, Func<string, string> unitRetrieveMenthod, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             var culture = new CultureInfo(localeId);
             var formatPattern = "N" + decimalPlaces;
             var formatted = calcMethod(localeId, value).ToString(formatPattern, culture);
@@ -431,6 +480,7 @@
         /// <returns>The returnable text-representation of the calculated value.</returns>
         private static string GetFormattedValue(string localeId, double value, Func<string, double, double> calcMethod, string unit, int decimalPlaces = 0)
         {
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             var culture = new CultureInfo(localeId);
             var formatPattern = "{0:N" + decimalPlaces + "} {1}";
             var formatted = calcMethod(localeId, value).ToString(formatPattern, culture);
@@ -447,10 +497,7 @@
         /// <returns>A usable region info.</returns>
         private static RegionInfo GetRegion(string localeId)
         {
-            if (string.IsNullOrEmpty(localeId))
-            {
-                throw new ArgumentException("localeId");
-            }
+            CheckUtil.ThrowIfNullOrEmpty(() => localeId);           
             var culture = new CultureInfo(localeId);
             if (culture.IsNeutralCulture)
             {

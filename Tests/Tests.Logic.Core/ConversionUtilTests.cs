@@ -8,6 +8,8 @@
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    using NAssert = NUnit.Framework.Assert;
+
     /// <summary>
     /// Contains unit tests for <see cref="ConversionUtil" />
     /// </summary>
@@ -23,6 +25,62 @@
         #region methods
 
         /// <summary>
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetAltitudeUnit" />.
+        /// </summary>
+        [TestMethod]
+        public void GetAltitudeUnitTest()
+        {
+            // arrange
+            var values = new List<(string locale, string result, Type exceptionType)>
+            {
+                ("", "", typeof(ArgumentException)),
+                ("de-DE", "m", null),
+                ("en-US", "ft", null),
+                ("en-GB", "m", null)
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    if (v.exceptionType != null)
+                    {
+                        NAssert.Throws(v.exceptionType, () => ConversionUtil.GetAltitudeUnit(v.locale), "Expected exception not thrown.");
+                        return;
+                    }
+                    var result = ConversionUtil.GetAltitudeUnit(v.locale);
+                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
+                });
+        }
+
+        /// <summary>
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetDistanceUnit" />.
+        /// </summary>
+        [TestMethod]
+        public void GetDistanceUnitTest()
+        {
+            // arrange
+            var values = new List<(string locale, string result, Type exceptionType)>
+            {
+                ("", "", typeof(ArgumentException)),
+                ("de-DE", "km", null),
+                ("en-US", "mi", null),
+                ("en-GB", "km", null)
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    if (v.exceptionType != null)
+                    {
+                        NAssert.Throws(v.exceptionType, () => ConversionUtil.GetDistanceUnit(v.locale), "Expected exception not thrown.");
+                        return;
+                    }
+                    var result = ConversionUtil.GetDistanceUnit(v.locale);
+                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
+                });
+        }
+
+        /// <summary>
         /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedAltitude" />.
         /// </summary>
         /// <remarks>
@@ -34,10 +92,11 @@
             // arrange
             var values = new List<(double meters, string locale, string result, int decimals)>
             {
-                ( 1, "de-DE", "1 m", 0),
-                ( 5000, "de-DE", "5.000 m", 0),
-                ( 200000, "de-DE", "200.000 m", 0),
-                ( 12.5, "de-DE", "12,50 m", 2)
+                (1, "de-DE", "1 m", 0),
+                (5000, "de-DE", "5.000 m", 0),
+                (200000, "de-DE", "200.000 m", 0),
+                (12.5, "de-DE", "12,50 m", 2),
+                (0, "de-DE", "0 m", 0)
             };
             // act && assert
             values.ForEach(
@@ -60,12 +119,12 @@
             // arrange
             var values = new List<(double meters, string locale, string result, int decimals, bool enforceBig)>
             {
-                ( 1, "de-DE", "1 m", 0, false),
-                ( 5000, "de-DE", "5 km", 0, false),
-                ( 200000, "de-DE", "200 km", 0, false),
-                ( 12.5, "de-DE", "12,50 m", 2, false),
-                ( 1, "de-DE", "0,001 km", 3, true),
-                ( 1, "de-DE", "0,00 km", 2, true),
+                (1, "de-DE", "1 m", 0, false),
+                (5000, "de-DE", "5 km", 0, false),
+                (200000, "de-DE", "200 km", 0, false),
+                (12.5, "de-DE", "12,50 m", 2, false),
+                (1, "de-DE", "0,001 km", 3, true),
+                (1, "de-DE", "0,00 km", 2, true)
             };
             // act && assert
             values.ForEach(
