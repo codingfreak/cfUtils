@@ -172,18 +172,18 @@
                 ConversionUtil.MetricWeightUnit = NewVal;
             }
             // assert
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialAltitudeUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialDistanceSmallUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialDistanceUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialHeightUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialSpeedUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.ImperialWeightUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricAltitudeUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricDistanceSmallUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricDistanceUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricHeightUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricSpeedUnit);
-            Assert.AreEqual(NewVal, ConversionUtil.MetricWeightUnit);
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialAltitudeUnit, "Change of imperial altitude unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialDistanceSmallUnit, "Change of imperial small distance unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialDistanceUnit, "Change of imperial distance unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialHeightUnit, "Change of imperial height unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialSpeedUnit, "Change of imperial speed unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.ImperialWeightUnit, "Change of imperial weight unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricAltitudeUnit, "Change of metric altitude unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricDistanceSmallUnit, "Change of metric small distance unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricDistanceUnit, "Change of metric distance unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricHeightUnit, "Change of metric height unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricSpeedUnit, "Change of metric speed unit not accepted.");
+            Assert.AreEqual(NewVal, ConversionUtil.MetricWeightUnit, "Change of metric weight unit not accepted.");
             // set defaults because other tests might need those values
             ConversionUtil.ImperialAltitudeUnit = imperialAltitudeUnit;
             ConversionUtil.ImperialDistanceSmallUnit = imperialDistanceSmallUnit;
@@ -207,18 +207,18 @@
         {
             lock (Lock)
             {
-                Assert.AreEqual("m", ConversionUtil.MetricAltitudeUnit);
-                Assert.AreEqual("m", ConversionUtil.MetricDistanceSmallUnit);
-                Assert.AreEqual("km", ConversionUtil.MetricDistanceUnit);
-                Assert.AreEqual("cm", ConversionUtil.MetricHeightUnit);
-                Assert.AreEqual("km/h", ConversionUtil.MetricSpeedUnit);
-                Assert.AreEqual("kg", ConversionUtil.MetricWeightUnit);
-                Assert.AreEqual("ft", ConversionUtil.ImperialAltitudeUnit);
-                Assert.AreEqual("yd", ConversionUtil.ImperialDistanceSmallUnit);
-                Assert.AreEqual("mi", ConversionUtil.ImperialDistanceUnit);
-                Assert.AreEqual("in", ConversionUtil.ImperialHeightUnit);
-                Assert.AreEqual("mph", ConversionUtil.ImperialSpeedUnit);
-                Assert.AreEqual("lbs", ConversionUtil.ImperialWeightUnit);
+                Assert.AreEqual("ft", ConversionUtil.ImperialAltitudeUnit, "Incorrect imperial altitude unit.");
+                Assert.AreEqual("yd", ConversionUtil.ImperialDistanceSmallUnit, "Incorrect imperial small distance unit.");
+                Assert.AreEqual("mi", ConversionUtil.ImperialDistanceUnit, "Incorrect imperial distance unit.");
+                Assert.AreEqual("in", ConversionUtil.ImperialHeightUnit, "Incorrect imperial height unit.");
+                Assert.AreEqual("mph", ConversionUtil.ImperialSpeedUnit, "Incorrect imperial speed unit.");
+                Assert.AreEqual("lbs", ConversionUtil.ImperialWeightUnit, "Incorrect imperial weight unit.");
+                Assert.AreEqual("m", ConversionUtil.MetricAltitudeUnit, "Incorrect metric altitude unit.");
+                Assert.AreEqual("m", ConversionUtil.MetricDistanceSmallUnit, "Incorrect metric small distance unit.");
+                Assert.AreEqual("km", ConversionUtil.MetricDistanceUnit, "Incorrect metric distance unit.");
+                Assert.AreEqual("cm", ConversionUtil.MetricHeightUnit, "Incorrect metric height unit.");
+                Assert.AreEqual("km/h", ConversionUtil.MetricSpeedUnit, "Incorrect metric speed unit.");
+                Assert.AreEqual("kg", ConversionUtil.MetricWeightUnit, "Incorrect metric weight unit.");
             }
         }
 
