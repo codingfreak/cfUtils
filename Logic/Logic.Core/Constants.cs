@@ -28,7 +28,7 @@
         /// <summary>
         /// Defines how many feets are included in one meter.
         /// </summary>
-        public const double FeetsPerMeter = 3.2808399;
+        public const double FeetsPerMeter = 3.28084;
 
         /// <summary>
         /// Defines how many inches are included in one centimeter.
@@ -53,7 +53,7 @@
         /// <summary>
         /// Defines the factor to calculate from m/s to mph.
         /// </summary>
-        public const double MetersPerSecondToMilesPerHourFactor = 2.23;
+        public const double MetersPerSecondToMilesPerHourFactor = 2.23694;
 
         /// <summary>
         /// Defines how many miles are included in one meter.
@@ -93,7 +93,7 @@
         /// <summary>
         /// Defines how many yards are included in one meter.
         /// </summary>
-        public const double YardsPerMeter = 0.9144;
+        public const double YardsPerMeter = 1.0936;
 
         #endregion
     }
