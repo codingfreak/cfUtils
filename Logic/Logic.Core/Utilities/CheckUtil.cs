@@ -12,32 +12,7 @@
     public static class CheckUtil
     {
         #region methods
-
-        /// <summary>
-        /// Tries to get a string-value out of a dictionary and throws exceptions if the <paramref name="key" /> is not found or
-        /// the result is null or empty.
-        /// </summary>
-        /// <param name="targetDictionary">The dictionary to use.</param>
-        /// <param name="key">The key inside the <paramref name="targetDictionary" /> keys.</param>
-        /// <param name="targetVariable">The variable reference where to store the result in.</param>
-        /// <exception cref="KeyNotFoundException">
-        /// Is thrown if the <paramref name="key" /> is not found in
-        /// <paramref name="targetDictionary" />.
-        /// </exception>
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "2#", Justification = "Won't work without out-parameter.")]
-        public static void ReadDictionaryOrThrow(Dictionary<string, string> targetDictionary, string key, out string targetVariable)
-        {            
-            ThrowIfNull(() => targetDictionary);
-            if (!targetDictionary.TryGetValue(key, out targetVariable))
-            {
-                throw new KeyNotFoundException("Dictionary does not contain provided key.");
-            }
-            if (string.IsNullOrEmpty(targetVariable))
-            {
-                throw new InvalidOperationException("Invalid value for provided key in dictionary.");
-            }
-        }
-
+        
         /// <summary>
         /// Throws an <see cref="ArgumentException" /> containing the name of the parameter in the <paramref name="expression" />
         /// if it is not
@@ -56,7 +31,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             var enumValue = expression.Compile().Invoke();
             if (Enum.IsDefined(typeof(TEnum), enumValue))
@@ -88,7 +63,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             if (expression.Compile().Invoke() != null)
             {
@@ -105,7 +80,7 @@
         /// if contains null or is equal to <see cref="string.Empty" />.
         /// </summary>
         /// <example>
-        /// void Foo(object someData)
+        /// void Foo(string someData)
         /// {
         ///     CheckUtil.ThrowIfNullOrEmpty(() => someData);
         /// }
@@ -116,7 +91,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             if (!string.IsNullOrEmpty(expression.Compile().Invoke()))
             {
@@ -133,7 +108,7 @@
         /// if contains null or just a white space.
         /// </summary>
         /// <example>
-        /// void Foo(object someData)
+        /// void Foo(string someData)
         /// {
         ///     CheckUtil.CheckNullOrWhitespace(() => someData);
         /// }
@@ -144,7 +119,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             if (!string.IsNullOrWhiteSpace(expression.Compile().Invoke()))
             {
@@ -161,7 +136,7 @@
         /// if contains zero or negative.
         /// </summary>
         /// <example>
-        /// void Foo(object someData)
+        /// void Foo(long someData)
         /// {
         ///     CheckUtil.ThrowIfZeroOrNegative(() => someData);
         /// }
@@ -172,7 +147,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             if (expression.Compile().Invoke() > 0)
             {
@@ -189,7 +164,7 @@
         /// if contains zero or negative.
         /// </summary>
         /// <example>
-        /// void Foo(object someData)
+        /// void Foo(int someData)
         /// {
         ///     CheckUtil.ThrowIfZeroOrNegative(() => someData);
         /// }
@@ -200,7 +175,7 @@
         {
             if (expression == null)
             {
-                throw new InvalidOperationException("Expression can't be null.");
+                throw new ArgumentNullException(nameof(expression));
             }
             if (expression.Compile().Invoke() > 0)
             {
