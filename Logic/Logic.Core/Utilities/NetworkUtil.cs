@@ -186,7 +186,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// <returns><c>True</c> if the port is opened, otherwise <c>false.</c></returns>
         public static bool IsPortOpened(int port)
         {
-            CheckUtil.ThrowIfZeroOrNegativ(() => port);
+            CheckUtil.ThrowIfZeroOrNegative(() => port);
             var ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
             var tcpConnInfoArray = ipGlobalProperties.GetActiveTcpListeners();
             return tcpConnInfoArray.Any(ep => ep.Port == port);

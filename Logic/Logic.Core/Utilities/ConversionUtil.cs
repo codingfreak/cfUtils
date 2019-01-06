@@ -26,7 +26,8 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
-        /// <returns>The converted amount of altitude.</returns>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
+        /// <returns>The converted amount of altitude.</returns>        
         public static double GetAltitude(string localeId, double meters)
         {
             CheckUtil.ThrowIfNullOrEmpty(() => localeId);
@@ -41,6 +42,7 @@
         /// Retrieves the correct altitude unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetAltitudeUnit(string localeId)
         {
@@ -53,6 +55,7 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The converted amount of distance.</returns>
         public static double GetDistance(string localeId, double meters)
         {
@@ -68,6 +71,7 @@
         /// Retrieves the correct distance unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetDistanceUnit(string localeId)
         {
@@ -82,6 +86,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of altitude.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted altitude-text.</returns>
         public static string GetFormattedAltitude(string localeId, double meters, int decimalPlaces = 0)
         {
@@ -99,6 +104,7 @@
         /// If set to <c>true</c>, no automatic switch between small and big distances will be applied.
         /// </param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted distance-text.</returns>
         public static string GetFormattedDistance(string localeId, double meters, bool enforceBigUnit, int decimalPlaces = 0)
         {
@@ -121,6 +127,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="centiMeters">The amount of height.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted height-text.</returns>
         public static string GetFormattedHeight(string localeId, double centiMeters, int decimalPlaces = 0)
         {
@@ -133,6 +140,7 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="seconds">The duration in seconds.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The timespan-string.</returns>
         public static string GetFormattedSeconds(string localeId, long seconds)
         {
@@ -148,6 +156,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted speed-text.</returns>
         public static string GetFormattedSpeed(string localeId, double metersPerSecond, int decimalPlaces = 0)
         {
@@ -159,7 +168,8 @@
         /// Retrieves a timespan formatted in a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
-        /// <param name="value">The timepart.</param>
+        /// <param name="value">The time part.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted altitude-text.</returns>
         public static string GetFormattedTimespan(string localeId, TimeSpan value)
         {
@@ -174,6 +184,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="kiloGrams">The amount of weight.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The formatted weight-text.</returns>
         public static string GetFormattedWeight(string localeId, double kiloGrams, int decimalPlaces = 0)
         {
@@ -186,6 +197,7 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="centiMeters">The amount of height.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The converted amount of height.</returns>
         public static double GetHeight(string localeId, double centiMeters)
         {
@@ -197,6 +209,7 @@
         /// Retrieves the correct height unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetHeightUnit(string localeId)
         {
@@ -208,6 +221,7 @@
         /// Retrieves a DateTime in a HTML formatted manner. The date is bigger than the time.
         /// </summary>
         /// <param name="original">The datetime as a string.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="original"/> is <c>null</c> or empty.</exception>
         /// <returns>The HTML-version.</returns>
         public static string GetOptimizedTimeHtmlString(string original)
         {
@@ -221,6 +235,7 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="meters">The amount of distance.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The converted amount of distance.</returns>
         public static double GetSmallDistance(string localeId, double meters)
         {
@@ -232,6 +247,7 @@
         /// Retrieves the correct distance unit for small distances text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetSmallDistanceUnit(string localeId)
         {
@@ -245,6 +261,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="seconds">The amount of seconds representing the amount of time.</param>
         /// <param name="resourceResolver">An optional function that this method uses to retrieve resource-strings.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The speaking text.</returns>
         public static string GetSpeakingTimeString(string localeId, long seconds, Func<string, string> resourceResolver = null)
         {
@@ -300,6 +317,7 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="seconds">The amount of seconds representing the amount of time.</param>
         /// <param name="resourceResolver">An optional function that this method uses to retrieve resource-strings.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The speaking text.</returns>
         public static string GetSpeakingTimeStringShort(string localeId, long seconds, Func<string, string> resourceResolver = null)
         {
@@ -348,6 +366,7 @@
         /// <param name="seconds">The amount of seconds representing the amount of time.</param>
         /// <param name="classNameUnits">The name of the CSS-class to format the units with.</param>
         /// <param name="resourceResolver">An optional function that this method uses to retrieve resource-strings.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The speaking text in HTML.</returns>
         public static string GetSpeakingTimeStringShortHtml(string localeId, long seconds, string classNameUnits, Func<string, string> resourceResolver = null)
         {
@@ -394,6 +413,7 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="metersPerSecond">The amount of speed.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The converted amount of speed.</returns>
         public static double GetSpeed(string localeId, double metersPerSecond)
         {
@@ -401,11 +421,7 @@
             if (Math.Abs(metersPerSecond) < CompareTolerance)
             {
                 return 0;
-            }
-            if (string.IsNullOrEmpty(localeId))
-            {
-                throw new ArgumentException("localeId");
-            }
+            }            
             return GetRegion(localeId).IsMetric
                 ? UnitConversionCalculator.ConvertMetersPerSecondToKilometersPerHour(metersPerSecond)
                 : UnitConversionCalculator.ConvertMetersPerSecondToMilesPerHour(metersPerSecond);
@@ -415,6 +431,7 @@
         /// Retrieves the correct speed unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetSpeedUnit(string localeId)
         {
@@ -427,6 +444,8 @@
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="kiloGrams">The amount of weight.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
+        /// <exception cref="CultureNotFoundException">Is thrown if the <paramref name="localeId"/> is not a valid culture.</exception>
         /// <returns>The converted amount of weight.</returns>
         public static double GetWeight(string localeId, double kiloGrams)
         {
@@ -442,6 +461,8 @@
         /// Retrieves the correct weight unit text for a given <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
+        /// <exception cref="CultureNotFoundException">Is thrown if the <paramref name="localeId"/> is not a valid culture.</exception>
         /// <returns>The correct unit.</returns>
         public static string GetWeightUnit(string localeId)
         {
@@ -456,16 +477,20 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="value">The value to convert and format.</param>
         /// <param name="calcMethod">A delegate for a method that performs the value calculation.</param>
-        /// <param name="unitRetrieveMenthod">A delegate for a method that can retrieve the unit text to use.</param>
+        /// <param name="unitRetrieveMethod">A delegate for a method that can retrieve the unit text to use.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
-        /// <returns>The returnable text-representation of the calculated value.</returns>
-        private static string GetFormattedValue(string localeId, double value, Func<string, double, double> calcMethod, Func<string, string> unitRetrieveMenthod, int decimalPlaces = 0)
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> or <paramref name="calcMethod"/> or <paramref name="unitRetrieveMethod"/> are <c>null</c> or empty.</exception>
+        /// <exception cref="CultureNotFoundException">Is thrown if the <paramref name="localeId"/> is not a valid culture.</exception>
+        /// <returns>The text-representation of the calculated value.</returns>
+        private static string GetFormattedValue(string localeId, double value, Func<string, double, double> calcMethod, Func<string, string> unitRetrieveMethod, int decimalPlaces = 0)
         {
             CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            CheckUtil.ThrowIfNull(() => calcMethod);
+            CheckUtil.ThrowIfNull(() => unitRetrieveMethod);
             var culture = new CultureInfo(localeId);
             var formatPattern = "N" + decimalPlaces;
             var formatted = calcMethod(localeId, value).ToString(formatPattern, culture);
-            return string.Format(culture, "{0} {1}", formatted, unitRetrieveMenthod(localeId));
+            return string.Format(culture, "{0} {1}", formatted, unitRetrieveMethod(localeId));
         }
 
         /// <summary>
@@ -475,12 +500,15 @@
         /// <param name="localeId">The locale ID.</param>
         /// <param name="value">The value to convert and format.</param>
         /// <param name="calcMethod">A delegate for a method that performs the value calculation.</param>
-        /// <param name="unit">The already resólved unit.</param>
+        /// <param name="unit">The already resolved unit.</param>
         /// <param name="decimalPlaces">The optional amount of decimal places for the output (defaults to 0).</param>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> or <paramref name="calcMethod"/> are <c>null</c> or empty.</exception>
+        /// <exception cref="CultureNotFoundException">Is thrown if the <paramref name="localeId"/> is not a valid culture.</exception>
         /// <returns>The returnable text-representation of the calculated value.</returns>
         private static string GetFormattedValue(string localeId, double value, Func<string, double, double> calcMethod, string unit, int decimalPlaces = 0)
         {
             CheckUtil.ThrowIfNullOrEmpty(() => localeId);
+            CheckUtil.ThrowIfNull(() => calcMethod);
             var culture = new CultureInfo(localeId);
             var formatPattern = "{0:N" + decimalPlaces + "} {1}";
             var formatted = calcMethod(localeId, value).ToString(formatPattern, culture);
@@ -491,10 +519,10 @@
         /// Retrieves either the <see cref="RegionInfo" /> for <paramref name="localeId" />.
         /// </summary>
         /// <param name="localeId">The specific culture ID in the form xx-XX.</param>
-        /// <exception cref="CultureNotFoundException"></exception>
-        /// <exception cref="NullReferenceException"></exception>
-        /// <exception cref="ArgumentException"></exception>
-        /// <returns>A usable region info.</returns>
+        /// <exception cref="CultureNotFoundException">Is thrown if the <paramref name="localeId"/> is not a valid culture.</exception>
+        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
+        /// <exception cref="ArgumentException">Is thrown if the <paramref name="localeId"/> maps to a neutral culture.</exception>
+        /// <returns>A usable region info.</returns>        
         private static RegionInfo GetRegion(string localeId)
         {
             CheckUtil.ThrowIfNullOrEmpty(() => localeId);           
