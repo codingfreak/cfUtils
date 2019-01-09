@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-
-namespace codingfreaks.cfUtils.Logic.Core.Models
+﻿namespace codingfreaks.cfUtils.Logic.Core.Models
 {
     using System;
+    using System.Linq;
 
     using Enumerations;
 
@@ -12,22 +10,15 @@ namespace codingfreaks.cfUtils.Logic.Core.Models
     /// </summary>
     public struct DateTimeOffsetSpanInfo
     {
-        #region member vars
+        #region constructors and destructors
 
-        /// <summary>
-        /// The date of the last day of this span.
-        /// </summary>
-        public DateTimeOffset DateEnd;
-
-        /// <summary>
-        /// The date of the first day of this span.
-        /// </summary>
-        public DateTimeOffset DateStart;
-
-        /// <summary>
-        /// The offset of the span in a year.
-        /// </summary>
-        public int SpanNumber;
+        public DateTimeOffsetSpanInfo(DateSpanType spanType, int spanNumber, DateTimeOffset dateStart, DateTimeOffset dateEnd)
+        {
+            SpanType = spanType;
+            SpanNumber = spanNumber;
+            DateStart = dateStart;
+            DateEnd = dateEnd;
+        }
 
         #endregion
 
@@ -47,14 +38,29 @@ namespace codingfreaks.cfUtils.Logic.Core.Models
         #region properties
 
         /// <summary>
+        /// The date of the last day of this span.
+        /// </summary>
+        public DateTimeOffset DateEnd { get; }
+
+        /// <summary>
+        /// The date of the first day of this span.
+        /// </summary>
+        public DateTimeOffset DateStart { get; }
+
+        /// <summary>
         /// The amount of days.
         /// </summary>
         public int Days => (int)DateEnd.Subtract(DateStart).TotalDays;
 
         /// <summary>
+        /// The offset of the span in a year.
+        /// </summary>
+        public int SpanNumber { get; }
+
+        /// <summary>
         /// The type this span is.
         /// </summary>
-        public DateSpanType SpanType { get; set; }
+        public DateSpanType SpanType { get; }
 
         #endregion
     }

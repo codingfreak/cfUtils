@@ -5,7 +5,7 @@
     using System.Linq;
 
     /// <summary>
-    /// Adds extension methods to <see cref="List{T}" /> and <see cref="IList{T}" /> LINQ-liqe.
+    /// Adds extension methods to <see cref="List{T}" /> and <see cref="IList{T}" /> LINQ-like.
     /// </summary>
     public static class ListExtensions
     {
@@ -58,6 +58,7 @@
                 // retrieve index and replace item
                 lastIndex = index;
                 list[index] = newItem;
+                // prepare for next iteration
                 item = list.FirstOrDefault(matchPredicate);
             }
         }

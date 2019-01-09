@@ -225,14 +225,7 @@
             // Collect all term-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeOffsetSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarTerm,
-                        SpanNumber = ++currentTerm,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 5, utcOffset).EndOfDay()
-                    });
+                result.Add(new DateTimeOffsetSpanInfo(DateSpanType.CalendarTerm, ++currentTerm,startDate,DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 5, utcOffset).EndOfDay()));
                 startDate = startDate.AddMonths(6);
             }
             return result;
@@ -254,14 +247,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeOffsetSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarMonth,
-                        SpanNumber = ++currentMonth,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, currentMonth, utcOffset)
-                    });
+                result.Add(new DateTimeOffsetSpanInfo( DateSpanType.CalendarMonth, ++currentMonth, startDate, DateTimeUtils.GetOffsetLastDayOfMonth(year, currentMonth, utcOffset)));
                 startDate = startDate.AddMonths(1);
             }
             return result;
@@ -283,14 +269,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeOffsetSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarQuarter,
-                        SpanNumber = ++currentQuarter,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 2, utcOffset).EndOfDay()
-                    });
+                result.Add(new DateTimeOffsetSpanInfo( DateSpanType.CalendarQuarter, ++currentQuarter, startDate, DateTimeUtils.GetOffsetLastDayOfMonth(year, startDate.Month + 2, utcOffset).EndOfDay()));
                 startDate = startDate.AddMonths(3);
             }
             return result;
@@ -317,14 +296,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeOffsetSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarWeek,
-                        SpanNumber = ++currentWeek,
-                        DateStart = startDate,
-                        DateEnd = startDate.AddDays(6).EndOfDay()
-                    });
+                result.Add(new DateTimeOffsetSpanInfo(DateSpanType.CalendarWeek, ++currentWeek, startDate, startDate.AddDays(6).EndOfDay()));
                 startDate = startDate.AddDays(7);
             }
             return result;
