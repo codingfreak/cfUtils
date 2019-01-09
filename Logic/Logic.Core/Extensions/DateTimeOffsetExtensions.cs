@@ -438,7 +438,7 @@
         }
 
         /// <summary>
-        /// Returns the decimal represenation of hour and minute of a given <paramref name="date" />.
+        /// Returns the decimal representation of hour and minute of a given <paramref name="date" />.
         /// </summary>
         /// <param name="date">The date to convert.</param>
         /// <returns>A decimal value. For 16:30 it will return 16.5 e.g.</returns>

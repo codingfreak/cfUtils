@@ -195,7 +195,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarMonth, ++currentMonth,startDate,DateTimeUtils.GetLastDayOfMonth(year, currentMonth)));
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarMonth, ++currentMonth, startDate, DateTimeUtils.GetLastDayOfMonth(year, currentMonth)));
                 startDate = startDate.AddMonths(1);
             }
             return result;
@@ -226,7 +226,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarQuarter, ++currentQuarter,startDate,DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)));
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarQuarter, ++currentQuarter, startDate, DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)));
                 startDate = startDate.AddMonths(3);
             }
             return result;
@@ -243,7 +243,7 @@
         }
 
         /// <summary>
-        /// Returns a list of both Terms of a given year.
+        /// Returns a list of both terms of a given year.
         /// </summary>
         /// <param name="year">The year to examine.</param>
         /// <returns>A list of meta-info objects describing the half-years.</returns>
@@ -257,7 +257,7 @@
             // Collect all term-information
             while (startDate < endDate)
             {
-                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarTerm,++currentTerm, startDate,DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)));
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarTerm, ++currentTerm, startDate, DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)));
                 startDate = startDate.AddMonths(6);
             }
             return result;
