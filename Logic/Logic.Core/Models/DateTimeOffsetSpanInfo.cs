@@ -5,6 +5,8 @@ namespace codingfreaks.cfUtils.Logic.Core.Models
 {
     using System;
 
+    using Enumerations;
+
     /// <summary>
     /// Defines a data structure to store meta data of one calendar span in time.
     /// </summary>

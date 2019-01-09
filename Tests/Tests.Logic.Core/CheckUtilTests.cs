@@ -31,12 +31,12 @@
         public void ThrowIfInvalidEnumTest()
         {
             // arrange
-            var values = new List<(Expression<Func<PortStateEnum>> expression, bool shouldRaceNull, bool shouldRaceArgument)>
+            var values = new List<(Expression<Func<PortState>> expression, bool shouldRaceNull, bool shouldRaceArgument)>
             {
                 (null, true, false),
-                (() => (PortStateEnum)10, false, true),
-                (() => PortStateEnum.Open, false, false),
-                (() => (PortStateEnum)1, false, false)
+                (() => (PortState)10, false, true),
+                (() => PortState.Open, false, false),
+                (() => (PortState)1, false, false)
             };
             // act & assert
             foreach (var value in values)

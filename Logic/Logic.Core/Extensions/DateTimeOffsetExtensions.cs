@@ -5,6 +5,8 @@
     using System.Globalization;
     using System.Linq;
 
+    using Enumerations;
+
     using Models;
 
     using Utilities;

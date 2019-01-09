@@ -1,7 +1,12 @@
-﻿namespace codingfreaks.cfUtils.Logic.Core.Models
+﻿using System;
+using System.Linq;
+
+namespace codingfreaks.cfUtils.Logic.Core.Enumerations
 {
     using System;
     using System.Linq;
+
+    using Models;
 
     /// <summary>
     /// Represents a type a <see cref="DateTimeSpanInfo" /> can be of.

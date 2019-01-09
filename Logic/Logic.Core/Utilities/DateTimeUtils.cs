@@ -61,13 +61,15 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// <param name="month">The month.</param>
         /// <param name="utcOffset">The optional offset to keep for the result.</param>
         /// <returns>The date of the last day of the month.</returns>
-        public static DateTimeOffset GetOffsetLastDayOfMonth(int year, int month, TimeSpan utcOffset = default(TimeSpan))
+        public static DateTimeOffset GetOffsetLastDayOfMonth(int year, int month, TimeSpan utcOffset = default)
         {
             var date = new DateTimeOffset(year, month, 28, 0, 0, 0, utcOffset);
+            // add days until the month of the date changes
             while (date.Month == month)
             {
                 date = date.AddDays(1);
             }
+            // subtract one day to come back to the last day of the month searched
             return date.AddDays(-1).BeginOfDay();
         }
 

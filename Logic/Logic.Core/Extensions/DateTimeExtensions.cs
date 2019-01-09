@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Linq.Expressions;
 
+    using Enumerations;
+
     using Models;
 
     using Utilities;
@@ -15,19 +17,6 @@
     /// </summary>
     public static class DateTimeExtensions
     {
-        #region constants
-
-        #region static fields
-
-        /// <summary>
-        /// The average amount of days per calendar year.
-        /// </summary>
-        public static double DaysPerYear = 365.2425;
-
-        #endregion
-
-        #endregion
-
         #region methods
 
         /// <summary>
@@ -206,14 +195,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarMonth,
-                        SpanNumber = ++currentMonth,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentMonth)
-                    });
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarMonth, ++currentMonth,startDate,DateTimeUtils.GetLastDayOfMonth(year, currentMonth)));
                 startDate = startDate.AddMonths(1);
             }
             return result;
@@ -244,14 +226,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarQuarter,
-                        SpanNumber = ++currentQuarter,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)
-                    });
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarQuarter, ++currentQuarter,startDate,DateTimeUtils.GetLastDayOfMonth(year, currentQuarter + 2)));
                 startDate = startDate.AddMonths(3);
             }
             return result;
@@ -282,14 +257,7 @@
             // Collect all term-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarTerm,
-                        SpanNumber = ++currentTerm,
-                        DateStart = startDate,
-                        DateEnd = DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)
-                    });
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarTerm,++currentTerm, startDate,DateTimeUtils.GetLastDayOfMonth(year, startDate.Month + 5)));
                 startDate = startDate.AddMonths(6);
             }
             return result;
@@ -325,14 +293,7 @@
             // Collect all week-information
             while (startDate < endDate)
             {
-                result.Add(
-                    new DateTimeSpanInfo
-                    {
-                        SpanType = DateSpanType.CalendarWeek,
-                        SpanNumber = ++currentWeek,
-                        DateStart = startDate,
-                        DateEnd = startDate.AddDays(6)
-                    });
+                result.Add(new DateTimeSpanInfo(DateSpanType.CalendarWeek, ++currentWeek, startDate, startDate.AddDays(6)));
                 startDate = startDate.AddDays(7);
             }
             return result;
@@ -509,7 +470,7 @@
                 // this would end up in rounding issues if we would calculate it.
                 return 1;
             }
-            return (int)(totalDays / DaysPerYear);
+            return (int)(totalDays / Constants.DaysPerYear);
         }
 
         /// <summary>
@@ -550,7 +511,7 @@
                 // if no future-date is given, take current date
                 dateInFuture = DateTime.Now;
             }
-            return (int)(dateInFuture.Value.Subtract(dateInPast).TotalDays / DaysPerYear);
+            return (int)(dateInFuture.Value.Subtract(dateInPast).TotalDays / Constants.DaysPerYear);
         }
 
         /// <summary>
@@ -558,7 +519,7 @@
         /// </summary>
         /// <param name="time">The time in decimal notation.</param>
         /// <returns>The date-time.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Is thrown if the <paramref name="time"/> results in an invalid time.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Is thrown if the <paramref name="time" /> results in an invalid time.</exception>
         public static DateTime ToDateTime(this decimal time)
         {
             var hours = (int)time;

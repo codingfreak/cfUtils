@@ -30,9 +30,9 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// <param name="timeout">The timeout in seconds to wait for a reply. Defaults to 2 because 1 second is mostly too short for .NET.</param>
         /// <param name="useUdp"><c>true</c> if a UDP port should be checked.</param>
         /// <returns>The result of the operation.</returns>
-        public static PortStateEnum GetPortState(string host, int port, int timeout = 2, bool useUdp = false)
+        public static PortState GetPortState(string host, int port, int timeout = 2, bool useUdp = false)
         {
-            var outerResult = PortStateEnum.Unknown;
+            var outerResult = PortState.Unknown;
             var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
             var token = tokenSource.Token;
             try
@@ -41,7 +41,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                 outerResult = Task.Run(
                     () =>
                     {
-                        var result = PortStateEnum.Unknown;
+                        var result = PortState.Unknown;
                         if (!useUdp)
                         {
                             // Use TCP
@@ -57,11 +57,11 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                         // The result was positiv
                                         if (!asyncResult.IsCompleted)
                                         {
-                                            result = PortStateEnum.TimedOut;
+                                            result = PortState.TimedOut;
                                         }
                                         else
                                         {
-                                            result = client.Connected ? PortStateEnum.Open : PortStateEnum.Closed;
+                                            result = client.Connected ? PortState.Open : PortState.Closed;
                                         }
                                     }
                                     // ensure the ending-call
@@ -80,10 +80,10 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 switch (sockEx.NativeErrorCode)
                                 {
                                     case 10060:
-                                        result = PortStateEnum.TimedOut;
+                                        result = PortState.TimedOut;
                                         break;
                                     case 10061:
-                                        result = PortStateEnum.Refused;
+                                        result = PortState.Refused;
                                         break;
                                 }
                             }
@@ -112,9 +112,9 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeout), false);
                                 if (!asyncResult.IsCompleted)
                                 {
-                                    return PortStateEnum.TimedOut;
+                                    return PortState.TimedOut;
                                 }
-                                result = PortStateEnum.Open;
+                                result = PortState.Open;
                             }
                             catch (SocketException sockEx)
                             {
@@ -123,10 +123,10 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 switch (sockEx.NativeErrorCode)
                                 {
                                     case 10060:
-                                        result = PortStateEnum.TimedOut;
+                                        result = PortState.TimedOut;
                                         break;
                                     case 10061:
-                                        result = PortStateEnum.Refused;
+                                        result = PortState.Refused;
                                         break;
                                 }
                             }
@@ -147,7 +147,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                     {
                         if (t.IsCanceled || token.IsCancellationRequested)
                         {
-                            return PortStateEnum.TimedOut;
+                            return PortState.TimedOut;
                         }
                         return t.Result;
                     },
@@ -158,7 +158,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                 var flatten = aex.Flatten();
                 if (flatten.InnerException is TaskCanceledException)
                 {
-                    outerResult = PortStateEnum.TimedOut;
+                    outerResult = PortState.TimedOut;
                 }
             }
             catch
@@ -202,7 +202,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// <returns><c>True</c> if the port is opened, otherwise <c>false.</c></returns>
         public static bool IsPortOpened(string host, int port, int timeout = 1, bool useUdp = false)
         {
-            return GetPortState(host, port, timeout, useUdp) == PortStateEnum.Open;
+            return GetPortState(host, port, timeout, useUdp) == PortState.Open;
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
             var result = false;
             if (!useUdp)
             {
-                // Use TCP          
+                // use TCP          
                 using (var client = new TcpClient())
                 {
                     try
@@ -240,11 +240,12 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
             }
             else
             {
+                // use UDP
                 var client = new UdpClient();
                 try
                 {
                     client.Connect(host, port);
-                    await client.ReceiveAsync();
+                    await client.ReceiveAsync().ConfigureAwait(false);
                     result = true;
                 }
                 catch (Exception ex)
@@ -267,7 +268,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// <summary>
         /// The result of the last internal port check.
         /// </summary>
-        public static PortStateEnum LastCheckResult { get; private set; } = PortStateEnum.Unknown;
+        public static PortState LastCheckResult { get; private set; } = PortState.Unknown;
 
         #endregion
     }

@@ -17,7 +17,7 @@
         /// <returns>The latitude degrees.</returns>
         public static double KilometersToLatitudeDegrees(double distance)
         {
-            return distance / Constants.EarthRadiusInKilometer * Constants.RadiansToDegrees;
+            return distance / Constants.EarthMediumRadiusInKilometer * Constants.RadiansToDegrees;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@
         /// <returns>The longitude degrees.</returns>
         public static double KilometersToLongitudeDegrees(double distance, double latitude)
         {
-            var radiusAtLatitude = Constants.EarthRadiusInKilometer * Math.Cos(latitude * Constants.DegreesToRadians);
+            var radiusAtLatitude = Constants.EarthMediumRadiusInKilometer * Math.Cos(latitude * Constants.DegreesToRadians);
             return distance / radiusAtLatitude * Constants.RadiansToDegrees;
         }
 

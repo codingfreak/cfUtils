@@ -3,27 +3,22 @@
     using System;
     using System.Linq;
 
+    using Enumerations;
+
     /// <summary>
     /// Defines a data structure to store meta data of one calendar span in time.
     /// </summary>
     public struct DateTimeSpanInfo
     {
-        #region member vars
+        #region constructors and destructors
 
-        /// <summary>
-        /// The date of the last day of this span.
-        /// </summary>
-        public DateTime DateEnd;
-
-        /// <summary>
-        /// The date of the first day of this span.
-        /// </summary>
-        public DateTime DateStart;
-
-        /// <summary>
-        /// The offset of the span in a year.
-        /// </summary>
-        public int SpanNumber;
+        public DateTimeSpanInfo(DateSpanType spanType, int spanNumber, DateTime dateStart, DateTime dateEnd)
+        {
+            SpanType = spanType;
+            SpanNumber = spanNumber;
+            DateStart = dateStart;
+            DateEnd = dateEnd;
+        }
 
         #endregion
 
@@ -43,14 +38,29 @@
         #region properties
 
         /// <summary>
+        /// The date of the last day of this span.
+        /// </summary>
+        public DateTime DateEnd { get; }
+
+        /// <summary>
+        /// The date of the first day of this span.
+        /// </summary>
+        public DateTime DateStart { get; }
+
+        /// <summary>
         /// The amount of days.
         /// </summary>
         public int Days => (int)DateEnd.Subtract(DateStart).TotalDays;
 
         /// <summary>
+        /// The offset of the span in a year.
+        /// </summary>
+        public int SpanNumber { get; }
+
+        /// <summary>
         /// The type this span is.
         /// </summary>
-        public DateSpanType SpanType { get; set; }
+        public DateSpanType SpanType { get; }
 
         #endregion
     }

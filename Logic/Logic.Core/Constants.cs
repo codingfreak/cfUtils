@@ -14,7 +14,7 @@
         /// Defines the factor to calculate from m/s² to G-force.
         /// </summary>
         public const double AccelerationToG = 0.1019367991845056;
-
+        
         /// <summary>
         /// The average amount of days per calendar year.
         /// </summary>
@@ -26,12 +26,17 @@
         public const double DegreesToRadians = Math.PI / 180.0;
 
         /// <summary>
-        /// The earth radius in kilometers.
+        /// The earth equatorial radius in kilometers.
         /// </summary>
-        public const double EarthRadiusInKilometer = 6371.0;
+        public const double EarthEquatorialRadiusInKilometer = 6378.137;
 
         /// <summary>
-        /// Defines how many feets are included in one meter.
+        /// The earth medium radius in kilometers.
+        /// </summary>
+        public const double EarthMediumRadiusInKilometer = 6371;
+
+        /// <summary>
+        /// Defines how many feet are included in one meter.
         /// </summary>
         public const double FeetPerMeter = 3.28084;
 

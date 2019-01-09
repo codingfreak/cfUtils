@@ -8,7 +8,7 @@
     /// <summary>
     /// Defines possible results for the <see cref="NetworkUtil.GetPortState" /> method.
     /// </summary>
-    public enum PortStateEnum
+    public enum PortState
     {
         Unknown = 0,
 

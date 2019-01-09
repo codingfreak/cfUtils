@@ -8,6 +8,8 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
     using System.IO;
     using System.Linq;
 
+    using Extensions;
+
     /// <summary>
     /// Provides logic for handling Windows INI files.
     /// </summary>
@@ -76,7 +78,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                         }
                         // this is the item we are looking for
                         var value = line.Split('=')[1].Trim();
-                        if (string.IsNullOrEmpty(value))
+                        if (value.IsNullOrEmpty())
                         {
                             return;
                         }
