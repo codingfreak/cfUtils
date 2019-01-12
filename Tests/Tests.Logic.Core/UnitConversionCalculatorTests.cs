@@ -2,6 +2,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using cfUtils.Logic.Core.Utilities;
@@ -12,6 +13,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
     /// Contains unit tests for <see cref="UnitConversionCalculator" />
     /// </summary>
     [TestClass]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class UnitConversionCalculatorTests
     {
         #region methods
@@ -23,7 +25,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.0001.
         /// </remarks>
         [TestMethod]
-        public void ConvertAccelerationToGForceTest()
+        public void ConvertAccelerationToGForce_Test()
         {
             // arrange
             var values = new List<(double acc, double gForce)>
@@ -49,7 +51,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.001.
         /// </remarks>
         [TestMethod]
-        public void ConvertCentimetersToInchesTest()
+        public void ConvertCentimetersToInches_Test()
         {
             // arrange
             var values = new List<(double centimeter, double inch)>
@@ -74,7 +76,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertKilogramsToPoundTest()
+        public void ConvertKilogramsToPound_Test()
         {
             // arrange
             var values = new List<(double kilogram, double pound)>
@@ -99,7 +101,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertMetersPerSecondToKilometersPerHourTest()
+        public void ConvertMetersPerSecondToKilometersPerHour_Test()
         {
             // arrange
             var values = new List<(double meters, double kilometers)>
@@ -124,7 +126,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertMetersPerSecondToMilesPerHourTest()
+        public void ConvertMetersPerSecondToMilesPerHour_Test()
         {
             // arrange
             var values = new List<(double meters, double miles)>
@@ -149,7 +151,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertMetersToFeetTest()
+        public void ConvertMetersToFeet_Test()
         {
             // arrange
             var values = new List<(double meters, double feet)>
@@ -174,7 +176,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertMetersToMilesTest()
+        public void ConvertMetersToMiles_Test()
         {
             // arrange
             var values = new List<(double meters, double miles)>
@@ -200,7 +202,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void ConvertMetersToYardsTest()
+        public void ConvertMetersToYards_Test()
         {
             // arrange
             var values = new List<(double meters, double yards)>
@@ -226,7 +228,7 @@ namespace codingfreaks.cfUtils.Tests.Logic.Core
         /// Uses an accuracy of 0.01.
         /// </remarks>
         [TestMethod]
-        public void GetApplePlaceStringTest()
+        public void GetApplePlaceString_Test()
         {
             // arrange
             var values = new List<(string place, string city)>

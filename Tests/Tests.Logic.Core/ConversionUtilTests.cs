@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     using cfUtils.Logic.Core.Utilities;
@@ -14,6 +15,7 @@
     /// Contains unit tests for <see cref="ConversionUtil" />
     /// </summary>
     [TestClass]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class ConversionUtilTests
     {
         #region constants
@@ -28,7 +30,7 @@
         /// Tests the correct functionality of <see cref="ConversionUtil.GetAltitudeUnit" />.
         /// </summary>
         [TestMethod]
-        public void GetAltitudeUnitTest()
+        public void GetAltitudeUnit_Test()
         {
             // arrange
             var values = new List<(string locale, string result, Type exceptionType)>
@@ -56,7 +58,7 @@
         /// Tests the correct functionality of <see cref="ConversionUtil.GetDistanceUnit" />.
         /// </summary>
         [TestMethod]
-        public void GetDistanceUnitTest()
+        public void GetDistanceUnit_Test()
         {
             // arrange
             var values = new List<(string locale, string result, Type exceptionType)>
@@ -87,7 +89,7 @@
         /// Uses an accuracy of 0.0001.
         /// </remarks>
         [TestMethod]
-        public void GetFormattedAltitudeTest()
+        public void GetFormattedAltitude_Test()
         {
             // arrange
             var values = new List<(double meters, string locale, string result, int decimals)>
@@ -114,7 +116,7 @@
         /// Uses an accuracy of 0.0001.
         /// </remarks>
         [TestMethod]
-        public void GetFormattedDistanceTest()
+        public void GetFormattedDistance_Test()
         {
             // arrange
             var values = new List<(double meters, string locale, string result, int decimals, bool enforceBig)>
@@ -139,7 +141,7 @@
         /// Checks if property changes are producing valid results.
         /// </summary>
         [TestMethod]
-        public void PropertyChangeTest()
+        public void PropertyChange_Test()
         {
             // arrange
             const string NewVal = "?";
@@ -203,7 +205,7 @@
         /// Checks if all initial property states are valid.
         /// </summary>
         [TestMethod]
-        public void PropertyInitTest()
+        public void PropertyInit_Test()
         {
             lock (Lock)
             {
