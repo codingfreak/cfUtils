@@ -360,7 +360,7 @@
         }
 
         /// <summary>
-        /// Generates a speaking text for a given amount of <paramref name="seconds" /> with abbrevations for HTML-output.
+        /// Generates a speaking text for a given amount of <paramref name="seconds" /> with abbreviations for HTML-output.
         /// </summary>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="seconds">The amount of seconds representing the amount of time.</param>
