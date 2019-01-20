@@ -5,7 +5,7 @@
     <RootNamespace>codingfreaks.cfUtils.Logic.Core</RootNamespace>
     <AssemblyName>cfUtils.Logic.Core</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>2.0.0</Version>
+    <Version>2.0.0-beta</Version>
     <Authors>codingfreaks</Authors>
     <Product>cfUtils</Product>
     <Description>Utility library with common features.</Description>
@@ -17,6 +17,7 @@
     <PackageId>codingfreaks.libs.Utilities</PackageId>
     <PackageReleaseNotes>First release of version 2 where we removed deprecated and outdated features.</PackageReleaseNotes>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
+    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl> 
   </PropertyGroup>
 
 </Project>

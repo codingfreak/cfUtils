@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>codingfreaks.libs.Utilities </id>
+    <title>codingfreaks Core utilities</title>
+    <version>2.0.0-beta</version>
+    <authors>codingfreaks</authors>    
+    <iconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</iconUrl>
+    <language>en-US</language>
+    <projectUrl>https://github.com/codingfreak/cfUtils</projectUrl>
+    <repositoryUrl>https://github.com/codingfreak/cfUtils</repositoryUrl>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>codingfreaks 2009-2019</copyright>
+    <tags>codingfreaks .NET C# Core</tags>
+    <summary>.NET Core helpers and wrappers.</summary>
+    <description>During our own project work we detect often needed features which are not covered in .NET. This library collects them and can be used by others as well.</description>    
+    <releaseNotes>Rework and re-assembly of former versions of cfUtils packages. Do not use this in productive code!</releaseNotes>
+  </metadata>  
+</package>
