@@ -6,6 +6,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading;
@@ -198,8 +199,65 @@
         /// <param name="data"></param>
         /// <returns></returns>
         private T MapDataToItem(string[] data)
-        {            
-            throw new NotImplementedException();
+        {
+            foreach (var mapping in PropertyInfos)
+            {
+                var textValue = string.Empty;
+                if (mapping.Value.propertyAttribute == null)
+                {
+                    // no attribute on this property was found
+                    var offset = _fieldNames.GetIndexOf(fn => fn.Equals(mapping.Value.propertyInfo.Name, StringComparison.OrdinalIgnoreCase));
+                    if (offset >= 0)
+                    {
+                        textValue = data[offset];
+                    }
+                    else
+                    {
+                        // TODO what should happen when there is no matching property name?
+                    }
+                }
+                else
+                {
+                    // attribute was found on the property
+                    if (mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
+                    {
+                        // retrieve value from offset
+                        textValue = data[mapping.Value.propertyAttribute.Offset.Value];
+                    }                    
+                }
+            }
+        }
+
+        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)> _propertyInfos;
+
+        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)> PropertyInfos
+        {
+            get
+            {
+                if (_propertyInfos == null)
+                {
+                    PopulatePropertyInfos();
+                }
+                return _propertyInfos;
+            }
+        }
+
+        private void PopulatePropertyInfos()
+        {
+            _propertyInfos = new Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)>();
+            var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead && p.CanWrite);
+            foreach (var property in properties)
+            {
+                var att = property.GetCustomAttribute<PropertyAttribute>(true);
+                if (att != null)
+                {
+                    _propertyInfos.Add(att.FieldName, (property, att));
+                }
+                else
+                {
+                    _propertyInfos.Add(property.Name, (property, null));
+                }
+            }
         }
 
         /// <summary>
@@ -326,6 +384,10 @@
             }
         }
 
+        /// <summary>
+        /// Starts and retrieves a task which will watch the <see cref="_incomingData"/> queue and call mapping of the data.
+        /// </summary>
+        /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>        
         private Task StartQueueWatcher(CancellationToken cancellationToken = default)
         {
             return Task.Run(
@@ -340,9 +402,10 @@
                             var item = MapDataToItem(data.itemData);
                             if (!Results.TryAdd(data.offset, item))
                             {
-                                // TODO 
+                                // TODO What schould we do here?
                                 Log("Could not add result data.");
                             }
+                            // data was added correctly
                         }
                     }
                 },
