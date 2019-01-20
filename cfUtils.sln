@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Csv", "Logic\Logic.Csv\Logic.Csv.csproj", "{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,12 @@ Global
 		{3A28F1C2-F9C6-4570-9E8B-A29E891FA4A4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A28F1C2-F9C6-4570-9E8B-A29E891FA4A4}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
 		{3A28F1C2-F9C6-4570-9E8B-A29E891FA4A4}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.ReleaseNuget|Any CPU.ActiveCfg = Release|Any CPU
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30}.ReleaseNuget|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +51,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8D53F4CC-80E5-49CE-9CDB-737C98570EB1} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 		{3A28F1C2-F9C6-4570-9E8B-A29E891FA4A4} = {4798BD11-CD22-4A48-85B2-580DCC568BC2}
+		{6920E7F9-9CE2-4379-9FCE-65713CAE8B30} = {ADDDDA89-779B-469D-822C-45AB27E52033}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0CB174C0-9B88-4511-B852-BBF7A730A908}
