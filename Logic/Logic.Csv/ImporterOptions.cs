@@ -35,7 +35,9 @@
         public bool CheckFileBeforeImport { get; set; }
         
         public bool AutoDetectEncoding { get; set; }
-        
+
+        public Action<string> Logger { get; set; }
+
         public bool Valid
         {
             get
