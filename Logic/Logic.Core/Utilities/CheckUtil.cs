@@ -83,7 +83,7 @@
         }
 
         /// <summary>
-        /// Throws an <see cref="ArgumentNullException" /> containing the name of the parameter in the
+        /// Throws an <see cref="ArgumentException" /> containing the name of the parameter in the
         /// <paramref name="expression" />
         /// if contains null or is equal to <see cref="string.Empty" />.
         /// </summary>
