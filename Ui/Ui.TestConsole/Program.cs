@@ -1,6 +1,8 @@
 ﻿namespace codingfreaks.cfUtils.Ui.TestConsole
 {
     using System;
+    using System.Diagnostics;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -19,17 +21,29 @@
 
         private static async Task TestCsvImporterAsync()
         {
+            var lastPerc = 0;
             var options = new ImporterOptions
             {
                 AutoDetectEncoding = true,
                 Delimiter = ';',
                 Logger = m => Console.WriteLine(m),
-                FirstReadedLineContainsHeader = true
+                FirstReadedLineContainsHeader = true,
+                Culture = new CultureInfo("de-DE"),
+                CheckFileBeforeImport = true,
+                MaxDegreeOfParallelism = (uint)Environment.ProcessorCount
             };
             var importer = new Importer<CsvImporterSample>(options);
-            var progress = new Progress<OperationProgress>(p => Console.WriteLine(p.CurrentLine));
-            var result = await importer.ImportAsync(@"C:\Users\schmidt\Desktop\sample\20190120_Playback-Echtdaten_01.csv", progress);
-            Console.WriteLine(result.ItemsCount);            
+            var progress = new Progress<OperationProgress>(p =>
+            {
+                if (p.Percentage > lastPerc)
+                {
+                    Console.WriteLine(p.Percentage);
+                    lastPerc = p.Percentage.Value;
+                }
+            });
+            var result = await importer.ImportAsync(@"C:\Users\schmidt\Desktop\samples\20190120_Playback-Echtdaten_01.csv", progress);
+            Console.WriteLine(result.ItemsCount);
+            Console.WriteLine(result.Finished - result.Started);
         }
 
         #endregion

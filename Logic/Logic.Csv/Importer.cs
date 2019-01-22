@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -16,11 +17,12 @@
     using Core.Utilities;
 
     public class Importer<T>
+        where T : new()
     {
         #region member vars
 
         /// <summary>
-        /// The amount of data rows counted by <see cref="CheckFileStructureAsync"/> if called ever.
+        /// The amount of data rows counted by <see cref="CheckFileStructureAsync" /> if called ever.
         /// </summary>
         private long? _dataRows;
 
@@ -29,10 +31,18 @@
         /// </summary>
         private string[] _fieldNames;
 
+        private long _handledRows;
+
         /// <summary>
         /// Storage for in-order mapping of data lines read.
         /// </summary>
         private ConcurrentQueue<(long offset, string[] itemData)> _incomingData;
+
+        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)> _propertyInfos;
+
+        private bool _readingFinished;
+
+        private int _runningMappers;
 
         /// <summary>
         /// The amount of lines skipped for any reason (empty, regex, options).
@@ -57,6 +67,7 @@
         {
             CheckUtil.ThrowIfNull(() => options);
             Options = options;
+            PopulatePropertyInfos();
         }
 
         #endregion
@@ -158,7 +169,8 @@
             // initialize the mapping process and data
             _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>();
             _waitingForData = true;
-            var watcherTask = StartQueueWatcher(cancellationToken);
+            _readingFinished = false;
+            var watcherTask = StartQueueWatcher(progress, cancellationToken);
             // perform the file parsing
             try
             {
@@ -173,6 +185,7 @@
                     fileUri,
                     progress,
                     cancellationToken);
+                _readingFinished = true;
             }
             catch (Exception ex)
             {
@@ -198,10 +211,12 @@
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private T MapDataToItem(string[] data)
+        private T MapDataToItem(string[] data, long currentOffset)
         {
+            var result = new T();
             foreach (var mapping in PropertyInfos)
             {
+                var context = new BaseTypeDescriptorContext(result, mapping.Value.propertyInfo.Name);
                 var textValue = string.Empty;
                 if (mapping.Value.propertyAttribute == null)
                 {
@@ -211,10 +226,6 @@
                     {
                         textValue = data[offset];
                     }
-                    else
-                    {
-                        // TODO what should happen when there is no matching property name?
-                    }
                 }
                 else
                 {
@@ -223,39 +234,76 @@
                     {
                         // retrieve value from offset
                         textValue = data[mapping.Value.propertyAttribute.Offset.Value];
-                    }                    
+                    }
                 }
-            }
-        }
-
-        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)> _propertyInfos;
-
-        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)> PropertyInfos
-        {
-            get
-            {
-                if (_propertyInfos == null)
+                try
                 {
-                    PopulatePropertyInfos();
+                    var converted = mapping.Value.converter.ConvertFromString(context, Options.Culture, textValue);
+                    mapping.Value.propertyInfo.SetValue(result, converted);
                 }
-                return _propertyInfos;
+                catch (Exception ex)
+                {
+                    ThrowException(new InvalidOperationException($"Could not set value {textValue} to property {mapping.Value.propertyInfo.Name} on line {currentOffset}.", ex));
+                }
             }
+            return result;
         }
 
+        /// <summary>
+        /// Taskes a bunch of <paramref name="items" /> contaning the offset of each item and the parsed values as a string array
+        /// and handles them in one thread.
+        /// </summary>
+        /// <param name="items">The items to handle in one thread.</param>
+        /// <param name="progress">An optional progress to report progress back to the caller.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>
+        private void MapItems(IEnumerable<(long offset, string[] data)> items, IProgress<OperationProgress> progress = null, CancellationToken cancellationToken = default)
+        {
+            Task.Run(
+                () =>
+                {
+                    var results = new List<(long offset, T item)>();
+                    foreach (var item in items)
+                    {
+                        var result = MapDataToItem(item.data, item.offset);
+                        results.Add((item.offset, result));
+                        // data was added correctly
+                        // report the progress if the caller has passed 
+                        Interlocked.Increment(ref _handledRows);
+                        progress?.Report(new OperationProgress(_handledRows, _dataRows));
+                        // TODO fire an event containing the new item
+                    }
+                    // add local results to the overall result
+                    lock (_resultLock)
+                    {
+                        results.ForEach(
+                            r =>
+                            {
+                                Results.Add(r.offset, r.item);
+                            });
+                        _runningMappers--;
+                    }
+                },
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Uses reflection to gain all informations on the type <typeparamref name="T" /> and stores it in memory.
+        /// </summary>
         private void PopulatePropertyInfos()
         {
-            _propertyInfos = new Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute)>();
+            _propertyInfos = new Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)>();
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead && p.CanWrite);
             foreach (var property in properties)
             {
                 var att = property.GetCustomAttribute<PropertyAttribute>(true);
+                var converter = TypeDescriptor.GetConverter(property.PropertyType);
                 if (att != null)
                 {
-                    _propertyInfos.Add(att.FieldName, (property, att));
+                    _propertyInfos.Add(att.FieldName, (property, att, converter));
                 }
                 else
                 {
-                    _propertyInfos.Add(property.Name, (property, null));
+                    _propertyInfos.Add(property.Name, (property, null, converter));
                 }
             }
         }
@@ -293,7 +341,7 @@
             var currentDataRow = 0;
             _skippedLines = 0;
             var headersPassed = false;
-            Results = new ConcurrentDictionary<long, T>();
+            Results = new Dictionary<long, T>();
             _fieldNames = null;
             Regex regex = null;
             if (!Options.IgnoreLinesRegex.IsNullOrEmpty())
@@ -355,7 +403,6 @@
                                     {
                                         ThrowException(new InvalidOperationException("Could not read field names from file. Check delimiter option or file."));
                                     }
-                                    Log("Headers handled.");
                                     headersPassed = true;
                                     continue;
                                 }
@@ -372,8 +419,6 @@
                             mappingAction.Invoke(items);
                             // count up the row offset
                             currentDataRow++;
-                            // report the progress if the caller has passed one
-                            progress?.Report(new OperationProgress(currentDataRow, _dataRows));
                         }
                     }
                 }
@@ -385,28 +430,42 @@
         }
 
         /// <summary>
-        /// Starts and retrieves a task which will watch the <see cref="_incomingData"/> queue and call mapping of the data.
+        /// Starts and retrieves a task which will watch the <see cref="_incomingData" /> queue and call mapping of the data.
         /// </summary>
-        /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>        
-        private Task StartQueueWatcher(CancellationToken cancellationToken = default)
+        /// <param name="progress">An optional progress to report progress back to the caller.</param>
+        /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>
+        private Task StartQueueWatcher(IProgress<OperationProgress> progress = null, CancellationToken cancellationToken = default)
         {
+            _runningMappers = 0;
+            _handledRows = 0;
+            var itemsPerWorker = _dataRows.HasValue ? _dataRows.Value / Options.MaxDegreeOfParallelism : 1;
             return Task.Run(
                 async () =>
                 {
-                    while (!cancellationToken.IsCancellationRequested && (!_incomingData.IsEmpty || _waitingForData))
+                    var nextItems = new List<(long offset, string[] data)>();
+                    while (!(cancellationToken.IsCancellationRequested || _incomingData.IsEmpty && _readingFinished))
                     {
-                        await Task.Delay(10, cancellationToken);
                         if (_incomingData.TryDequeue(out var data))
                         {
-                            // TODO handle MaxDOP
-                            var item = MapDataToItem(data.itemData);
-                            if (!Results.TryAdd(data.offset, item))
+                            nextItems.Add(data);
+                            if (nextItems.Count == itemsPerWorker)
                             {
-                                // TODO What schould we do here?
-                                Log("Could not add result data.");
+                                // start a new worker
+                                MapItems(nextItems.AsEnumerable(), progress, cancellationToken);
+                                nextItems = new List<(long offset, string[] data)>();
+                                Interlocked.Increment(ref _runningMappers);
                             }
-                            // data was added correctly
                         }
+                        // ensure to start only as many workers as MaxDOP allows
+                        while (_runningMappers > Options.MaxDegreeOfParallelism)
+                        {
+                            await Task.Delay(1, cancellationToken);
+                        }
+                    }
+                    Log("Waiting for last threads.");
+                    while (_runningMappers > 0)
+                    {
+                        await Task.Delay(10, cancellationToken);
                     }
                 },
                 cancellationToken);
@@ -455,11 +514,24 @@
         /// </summary>
         public ImporterOptions Options { get; }
 
+        private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)> PropertyInfos
+        {
+            get
+            {
+                if (_propertyInfos == null)
+                {
+                    PopulatePropertyInfos();
+                }
+                return _propertyInfos;
+            }
+        }
+
         /// <summary>
         /// Is used to collect items during a running import operation.
         /// </summary>
-        private ConcurrentDictionary<long, T> Results { get; set; }
+        private Dictionary<long, T> Results { get; set; }
 
+        private object _resultLock = new object();
         #endregion
     }
 }
