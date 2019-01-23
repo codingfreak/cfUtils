@@ -41,7 +41,11 @@
                     lastPerc = p.Percentage.Value;
                 }
             });
-            var result = await importer.ImportAsync(@"C:\Users\schmidt\Desktop\samples\20190120_Playback-Echtdaten_01.csv", progress);
+            importer.ItemImported += (s, e) =>
+            {
+
+            };
+            var result = await importer.ImportAsync(@"C:\Users\alexanderschmidt\Desktop\samples\20190120_Playback-Echtdaten_01.csv", progress);
             Console.WriteLine(result.ItemsCount);
             Console.WriteLine(result.Finished - result.Started);
         }

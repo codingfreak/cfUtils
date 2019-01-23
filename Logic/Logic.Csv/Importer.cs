@@ -19,6 +19,9 @@
     public class Importer<T>
         where T : new()
     {
+
+        public event EventHandler<ItemEventArgs<T>> ItemImported;
+
         #region member vars
 
         /// <summary>
@@ -270,7 +273,7 @@
                         // report the progress if the caller has passed 
                         Interlocked.Increment(ref _handledRows);
                         progress?.Report(new OperationProgress(_handledRows, _dataRows));
-                        // TODO fire an event containing the new item
+                        ItemImported?.Invoke(this, new ItemEventArgs<T>(result));
                     }
                     // add local results to the overall result
                     lock (_resultLock)
@@ -295,15 +298,19 @@
             var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanRead && p.CanWrite);
             foreach (var property in properties)
             {
-                var att = property.GetCustomAttribute<PropertyAttribute>(true);
+                var propertyAtt = property.GetCustomAttribute<PropertyAttribute>(true);
                 var converter = TypeDescriptor.GetConverter(property.PropertyType);
-                if (att != null)
+                if (propertyAtt != null)
                 {
-                    _propertyInfos.Add(att.FieldName, (property, att, converter));
+                    _propertyInfos.Add(propertyAtt.FieldName, (property, propertyAtt, converter));
                 }
                 else
                 {
-                    _propertyInfos.Add(property.Name, (property, null, converter));
+                    var ignoreAtt = property.GetCustomAttribute<IgnoreAttribute>(true);
+                    if (ignoreAtt == null || !ignoreAtt.IgnoreOnImport)
+                    { 
+                        _propertyInfos.Add(property.Name, (property, null, converter));
+                    }
                 }
             }
         }
