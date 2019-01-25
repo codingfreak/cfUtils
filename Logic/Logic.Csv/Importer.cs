@@ -233,11 +233,20 @@
                 else
                 {
                     // attribute was found on the property
-                    if (mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
+                    if (!mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty())
+                    {
+                        var offset = _fieldNames.GetIndexOf(mapping.Value.propertyAttribute.FieldName);
+                        if (offset < 0)
+                        {
+                            ThrowException(new InvalidOperationException($"Fieldname {mapping.Value.propertyAttribute.FieldName} not found in import data."));
+                        }
+                        textValue = data[offset];
+                    }
+                    else if (mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
                     {
                         // retrieve value from offset
                         textValue = data[mapping.Value.propertyAttribute.Offset.Value];
-                    }
+                    }                    
                 }
                 try
                 {
