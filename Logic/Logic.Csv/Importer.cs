@@ -16,12 +16,13 @@
     using Core.Extensions;
     using Core.Utilities;
 
+    /// <summary>
+    /// Handles CSV-imports for one file.
+    /// </summary>
+    /// <typeparam name="T">The type which represents a single row of the CSV file after it's mapped.</typeparam>
     public class Importer<T>
         where T : new()
     {
-
-        public event EventHandler<ItemEventArgs<T>> ItemImported;
-
         #region member vars
 
         /// <summary>
@@ -41,21 +42,42 @@
         /// </summary>
         private ConcurrentQueue<(long offset, string[] itemData)> _incomingData;
 
+        /// <summary>
+        /// Holds data for the <see cref="PropertyInfos"/>.
+        /// </summary>
         private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)> _propertyInfos;
 
+        /// <summary>
+        /// Is set to <c>true</c> when the process of reading the complete file is finished.
+        /// </summary>
+        /// <remarks>
+        /// The reading only gets the data and put's it to the <see cref="_incomingData"/> queue.
+        /// </remarks>
         private bool _readingFinished;
 
+        /// <summary>
+        /// Is used as a lock for accessing the <see cref="Results"/> property in MT scenarios.
+        /// </summary>
+        private readonly object _resultLock = new object();
+
+        /// <summary>
+        /// The amount of mapper jobs running currently.
+        /// </summary>
         private int _runningMappers;
 
         /// <summary>
         /// The amount of lines skipped for any reason (empty, regex, options).
         /// </summary>
         private long _skippedLines;
+  
+        #endregion
+
+        #region events
 
         /// <summary>
-        /// <c>true</c> when the first data-row is read.
+        /// Occurs when a single line is imported completely.
         /// </summary>
-        private bool _waitingForData;
+        public event EventHandler<ItemEventArgs<T>> ItemImported;
 
         #endregion
 
@@ -107,8 +129,7 @@
                             }
                             _dataRows++;
                         },
-                        fileUri,
-                        progress,
+                        fileUri,                        
                         cancellationToken);
                 }
                 catch (Exception ex)
@@ -170,8 +191,7 @@
                 }
             }
             // initialize the mapping process and data
-            _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>();
-            _waitingForData = true;
+            _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>();            
             _readingFinished = false;
             var watcherTask = StartQueueWatcher(progress, cancellationToken);
             // perform the file parsing
@@ -182,11 +202,9 @@
                     items =>
                     {
                         _incomingData.Enqueue((offset, items));
-                        offset++;
-                        _waitingForData = false;
+                        offset++;                        
                     },
-                    fileUri,
-                    progress,
+                    fileUri,                    
                     cancellationToken);
                 _readingFinished = true;
             }
@@ -211,9 +229,14 @@
         }
 
         /// <summary>
+        /// Is called once for each row in the CSV file to map the CSV-fields to an instance of type <typeparamref name="T"/>.
         /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <remarks>
+        /// This is the import part of type-safe mapping CSV-text-data to .NET properties.
+        /// </remarks>
+        /// <param name="data">The data of the CSV line.</param>
+        /// <param name="currentOffset">The current line number.</param>
+        /// <returns>The mapped instance including all properties.</returns>
         private T MapDataToItem(string[] data, long currentOffset)
         {
             var result = new T();
@@ -235,19 +258,23 @@
                     // attribute was found on the property
                     if (!mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty())
                     {
+                        // the attribute defines a field name which we will use now to obtain the offset of the data-entry
                         var offset = _fieldNames.GetIndexOf(mapping.Value.propertyAttribute.FieldName);
                         if (offset < 0)
                         {
-                            ThrowException(new InvalidOperationException($"Fieldname {mapping.Value.propertyAttribute.FieldName} not found in import data."));
+                            // this is invalid and means the caller has misspelled the field name when defining the property
+                            ThrowException(new InvalidOperationException($"Field name {mapping.Value.propertyAttribute.FieldName} not found in import data."));
                         }
+                        // found the offset -> get the data
                         textValue = data[offset];
                     }
                     else if (mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
                     {
-                        // retrieve value from offset
+                        // retrieve value from offset defined in the property attribute
                         textValue = data[mapping.Value.propertyAttribute.Offset.Value];
-                    }                    
+                    }
                 }
+                // we've got some string value and try to map it the property using the associated converter
                 try
                 {
                     var converted = mapping.Value.converter.ConvertFromString(context, Options.Culture, textValue);
@@ -262,7 +289,7 @@
         }
 
         /// <summary>
-        /// Taskes a bunch of <paramref name="items" /> contaning the offset of each item and the parsed values as a string array
+        /// Taskes a bunch of <paramref name="items" /> containing the offset of each item and the parsed values as a string array
         /// and handles them in one thread.
         /// </summary>
         /// <param name="items">The items to handle in one thread.</param>
@@ -317,7 +344,7 @@
                 {
                     var ignoreAtt = property.GetCustomAttribute<IgnoreAttribute>(true);
                     if (ignoreAtt == null || !ignoreAtt.IgnoreOnImport)
-                    { 
+                    {
                         _propertyInfos.Add(property.Name, (property, null, converter));
                     }
                 }
@@ -329,10 +356,9 @@
         /// row found.
         /// </summary>
         /// <param name="mappingAction">The action to perform for every data row containing the the data row values.</param>
-        /// <param name="fileUri">The absolute path to the file.</param>
-        /// <param name="progress">An optional progress to report progress back to the caller.</param>
+        /// <param name="fileUri">The absolute path to the file.</param>        
         /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>
-        private async Task ReadFileAsync(Action<string[]> mappingAction, string fileUri, IProgress<OperationProgress> progress = null, CancellationToken cancellationToken = default)
+        private async Task ReadFileAsync(Action<string[]> mappingAction, string fileUri, CancellationToken cancellationToken = default)
         {
             CheckUtil.ThrowIfNull(() => mappingAction);
             var encoding = Encoding.Default;
@@ -448,13 +474,19 @@
         /// <summary>
         /// Starts and retrieves a task which will watch the <see cref="_incomingData" /> queue and call mapping of the data.
         /// </summary>
+        /// <remarks>
+        /// Ensure to check the <see cref="Options"/> in order to understand this method. Especially <see cref="ImporterOptions.MaxDegreeOfParallelism"/> is
+        /// important to understand the behavior of this method.
+        /// </remarks>
         /// <param name="progress">An optional progress to report progress back to the caller.</param>
         /// <param name="cancellationToken">An optional token to cancel the operation by the caller.</param>
         private Task StartQueueWatcher(IProgress<OperationProgress> progress = null, CancellationToken cancellationToken = default)
         {
             _runningMappers = 0;
             _handledRows = 0;
+            // calculated how many lines should be handled by 1 worker process
             var itemsPerWorker = _dataRows.HasValue ? _dataRows.Value / Options.MaxDegreeOfParallelism : 1;
+            // start watching the queue on a new thread
             return Task.Run(
                 async () =>
                 {
@@ -463,22 +495,25 @@
                     {
                         if (_incomingData.TryDequeue(out var data))
                         {
+                            // We've got one item out of the queue. We add it to the workload for the next
+                            // task ...
                             nextItems.Add(data);
+                            // ... and check if the calculated work-amount for each worker is reached.
                             if (nextItems.Count == itemsPerWorker)
                             {
-                                // start a new worker
+                                // start a new worker because it is enough work collected
                                 MapItems(nextItems.AsEnumerable(), progress, cancellationToken);
                                 nextItems = new List<(long offset, string[] data)>();
                                 Interlocked.Increment(ref _runningMappers);
                             }
                         }
-                        // ensure to start only as many workers as MaxDOP allows
+                        // wait now because we reached the limit of concurrent workers
                         while (_runningMappers > Options.MaxDegreeOfParallelism)
                         {
                             await Task.Delay(1, cancellationToken);
                         }
-                    }
-                    Log("Waiting for last threads.");
+                    }             
+                    // wait until remaining workers are finished
                     while (_runningMappers > 0)
                     {
                         await Task.Delay(10, cancellationToken);
@@ -530,6 +565,14 @@
         /// </summary>
         public ImporterOptions Options { get; }
 
+        /// <summary>
+        /// Holds information about properties of the type <typeparamref name="T"/> so that expensive reflection-based
+        /// processes are performed only one (ctor).
+        /// </summary>
+        /// <remarks>
+        /// Contains the reflected property information, the associated <see cref="PropertyAttribute"/> if any is present and
+        /// a <see cref="TypeConverter"/> for the reflected type.
+        /// </remarks>
         private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)> PropertyInfos
         {
             get
@@ -547,7 +590,6 @@
         /// </summary>
         private Dictionary<long, T> Results { get; set; }
 
-        private object _resultLock = new object();
         #endregion
     }
 }
