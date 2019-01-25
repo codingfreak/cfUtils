@@ -12,6 +12,8 @@
     {
         #region methods
 
+        private static object ConsoleLock = new object();
+
         private static async Task Main(string[] args)
         {
             await TestCsvImporterAsync();
@@ -21,12 +23,12 @@
 
         private static async Task TestCsvImporterAsync()
         {
-            var lastPerc = 0;
+            var lastPercentage = 0;
             var options = new ImporterOptions
             {
                 AutoDetectEncoding = true,
                 Delimiter = ';',
-                Logger = m => Console.WriteLine(m),
+                Logger = Console.WriteLine,
                 FirstReadedLineContainsHeader = true,
                 Culture = new CultureInfo("de-DE"),
                 CheckFileBeforeImport = true,
@@ -35,17 +37,26 @@
             var importer = new Importer<CsvImporterSample>(options);
             var progress = new Progress<OperationProgress>(p =>
             {
-                if (p.Percentage > lastPerc)
+                if (!(p.Percentage > lastPercentage))
                 {
-                    Console.WriteLine(p.Percentage);
-                    lastPerc = p.Percentage.Value;
+                    return;
                 }
+                lock (ConsoleLock)
+                {
+                    var lineBefore = Console.CursorTop;
+                    Console.SetCursorPosition(1,Console.WindowHeight - 1);
+                    Console.Write(new string(' ', Console.WindowWidth - 1));
+                    Console.Write($"{p.Percentage}% done");
+                    Console.SetCursorPosition(0, lineBefore);
+                }                
+                lastPercentage = p.Percentage.Value;
             });
             importer.ItemImported += (s, e) =>
             {
 
-            };
+            };            
             var result = await importer.ImportAsync(@"C:\Users\schmidt\Desktop\sample\20190120_Playback-Echtdaten_01.csv", progress);
+            Console.Clear();
             Console.WriteLine(result.ItemsCount);
             Console.WriteLine(result.Finished - result.Started);
         }
