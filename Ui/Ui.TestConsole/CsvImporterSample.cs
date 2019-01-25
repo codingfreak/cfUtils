@@ -90,8 +90,11 @@
 
         //public double T_sugar_get_water { get; set; }
 
+        /// <summary>
+        /// T1 cycle time monitoring x10
+        /// </summary>
         [Property("T1")]
-        public double T1Value { get; set; }
+        public double CycleTime { get; set; }
 
         //public double T1_backward { get; set; }
 
@@ -115,7 +118,11 @@
 
         //public double T19 { get; set; }
 
-        //public double T2 { get; set; }
+        /// <summary>
+        /// T2 filling time monitoring x10
+        /// </summary>
+        [Property("T2")]
+        public double FillingTime { get; set; }
 
         //public double T2_backward { get; set; }
 
@@ -129,7 +136,11 @@
 
         //public double T26 { get; set; }
 
-        //public double T3 { get; set; }
+        /// <summary>
+        /// T3 delay syrup separation white x10
+        /// </summary>
+        [Property("T3")]
+        public double SyrupSeparationDelay { get; set; }
 
         //public double T30 { get; set; }
 
@@ -141,7 +152,11 @@
 
         //public double T34 { get; set; }
 
-        //public double T4 { get; set; }
+        /// <summary>
+        /// T4 delay syrup washing x10
+        /// </summary>
+        [Property("T4")]
+        public double SyrupWashingDelay { get; set; }
 
         //public double T40a { get; set; }
 
@@ -169,7 +184,11 @@
 
         //public double T48 { get; set; }
 
-        //public double T5 { get; set; }
+        /// <summary>
+        /// T5 duration syrup washing x10
+        /// </summary>
+        [Property("T5")]
+        public double SyrupWashingDuration { get; set; }
 
         //public double T50 { get; set; }
 
@@ -179,7 +198,11 @@
 
         //public double T53 { get; set; }
 
-        //public double T6a { get; set; }
+        /// <summary>
+        /// T6a delay water washing 1 x10
+        /// </summary>
+        [Property("T6a")]
+        public double WaterWashingDelay { get; set; }
 
         //public double T6b { get; set; }
 
@@ -197,9 +220,17 @@
 
         //public DateTimeOffset time { get; set; }
 
-        //public double TL1 { get; set; }
+        /// <summary>
+        /// TL1 cycle time monitoring running x10
+        /// </summary>
+        [Property("TL1")]
+        public double RunningCycleTime { get; set; }
 
-        //public double TL2 { get; set; }
+        /// <summary>
+        /// TL2 filling time monitoring running x10
+        /// </summary>
+        [Property("TL2")]
+        public double RunningFillingTime { get; set; }
 
         //public double vibration { get; set; }
 
