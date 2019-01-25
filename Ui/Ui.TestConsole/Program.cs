@@ -27,12 +27,8 @@
             var options = new ImporterOptions
             {
                 AutoDetectEncoding = true,
-                Delimiter = ';',
+                Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
-                FirstReadedLineContainsHeader = true,
-                Culture = new CultureInfo("de-DE"),
-                CheckFileBeforeImport = true,
-                MaxDegreeOfParallelism = (uint)Environment.ProcessorCount
             };
             var importer = new Importer<CsvImporterSample>(options);
             var progress = new Progress<OperationProgress>(p =>

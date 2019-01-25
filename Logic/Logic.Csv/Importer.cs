@@ -437,7 +437,7 @@
                                     _skippedLines++;
                                     continue;
                                 }
-                                if (Options.FirstReadedLineContainsHeader)
+                                if (Options.FirstReadLineContainsHeader)
                                 {
                                     // this should be line containing the field names
                                     _fieldNames = line.Split(Options.Delimiter).ToArray();
