@@ -35,6 +35,9 @@
         /// </summary>
         private string[] _fieldNames;
 
+        /// <summary>
+        /// The amount of rows handled completely in the current job.
+        /// </summary>
         private long _handledRows;
 
         /// <summary>
