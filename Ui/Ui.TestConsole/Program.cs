@@ -38,6 +38,7 @@
                 AutoDetectEncoding = true,
                 Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
+                ItemsPerWorker = 20
             };
             // get a new importer
             var importer = new Importer<CsvImporterSample>(options);
