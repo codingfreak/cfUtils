@@ -488,7 +488,7 @@
             _runningMappers = 0;
             _handledRows = 0;
             // calculated how many lines should be handled by 1 worker process
-            var itemsPerWorker = _dataRows.HasValue ? _dataRows.Value / Options.MaxDegreeOfParallelism : 1;
+            var itemsPerWorker = _dataRows.HasValue ? Options.ItemsPerWorker : 0;
             // start watching the queue on a new thread
             return Task.Run(
                 async () =>

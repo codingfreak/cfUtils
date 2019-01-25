@@ -8,9 +8,4 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Logic\Logic.Core\Logic.Core.csproj" />
-    <ProjectReference Include="..\..\Logic\Logic.Csv\Logic.Csv.csproj" />
-  </ItemGroup>
-
 </Project>

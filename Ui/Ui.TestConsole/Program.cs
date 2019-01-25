@@ -21,16 +21,27 @@
             Console.ReadKey();
         }
 
+        private static readonly string SourceFileUri = @"C:\Users\schmidt\Desktop\sample\20190120_Playback-Echtdaten_01.csv";
+
+        /// <summary>
+        /// Tests CSV import using logic from the NuGet package 'codingfreaks.libs.Csv'.
+        /// </summary>
+        /// <remarks>
+        /// Uses a BMA import file <see cref="SourceFileUri"/>.
+        /// </remarks>        
         private static async Task TestCsvImporterAsync()
         {
             var lastPercentage = 0;
+            // prepare import options
             var options = new ImporterOptions
             {
                 AutoDetectEncoding = true,
                 Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
             };
+            // get a new importer
             var importer = new Importer<CsvImporterSample>(options);
+            // define a progress to visualize it later in the console
             var progress = new Progress<OperationProgress>(p =>
             {
                 if (!(p.Percentage > lastPercentage))
@@ -50,9 +61,15 @@
             importer.ItemImported += (s, e) =>
             {
 
-            };            
-            var result = await importer.ImportAsync(@"C:\Users\schmidt\Desktop\sample\20190120_Playback-Echtdaten_01.csv", progress);
+            };    
+            // run the importer and wait for it to finish
+            var result = await importer.ImportAsync(SourceFileUri, progress);
+            // handle results
             Console.Clear();
+            if (result.Failed)
+            {
+
+            }
             Console.WriteLine(result.ItemsCount);
             Console.WriteLine(result.Finished - result.Started);
         }

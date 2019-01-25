@@ -90,6 +90,11 @@
         public uint MaxDegreeOfParallelism { get; set; } = (uint)Environment.ProcessorCount;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public uint ItemsPerWorker { get; set; }
+
+        /// <summary>
         /// The styles for numeric conversions.
         /// </summary>
         public NumberStyles NumberStyles { get; set; } = NumberStyles.Any;
@@ -119,6 +124,11 @@
                 if (Delimiter == string.Empty.ToChar())
                 {
                     // empty character is not valid
+                    return false;
+                }
+                if (MaxDegreeOfParallelism > 1 && ItemsPerWorker == 0)
+                {
+                    // 
                     return false;
                 }
                 return true;
