@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
 
     using Core.Extensions;
@@ -12,6 +13,21 @@
     /// </summary>
     public class ImporterOptions
     {
+        #region methods
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            foreach (var prop in GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                sb.AppendFormat(CultureInfo.InvariantCulture, "  {0,-30}: {1}\n", prop.Name, prop.GetValue(this));
+            }
+            return sb.ToString();
+        }
+
+        #endregion
+
         #region properties
 
         /// <summary>
@@ -88,6 +104,14 @@
         /// An optional method passed in which gets called for logging messages.
         /// </summary>
         public Action<string> Logger { get; set; }
+
+        /// <summary>
+        /// Defines if options are written to the <see cref="Logger" /> on startup.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to <c>true</c>.
+        /// </remarks>
+        public bool LogOptionsOnStartup { get; set; } = true;
 
         /// <summary>
         /// Defines the maximum amount of concurrent worker processes during an import.

@@ -163,6 +163,12 @@
                 throw new InvalidOperationException("Another operation is running on this instance.");
             }
             IsBusy = true;
+            if (Options.LogOptionsOnStartup)
+            {
+                Log($"Starting import of file '{fileUri}'.");
+                Log("Options:");
+                Log(Options.ToString());
+            }
             CheckUtil.ThrowIfNullOrEmpty(() => fileUri);
             if (!Options.Valid)
             {
