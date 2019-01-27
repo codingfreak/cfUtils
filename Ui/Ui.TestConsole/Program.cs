@@ -4,6 +4,7 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using Logic.Csv;
@@ -11,8 +12,6 @@
     internal class Program
     {
         #region methods
-
-        private static object ConsoleLock = new object();
 
         private static async Task Main(string[] args)
         {
@@ -38,26 +37,18 @@
                 AutoDetectEncoding = true,
                 Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
-                ItemsPerWorker = 20
+                ItemsPerWorker = 10
             };
             // get a new importer
             var importer = new Importer<CsvImporterSample>(options);
             // define a progress to visualize it later in the console
             var progress = new Progress<OperationProgress>(p =>
             {
-                if (!(p.Percentage > lastPercentage))
+                if (p.Percentage % 10 == 0 && p.Percentage > lastPercentage)
                 {
-                    return;
+                    Interlocked.Exchange(ref lastPercentage, p.Percentage.Value);
+                    Console.WriteLine($"{p.Percentage}% imported");
                 }
-                lock (ConsoleLock)
-                {
-                    var lineBefore = Console.CursorTop;
-                    Console.SetCursorPosition(1,Console.WindowHeight - 1);
-                    Console.Write(new string(' ', Console.WindowWidth - 1));
-                    Console.Write($"{p.Percentage}% done");
-                    Console.SetCursorPosition(0, lineBefore);
-                }                
-                lastPercentage = p.Percentage.Value;
             });
             importer.ItemImported += (s, e) =>
             {

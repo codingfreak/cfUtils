@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="codingfreaks.libs.Csv" Version="0.0.2-alpha" />
+    <PackageReference Include="codingfreaks.libs.Csv" Version="0.0.3-alpha" />
   </ItemGroup>
 
 </Project>
