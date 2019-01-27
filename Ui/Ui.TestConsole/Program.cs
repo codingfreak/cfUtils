@@ -20,7 +20,7 @@
             Console.ReadKey();
         }
 
-        private static readonly string SourceFileUri = @"C:\Users\schmidt\Desktop\samples\D000001.csv";
+        private static readonly string SourceFileUri = @"C:\Users\schmidt\Desktop\samples\D000000.csv";
 
         /// <summary>
         /// Tests CSV import using logic from the NuGet package 'codingfreaks.libs.Csv'.
@@ -65,6 +65,8 @@
             }
             Console.WriteLine(result.ItemsCount);
             Console.WriteLine(result.Finished - result.Started);
+            var resultItems = result.Items.ToList();
+            Console.WriteLine(resultItems.Count);
         }
 
         #endregion

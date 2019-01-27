@@ -225,7 +225,8 @@
             resultsList.FreeFromMemory();
             Log($"File content read completely after {DateTimeOffset.Now.Subtract(started)}.");
             await StartQueueWatcher(progress, cancellationToken);
-            var results = Results.SelectMany(l => l).OrderBy(r => r.offset).Select(r => r.item).AsEnumerable();
+            var deflated = Results.SelectMany(l => l);
+            var results = deflated.OrderBy(r => r.offset).Select(r => r.item).ToList();
             IsBusy = false;
             return new ImportResult<T>(true, results, started, DateTimeOffset.Now, _skippedLines++);
         }
@@ -331,7 +332,7 @@
                         ItemImported?.Invoke(this, new ItemEventArgs<T>(result));
                     }
                     // add local results to the overall result
-                    Results.Add(results);
+                    Results.Add(results.ToList());
                     if (watch != null)
                     {
                         watch.Stop();
@@ -509,8 +510,12 @@
                 async () =>
                 {
                     var nextItems = new List<(long offset, string[] data)>();
-                    while (!(cancellationToken.IsCancellationRequested || _incomingData.IsEmpty && _readingFinished))
+                    while (true)
                     {
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            break;
+                        }
                         if (_incomingData.TryDequeue(out var data))
                         {
                             // We've got one item out of the queue. We add it to the workload for the next
@@ -524,6 +529,18 @@
                                 nextItems = new List<(long offset, string[] data)>();
                                 Interlocked.Increment(ref _runningMappers);
                             }
+                        }
+                        else if (nextItems.Any())
+                        {
+                            // no item in queue but next items still filled
+                            // start a new worker because it is enough work collected
+                            MapItems(nextItems.AsEnumerable(), progress, cancellationToken);
+                            nextItems = new List<(long offset, string[] data)>();
+                            Interlocked.Increment(ref _runningMappers);
+                        }
+                        else
+                        {
+                            break;
                         }
                         // wait now because we reached the limit of concurrent workers
                         while (_runningMappers >= Options.MaxDegreeOfParallelism)
