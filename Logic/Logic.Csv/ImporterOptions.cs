@@ -106,6 +106,14 @@
         public Action<string> Logger { get; set; }
 
         /// <summary>
+        /// If set to <c>true</c> mapping logic will output the item-mapping-performance in the <see cref="Logger" />.
+        /// </summary>
+        /// <remarks>
+        /// Setting this options could degrade performance slightly.
+        /// </remarks>
+        public bool LogMappingPerformance { get; set; }
+
+        /// <summary>
         /// Defines if options are written to the <see cref="Logger" /> on startup.
         /// </summary>
         /// <remarks>
@@ -125,14 +133,6 @@
         /// The styles for numeric conversions.
         /// </summary>
         public NumberStyles NumberStyles { get; set; } = NumberStyles.Any;
-
-        /// <summary>
-        /// If set to <c>true</c> mapping logic will output the item-mapping-performance in the <see cref="Logger" />.
-        /// </summary>
-        /// <remarks>
-        /// Setting this options could degrade performance slightly.
-        /// </remarks>
-        public bool OutputMappingPerformance { get; set; }
 
         /// <summary>
         /// A fixed amount of lines to skip before start interpretation of the file.

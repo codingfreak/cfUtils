@@ -315,7 +315,7 @@
                 () =>
                 {
                     Stopwatch watch = null;
-                    if (Options.OutputMappingPerformance)
+                    if (Options.LogMappingPerformance)
                     {
                         watch = new Stopwatch();
                         watch.Start();

@@ -38,7 +38,7 @@
                 Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
                 ItemsPerWorker = 500,
-                OutputMappingPerformance = true
+                LogMappingPerformance = true
             };
             // get a new importer
             var importer = new Importer<CsvImporterSample>(options);
