@@ -194,9 +194,8 @@
                 }
             }
             // initialize the mapping process and data
-            _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>();            
+            var resultsList = new List<(long offset, string[] itemData)>();
             _readingFinished = false;
-            var watcherTask = StartQueueWatcher(progress, cancellationToken);
             // perform the file parsing
             try
             {
@@ -204,18 +203,22 @@
                 await ReadFileAsync(
                     items =>
                     {
-                        _incomingData.Enqueue((offset, items));
+                        resultsList.Add((offset, items));
                         offset++;                        
                     },
                     fileUri,                    
                     cancellationToken);
-                _readingFinished = true;
+                
             }
             catch (Exception ex)
             {
                 ThrowException(new InvalidOperationException("Error during import.", ex));
             }
-            await watcherTask;
+            _readingFinished = true;
+            _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>(resultsList);
+            resultsList.FreeFromMemory();
+            Log($"File content read completely after {DateTimeOffset.Now.Subtract(started)}.");
+            await StartQueueWatcher(progress, cancellationToken);
             var results = Results.OrderBy(r => r.Key).Select(r => r.Value).AsEnumerable();
             IsBusy = false;
             return new ImportResult<T>(true, results, started, DateTimeOffset.Now, _skippedLines++);
@@ -247,6 +250,7 @@
             {
                 var context = new BaseTypeDescriptorContext(result, mapping.Value.propertyInfo.Name);
                 var textValue = string.Empty;
+                var fieldName = mapping.Value.propertyAttribute.FieldName;
                 if (mapping.Value.propertyAttribute == null)
                 {
                     // no attribute on this property was found
@@ -259,19 +263,19 @@
                 else
                 {
                     // attribute was found on the property
-                    if (!mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty())
+                    if (!fieldName.IsNullOrEmpty())
                     {
                         // the attribute defines a field name which we will use now to obtain the offset of the data-entry
-                        var offset = _fieldNames.GetIndexOf(mapping.Value.propertyAttribute.FieldName);
+                        var offset = _fieldNames.GetIndexOf(fieldName);
                         if (offset < 0)
                         {
                             // this is invalid and means the caller has misspelled the field name when defining the property
-                            ThrowException(new InvalidOperationException($"Field name {mapping.Value.propertyAttribute.FieldName} not found in import data."));
+                            ThrowException(new InvalidOperationException($"Field name {fieldName} not found in import data."));
                         }
                         // found the offset -> get the data
                         textValue = data[offset];
                     }
-                    else if (mapping.Value.propertyAttribute.FieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
+                    else if (fieldName.IsNullOrEmpty() && mapping.Value.propertyAttribute.Offset.HasValue)
                     {
                         // retrieve value from offset defined in the property attribute
                         textValue = data[mapping.Value.propertyAttribute.Offset.Value];
@@ -322,8 +326,8 @@
                             {
                                 Results.Add(r.offset, r.item);
                             });
-                        _runningMappers--;
                     }
+                    Interlocked.Decrement(ref _runningMappers);
                 },
                 cancellationToken);
         }
@@ -502,7 +506,7 @@
                             // task ...
                             nextItems.Add(data);
                             // ... and check if the calculated work-amount for each worker is reached.
-                            if (nextItems.Count == itemsPerWorker)
+                            if (nextItems.Count >= itemsPerWorker)
                             {
                                 // start a new worker because it is enough work collected
                                 MapItems(nextItems.AsEnumerable(), progress, cancellationToken);
