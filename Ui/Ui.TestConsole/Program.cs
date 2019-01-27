@@ -21,7 +21,7 @@
             Console.ReadKey();
         }
 
-        private static readonly string SourceFileUri = @"C:\Users\schmidt\Desktop\sample\20190120_Playback-Echtdaten_01.csv";
+        private static readonly string SourceFileUri = @"C:\Users\schmidt\Desktop\samples\20190120_Playback-Echtdaten_01.csv";
 
         /// <summary>
         /// Tests CSV import using logic from the NuGet package 'codingfreaks.libs.Csv'.

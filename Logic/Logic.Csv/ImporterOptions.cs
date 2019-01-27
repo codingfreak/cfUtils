@@ -90,8 +90,11 @@
         public uint MaxDegreeOfParallelism { get; set; } = (uint)Environment.ProcessorCount;
 
         /// <summary>
-        /// 
+        /// Defines how many lines a single worker process will handle.
         /// </summary>
+        /// <remarks>
+        /// See <see cref="MaxDegreeOfParallelism"/> for the amount of parallel workers.
+        /// </remarks>
         public uint ItemsPerWorker { get; set; }
 
         /// <summary>
