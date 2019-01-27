@@ -219,7 +219,7 @@
             resultsList.FreeFromMemory();
             Log($"File content read completely after {DateTimeOffset.Now.Subtract(started)}.");
             await StartQueueWatcher(progress, cancellationToken);
-            var results = Results.OrderBy(r => r.Key).Select(r => r.Value).AsEnumerable();
+            var results = Results.SelectMany(l => l).OrderBy(r => r.offset).Select(r => r.item).AsEnumerable();
             IsBusy = false;
             return new ImportResult<T>(true, results, started, DateTimeOffset.Now, _skippedLines++);
         }
@@ -325,14 +325,7 @@
                         ItemImported?.Invoke(this, new ItemEventArgs<T>(result));
                     }
                     // add local results to the overall result
-                    results.ForEach(
-                        r =>
-                        {
-                            if (!Results.TryAdd(r.offset, r.item))
-                            {
-                                // TODO What now?
-                            }
-                        });
+                    Results.Add(results);
                     if (watch != null)
                     {
                         watch.Stop();
@@ -402,7 +395,7 @@
             var currentDataRow = 0;
             _skippedLines = 0;
             var headersPassed = false;
-            Results = new ConcurrentDictionary<long, T>();
+            Results = new ConcurrentBag<IEnumerable<(long, T)>>();
             _fieldNames = null;
             Regex regex = null;
             if (!Options.IgnoreLinesRegex.IsNullOrEmpty())
@@ -529,13 +522,14 @@
                         // wait now because we reached the limit of concurrent workers
                         while (_runningMappers >= Options.MaxDegreeOfParallelism)
                         {
-                            await Task.Delay(1, cancellationToken);
+                            await Task.Delay(1000, cancellationToken);
                         }
-                    }             
+                    }
                     // wait until remaining workers are finished
+                    Log($"All jobs queued. Waiting for them to finish.");
                     while (_runningMappers > 0)
                     {
-                        await Task.Delay(10, cancellationToken);
+                        await Task.Delay(1000, cancellationToken);
                     }
                 },
                 cancellationToken);
@@ -607,7 +601,7 @@
         /// <summary>
         /// Is used to collect items during a running import operation.
         /// </summary>
-        private ConcurrentDictionary<long, T> Results { get; set; }
+        private ConcurrentBag<IEnumerable<(long offset, T item)>> Results { get; set; }
 
         #endregion
     }

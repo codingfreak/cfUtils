@@ -37,8 +37,7 @@
                 AutoDetectEncoding = true,
                 Culture = new CultureInfo("de-DE"),                
                 Logger = Console.WriteLine,
-                ItemsPerWorker = 100,
-                MaxDegreeOfParallelism = 20,
+                ItemsPerWorker = 500,
                 OutputMappingPerformance = true
             };
             // get a new importer
