@@ -77,6 +77,14 @@
         public string IgnoreLinesRegex { get; set; }
 
         /// <summary>
+        /// Defines how many lines a single worker process will handle.
+        /// </summary>
+        /// <remarks>
+        /// See <see cref="MaxDegreeOfParallelism" /> for the amount of parallel workers.
+        /// </remarks>
+        public uint ItemsPerWorker { get; set; }
+
+        /// <summary>
         /// An optional method passed in which gets called for logging messages.
         /// </summary>
         public Action<string> Logger { get; set; }
@@ -90,17 +98,17 @@
         public uint MaxDegreeOfParallelism { get; set; } = (uint)Environment.ProcessorCount;
 
         /// <summary>
-        /// Defines how many lines a single worker process will handle.
-        /// </summary>
-        /// <remarks>
-        /// See <see cref="MaxDegreeOfParallelism"/> for the amount of parallel workers.
-        /// </remarks>
-        public uint ItemsPerWorker { get; set; }
-
-        /// <summary>
         /// The styles for numeric conversions.
         /// </summary>
         public NumberStyles NumberStyles { get; set; } = NumberStyles.Any;
+
+        /// <summary>
+        /// If set to <c>true</c> mapping logic will output the item-mapping-performance in the <see cref="Logger" />.
+        /// </summary>
+        /// <remarks>
+        /// Setting this options could degrade performance slightly.
+        /// </remarks>
+        public bool OutputMappingPerformance { get; set; }
 
         /// <summary>
         /// A fixed amount of lines to skip before start interpretation of the file.

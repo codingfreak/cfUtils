@@ -307,6 +307,12 @@
             Task.Run(
                 () =>
                 {
+                    Stopwatch watch = null;
+                    if (Options.OutputMappingPerformance)
+                    {
+                        watch = new Stopwatch();
+                        watch.Start();
+                    }
                     var results = new List<(long offset, T item)>();
                     foreach (var item in items)
                     {
@@ -319,14 +325,20 @@
                         ItemImported?.Invoke(this, new ItemEventArgs<T>(result));
                     }
                     // add local results to the overall result
-                    lock (_resultLock)
-                    {
-                        results.ForEach(
-                            r =>
+                    results.ForEach(
+                        r =>
+                        {
+                            if (!Results.TryAdd(r.offset, r.item))
                             {
-                                Results.Add(r.offset, r.item);
-                            });
+                                // TODO What now?
+                            }
+                        });
+                    if (watch != null)
+                    {
+                        watch.Stop();
+                        Log($"Handled {results.Count} items in {watch.Elapsed}.");
                     }
+                    results.FreeFromMemory();
                     Interlocked.Decrement(ref _runningMappers);
                 },
                 cancellationToken);
@@ -390,7 +402,7 @@
             var currentDataRow = 0;
             _skippedLines = 0;
             var headersPassed = false;
-            Results = new Dictionary<long, T>();
+            Results = new ConcurrentDictionary<long, T>();
             _fieldNames = null;
             Regex regex = null;
             if (!Options.IgnoreLinesRegex.IsNullOrEmpty())
@@ -515,7 +527,7 @@
                             }
                         }
                         // wait now because we reached the limit of concurrent workers
-                        while (_runningMappers > Options.MaxDegreeOfParallelism)
+                        while (_runningMappers >= Options.MaxDegreeOfParallelism)
                         {
                             await Task.Delay(1, cancellationToken);
                         }
@@ -595,7 +607,7 @@
         /// <summary>
         /// Is used to collect items during a running import operation.
         /// </summary>
-        private Dictionary<long, T> Results { get; set; }
+        private ConcurrentDictionary<long, T> Results { get; set; }
 
         #endregion
     }
