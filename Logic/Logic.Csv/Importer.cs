@@ -51,14 +51,6 @@
         private Dictionary<string, (PropertyInfo propertyInfo, PropertyAttribute propertyAttribute, TypeConverter converter)> _propertyInfos;
 
         /// <summary>
-        /// Is set to <c>true</c> when the process of reading the complete file is finished.
-        /// </summary>
-        /// <remarks>
-        /// The reading only gets the data and put's it to the <see cref="_incomingData"/> queue.
-        /// </remarks>
-        private bool _readingFinished;
-
-        /// <summary>
         /// Is used as a lock for accessing the <see cref="Results"/> property in MT scenarios.
         /// </summary>
         private readonly object _resultLock = new object();
@@ -179,29 +171,25 @@
                 ThrowException(new FileNotFoundException("Provided file not found.", fileUri));
             }
             var started = DateTimeOffset.Now;
-            if (Options.CheckFileBeforeImport)
+            // check the file structure before we run the actual import process
+            Log("File check started.");
+            try
             {
-                // caller wants us to check the file structure before we run the actual import process
-                Log("File check started.");
-                try
+                var checkResult = await CheckFileStructureAsync(fileUri, null, cancellationToken);
+                if (!checkResult)
                 {
-                    var checkResult = await CheckFileStructureAsync(fileUri, null, cancellationToken);
-                    if (!checkResult)
-                    {
-                        Log("File check failed.");
-                        IsBusy = false;
-                        return new ImportResult<T>(false, null, started, DateTimeOffset.Now);
-                    }
-                    Log("File check succeeded.");
+                    Log("File check failed.");
+                    IsBusy = false;
+                    return new ImportResult<T>(false, null, started, DateTimeOffset.Now);
                 }
-                catch (Exception ex)
-                {
-                    ThrowException(new InvalidOperationException("Error during operation. See inner exception for details.", ex));
-                }
+                Log("File check succeeded.");
+            }
+            catch (Exception ex)
+            {
+                ThrowException(new InvalidOperationException("Error during operation. See inner exception for details.", ex));
             }
             // initialize the mapping process and data
             var resultsList = new List<(long offset, string[] itemData)>();
-            _readingFinished = false;
             // perform the file parsing
             try
             {
@@ -220,7 +208,6 @@
             {
                 ThrowException(new InvalidOperationException("Error during import.", ex));
             }
-            _readingFinished = true;
             _incomingData = new ConcurrentQueue<(long offset, string[] itemData)>(resultsList);
             resultsList.FreeFromMemory();
             Log($"File content read completely after {DateTimeOffset.Now.Subtract(started)}.");

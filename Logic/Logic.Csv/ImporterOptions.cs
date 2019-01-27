@@ -36,15 +36,6 @@
         public bool AutoDetectEncoding { get; set; }
 
         /// <summary>
-        /// Defines if the logic will check the file structure before the actual import starts.
-        /// </summary>
-        /// <remarks>
-        /// <para>Defaults to <c>true</c>.</para>
-        /// <para>If set to <c>false</c> every progress is reported absolutely only!</para>
-        /// </remarks>
-        public bool CheckFileBeforeImport { get; set; } = true;
-
-        /// <summary>
         /// The culture to use when reading data and converting it.
         /// </summary>
         /// <remarks>
