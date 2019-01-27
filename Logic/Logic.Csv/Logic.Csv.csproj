@@ -6,7 +6,7 @@
     <AssemblyName>cfUtils.Logic.Csv</AssemblyName>
     <LangVersion>latest</LangVersion>
     <PackageId>codingfreaks.libs.Csv</PackageId>
-    <Version>0.0.4-alpha</Version>
+    <Version>0.0.5-alpha</Version>
     <Authors>codingfreaks</Authors>
     <Company>codingfreaks</Company>
     <Product>cfUtils</Product>
@@ -16,9 +16,9 @@
     <RepositoryUrl>https://github.com/codingfreak/cfUtils</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>codingfreaks .NET C# CSV Core</PackageTags>
-    <PackageReleaseNotes>Optimized memory management.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added options display.</PackageReleaseNotes>
     <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
-    <AssemblyVersion>0.0.4.0</AssemblyVersion>
+    <AssemblyVersion>0.0.5.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
