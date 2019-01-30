@@ -138,6 +138,9 @@
         /// <summary>
         /// Converts a timespan in seconds into a localized version.
         /// </summary>
+        /// <remarks>
+        /// This is a wrapper for TimeSpan.ToString("c")
+        /// </remarks>
         /// <param name="localeId">The locale ID.</param>
         /// <param name="seconds">The duration in seconds.</param>
         /// <exception cref="ArgumentNullException">Is thrown if <paramref name="localeId"/> is <c>null</c> or empty.</exception>
