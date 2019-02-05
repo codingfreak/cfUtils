@@ -241,6 +241,30 @@
         }
 
         /// <summary>
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedTimespan" />.
+        /// </summary>
+        /// <remarks>
+        /// Uses an accuracy of 0.0001.
+        /// </remarks>
+        [TestMethod]
+        public void GetFormattedTimespan_Test()
+        {
+            // arrange
+            var values = new List<(long seconds, string locale, string result)>
+            {
+                (1, "de-DE", "00:00:01"),
+                (100, "en-US", "00:01:40")
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    var result = ConversionUtil.GetFormattedTimespan(v.locale, v.seconds);
+                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
+                });
+        }
+
+        /// <summary>
         /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedSpeed" />.
         /// </summary>
         /// <remarks>
