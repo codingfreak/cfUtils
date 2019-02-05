@@ -18,7 +18,7 @@
         /// <param name="type">The type of the property to read coming from <see cref="ClaimTypes" /> constants.</param>
         /// <param name="defaultValue">The default value, if reading fails.</param>
         /// <returns>The result.</returns>
-        public static string GetPropertyValue(this ClaimsPrincipal user, string type, string defaultValue = "")
+        public static string GetPropertyValue(this ClaimsPrincipal user, string type, string defaultValue = null)
         {
             if (user == null)
             {
