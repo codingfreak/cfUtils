@@ -219,20 +219,7 @@
             CheckUtil.ThrowIfNullOrEmpty(() => localeId);
             return GetRegion(localeId).IsMetric ? MetricHeightUnit : ImperialHeightUnit;
         }
-
-        /// <summary>
-        /// Retrieves a DateTime in a HTML formatted manner. The date is bigger than the time.
-        /// </summary>
-        /// <param name="original">The datetime as a string.</param>
-        /// <exception cref="ArgumentNullException">Is thrown if <paramref name="original"/> is <c>null</c> or empty.</exception>
-        /// <returns>The HTML-version.</returns>
-        public static string GetOptimizedTimeHtmlString(string original)
-        {
-            CheckUtil.ThrowIfNullOrEmpty(() => original);
-            var parts = original.Split(' ');
-            return parts.Length == 2 ? $"{parts[0]} <span style=\"font-size:0.8em\">{parts[1]}</span>" : original;
-        }
-
+       
         /// <summary>
         /// Converts meters to km or yards depending on the <paramref name="localeId" />.
         /// </summary>

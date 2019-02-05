@@ -241,30 +241,6 @@
         }
 
         /// <summary>
-        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedTimespan" />.
-        /// </summary>
-        /// <remarks>
-        /// Uses an accuracy of 0.0001.
-        /// </remarks>
-        [TestMethod]
-        public void GetFormattedTimespan_Test()
-        {
-            // arrange
-            var values = new List<(long seconds, string locale, string result)>
-            {
-                (1, "de-DE", "00:00:01"),
-                (100, "en-US", "00:01:40")
-            };
-            // act && assert
-            values.ForEach(
-                v =>
-                {
-                    var result = ConversionUtil.GetFormattedTimespan(v.locale, v.seconds);
-                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
-                });
-        }
-
-        /// <summary>
         /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedSpeed" />.
         /// </summary>
         /// <remarks>
@@ -285,6 +261,56 @@
                 v =>
                 {
                     var result = ConversionUtil.GetFormattedSpeed(v.locale, v.metersPerSecond, v.decimals);
+                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
+                });
+        }
+
+        /// <summary>
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedTimespan" />.
+        /// </summary>
+        [TestMethod]
+        public void GetFormattedTimespan_Test()
+        {
+            // arrange
+            var values = new List<(TimeSpan timeSpan, string locale, string result)>
+            {
+                (TimeSpan.FromSeconds(1), "de-DE", "00:00:01"),
+                (TimeSpan.FromSeconds(1), "en-US", "00:00:01")
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    var result = ConversionUtil.GetFormattedTimespan(v.locale, v.timeSpan);
+                    Assert.AreEqual(v.result, result, "Resulting text does not match.");
+                });
+        }
+
+        /// <summary>
+        /// Tests the correct functionality of <see cref="ConversionUtil.GetFormattedWeight" />.
+        /// </summary>
+        /// <remarks>
+        /// Uses an accuracy of 0.0001.
+        /// </remarks>
+        [TestMethod]
+        public void GetFormattedWeight_Test()
+        {
+            // arrange
+            var values = new List<(double kiloGrams, string locale, string result, int decimals)>
+            {
+                (1, "de-DE", "1 kg", 0),
+                (5000, "de-DE", "5.000 kg", 0),
+                (200000, "de-DE", "200.000 kg", 0),
+                (12.5, "de-DE", "12,50 kg", 2),
+                (0, "de-DE", "0 kg", 0),
+                (1, "en-US", "2 lbs", 0),
+                (1, "en-US", "2.20 lbs", 2)
+            };
+            // act && assert
+            values.ForEach(
+                v =>
+                {
+                    var result = ConversionUtil.GetFormattedWeight(v.locale, v.kiloGrams, v.decimals);
                     Assert.AreEqual(v.result, result, "Resulting text does not match.");
                 });
         }
