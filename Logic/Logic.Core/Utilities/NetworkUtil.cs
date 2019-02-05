@@ -54,7 +54,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 {
                                     if (asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeout), false))
                                     {
-                                        // The result was positiv
+                                        // The result was positive
                                         if (!asyncResult.IsCompleted)
                                         {
                                             result = PortState.TimedOut;
