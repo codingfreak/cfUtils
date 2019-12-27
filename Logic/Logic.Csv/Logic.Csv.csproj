@@ -6,7 +6,7 @@
     <AssemblyName>cfUtils.Logic.Csv</AssemblyName>
     <LangVersion>latest</LangVersion>
     <PackageId>codingfreaks.libs.Csv</PackageId>
-    <Version>0.0.8-alpha</Version>
+    <Version>0.1.9-beta</Version>
     <Authors>codingfreaks</Authors>
     <Company>codingfreaks</Company>
     <Product>cfUtils</Product>
