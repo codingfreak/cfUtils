@@ -5,17 +5,17 @@
     <RootNamespace>codingfreaks.cfUtils.Logic.Core</RootNamespace>
     <AssemblyName>cfUtils.Logic.Core</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>2.0.1-beta</Version>
+    <Version>2.0.2-beta</Version>
     <Authors>codingfreaks</Authors>
     <Product>cfUtils</Product>
     <Description>During our own project work we detect often needed features which are not covered in .NET. This library collects them and can be used by others as well.</Description>
-    <Copyright>codingfreaks 2009-2019</Copyright>
+    <Copyright>codingfreaks 2009-2021</Copyright>
     <PackageProjectUrl>https://codingfreaks.de</PackageProjectUrl>
     <RepositoryUrl>https://github.com/codingfreak/cfUtils</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>codingfreaks .NET C#</PackageTags>
     <PackageId>codingfreaks.libs.Utilities</PackageId>
-    <PackageReleaseNotes>Rework and re-assembly of former versions of cfUtils packages. Do not use this in productive code!</PackageReleaseNotes>
+    <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
     <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl> 
   </PropertyGroup>

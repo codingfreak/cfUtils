@@ -1,22 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>codingfreaks.cfUtils.Logic.Csv</RootNamespace>
     <AssemblyName>cfUtils.Logic.Csv</AssemblyName>
     <LangVersion>latest</LangVersion>
     <PackageId>codingfreaks.libs.Csv</PackageId>
-    <Version>0.0.7-alpha</Version>
+    <Version>0.0.8-alpha</Version>
     <Authors>codingfreaks</Authors>
     <Company>codingfreaks</Company>
     <Product>cfUtils</Product>
-    <Copyright>codingfreaks 2019</Copyright>
+    <Copyright>codingfreaks 2019-2021</Copyright>
     <PackageProjectUrl>https://codingfreaks.de</PackageProjectUrl>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
     <RepositoryUrl>https://github.com/codingfreak/cfUtils</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>codingfreaks .NET C# CSV Core</PackageTags>
-    <PackageReleaseNotes>Renamed property.</PackageReleaseNotes>
+    <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
     <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
     <AssemblyVersion>0.0.7.0</AssemblyVersion>
   </PropertyGroup>
