@@ -16,8 +16,16 @@
     <PackageTags>codingfreaks .NET C#</PackageTags>
     <PackageId>codingfreaks.libs.Utilities</PackageId>
     <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
+    <PackageIcon>codingfreaks.jpg</PackageIcon>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
-    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl> 
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="codingfreaks.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

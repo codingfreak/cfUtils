@@ -12,13 +12,14 @@
     <Product>cfUtils</Product>
     <Copyright>codingfreaks 2019-2021</Copyright>
     <PackageProjectUrl>https://codingfreaks.de</PackageProjectUrl>
+    <PackageIcon>codingfreaks.jpg</PackageIcon>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
     <RepositoryUrl>https://github.com/codingfreak/cfUtils</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
     <PackageTags>codingfreaks .NET C# CSV Core</PackageTags>
     <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
-    <PackageLicenseUrl>https://licenses.nuget.org/MIT</PackageLicenseUrl>
-    <AssemblyVersion>0.0.7.0</AssemblyVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
