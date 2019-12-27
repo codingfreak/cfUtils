@@ -5,7 +5,7 @@
     <RootNamespace>codingfreaks.cfUtils.Logic.Core</RootNamespace>
     <AssemblyName>cfUtils.Logic.Core</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>2.0.2-beta</Version>
+    <Version>2.0.3</Version>
     <Authors>codingfreaks</Authors>
     <Product>cfUtils</Product>
     <Description>During our own project work we detect often needed features which are not covered in .NET. This library collects them and can be used by others as well.</Description>
