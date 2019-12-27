@@ -23,6 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="../../codingfreaks.jpg" Pack="true" PackagePath="\" />
     <PackageReference Include="codingfreaks.libs.Utilities" Version="2.0.0-beta" />
   </ItemGroup>
 
