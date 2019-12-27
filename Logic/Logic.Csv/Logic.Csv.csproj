@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>codingfreaks.cfUtils.Logic.Csv</RootNamespace>
+    <AssemblyName>cfUtils.Logic.Csv</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <PackageId>codingfreaks.libs.Csv</PackageId>
+    <Version>0.1.9-beta</Version>
+    <Authors>codingfreaks</Authors>
+    <Company>codingfreaks</Company>
+    <Product>cfUtils</Product>
+    <Copyright>codingfreaks 2019-2021</Copyright>
+    <PackageProjectUrl>https://codingfreaks.de</PackageProjectUrl>
+    <PackageIcon>codingfreaks.jpg</PackageIcon>
+    <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
+    <RepositoryUrl>https://github.com/codingfreak/cfUtils</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageTags>codingfreaks .NET C# CSV Core</PackageTags>
+    <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../codingfreaks.jpg" Pack="true" PackagePath="\" />
+    <PackageReference Include="codingfreaks.libs.Utilities" Version="2.0.0-beta" />
+  </ItemGroup>
+
+</Project>

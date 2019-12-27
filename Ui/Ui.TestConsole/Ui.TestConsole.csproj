@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>codingfreaks.cfUtils.Ui.TestConsole</RootNamespace>
+    <AssemblyName>cfUtils.Ui.TestConsole</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Logic\Logic.Core\Logic.Core.csproj" />
+    <ProjectReference Include="..\..\Logic\Logic.Csv\Logic.Csv.csproj" />
+  </ItemGroup>
+
+</Project>
