@@ -5,7 +5,7 @@
     <RootNamespace>codingfreaks.cfUtils.Logic.Core</RootNamespace>
     <AssemblyName>cfUtils.Logic.Core</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
     <Authors>codingfreaks</Authors>
     <Title>cfUtils</Title>
     <Description>During our own project work we detect often needed features which are not covered in .NET. This library collects them and can be used by others as well.</Description>
@@ -15,7 +15,7 @@
     <RepositoryType>github</RepositoryType>
     <PackageTags>codingfreaks .NET C#</PackageTags>
     <PackageId>codingfreaks.libs.Utilities</PackageId>
-    <PackageReleaseNotes>Moved to .NET Standard 2.1.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added async port checks in NetworkUtil.</PackageReleaseNotes>
     <PackageIcon>codingfreaks.jpg</PackageIcon>
     <PackageIconUrl>http://www.codingfreaks.de/files/codingfreaks.jpg</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

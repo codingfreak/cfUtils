@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace codingfreaks.cfUtils.Logic.Core.Utilities
+﻿namespace codingfreaks.cfUtils.Logic.Core.Utilities
 {
     using System;
     using System.Linq;
@@ -27,17 +24,20 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// </remarks>
         /// <param name="host">IP-Address or host name to check for the port.</param>
         /// <param name="port">The port-number to check.</param>
-        /// <param name="timeout">The timeout in seconds to wait for a reply. Defaults to 2 because 1 second is mostly too short for .NET.</param>
+        /// <param name="timeoutSeconds">
+        /// The timeoutSeconds in seconds to wait for a reply. Defaults to 2 because 1 second is
+        /// mostly too short for .NET.
+        /// </param>
         /// <param name="useUdp"><c>true</c> if a UDP port should be checked.</param>
         /// <returns>The result of the operation.</returns>
-        public static PortState GetPortState(string host, int port, int timeout = 2, bool useUdp = false)
+        public static PortState GetPortState(string host, int port, int timeoutSeconds = 2, bool useUdp = false)
         {
             var outerResult = PortState.Unknown;
-            var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
+            var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
             var token = tokenSource.Token;
             try
             {
-                // use a task to enable outer cancellation regardless of the asyncResult-timeout which isn't working very well
+                // use a task to enable outer cancellation regardless of the asyncResult-timeoutSeconds which isn't working very well
                 outerResult = Task.Run(
                     () =>
                     {
@@ -52,7 +52,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 var waitHandle = asyncResult.AsyncWaitHandle;
                                 try
                                 {
-                                    if (asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeout), false))
+                                    if (asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeoutSeconds), false))
                                     {
                                         // The result was positive
                                         if (!asyncResult.IsCompleted)
@@ -109,7 +109,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                     {
                                     },
                                     null);
-                                asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeout), false);
+                                asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeoutSeconds), false);
                                 if (!asyncResult.IsCompleted)
                                 {
                                     return PortState.TimedOut;
@@ -139,7 +139,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                                 // wait handle didn't came back in time
                                 client.Close();
                             }
-                        }                        
+                        }
                         return result;
                     },
                     token).ContinueWith(
@@ -162,11 +162,32 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                 }
             }
             catch
-            {    
+            {
                 // empty catch
             }
             LastCheckResult = outerResult;
             return outerResult;
+        }
+
+        /// <summary>
+        /// Tries to open a network connection to a specific port retrieving the result.
+        /// </summary>
+        /// <remarks>
+        /// Stores the result of the last operation in <see cref="LastCheckResult" /> too.
+        /// </remarks>
+        /// <param name="host">IP-Address or host name to check for the port.</param>
+        /// <param name="port">The port-number to check.</param>
+        /// <param name="timeoutSeconds">
+        /// The timeoutSeconds in seconds to wait for a reply. Defaults to 2 because 1 second is
+        /// mostly too short for .NET.
+        /// </param>
+        /// <param name="useUdp"><c>true</c> if a UDP port should be checked.</param>
+        /// <returns>The result of the operation.</returns>
+        public static async Task<PortState> GetPortStateAsync(string host, int port, int timeoutSeconds = 2, bool useUdp = false)
+        {
+            var result = useUdp ? await GetUdpPortStateAsync(host, port, timeoutSeconds) : await GetTcpPortStateAsync(host, port, timeoutSeconds);
+            LastCheckResult = result;
+            return result;
         }
 
         /// <summary>
@@ -197,7 +218,7 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// </summary>
         /// <param name="host">IP-Address or host name to check for the port.</param>
         /// <param name="port">The port-number to check.</param>
-        /// <param name="timeout">The timeout in seconds to wait for a reply.</param>
+        /// <param name="timeout">The timeoutSeconds in seconds to wait for a reply.</param>
         /// <param name="useUdp"><c>true</c> if a UDP port should be checked.</param>
         /// <returns><c>True</c> if the port is opened, otherwise <c>false.</c></returns>
         public static bool IsPortOpened(string host, int port, int timeout = 1, bool useUdp = false)
@@ -209,12 +230,12 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
         /// Checks, if a certain TCP <paramref name="port" /> is opened on a given <paramref name="host" />.
         /// </summary>
         /// <remarks>
-        /// Due to the lack of cancellation support in the <see cref="TcpClient"/> and <see cref="UdpClient"/>
-        /// you should use the synchronously method insteadif timeout is valueable for you.
+        /// Due to the lack of cancellation support in the <see cref="TcpClient" /> and <see cref="UdpClient" />
+        /// you should use the synchronously method insteadif timeoutSeconds is valueable for you.
         /// </remarks>
         /// <param name="host">IP-Address or host name to check for the port.</param>
         /// <param name="port">The port-number to check.</param>
-        /// <param name="timeout">The timeout in seconds to wait for a reply.</param>
+        /// <param name="timeout">The timeoutSeconds in seconds to wait for a reply.</param>
         /// <param name="useUdp"><c>true</c> if a UDP port should be checked.</param>
         /// <returns><c>true</c> if the port is opened, otherwise <c>false.</c></returns>
         public static async Task<bool> IsPortOpenedAsync(string host, int port, int timeout, bool useUdp = false)
@@ -259,6 +280,113 @@ namespace codingfreaks.cfUtils.Logic.Core.Utilities
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// Tries to open a network connection via TCP to a specific port retrieving the result.
+        /// </summary>
+        /// <param name="host">IP-Address or host name to check for the port.</param>
+        /// <param name="port">The port-number to check.</param>
+        /// <param name="timeoutSeconds">
+        /// The timeoutSeconds in seconds to wait for a reply. Defaults to 2 because 1 second is
+        /// mostly too short for .NET.
+        /// </param>
+        /// <returns>The result of the operation.</returns>
+        private static async Task<PortState> GetTcpPortStateAsync(string host, int port, int timeoutSeconds = 2)
+        {
+            var cancellationCompletionSource = new TaskCompletionSource<bool>();
+            try
+            {
+                using (var cts = new CancellationTokenSource(timeoutSeconds))
+                {
+                    using (var client = new TcpClient())
+                    {
+                        var task = client.ConnectAsync(host, port);
+                        using (cts.Token.Register(() => cancellationCompletionSource.TrySetResult(true)))
+                        {
+                            if (task != await Task.WhenAny(task, cancellationCompletionSource.Task))
+                            {
+                                throw new OperationCanceledException(cts.Token);
+                            }
+                            // throw exception inside 'task' (if any)
+                            if (task.Exception?.InnerException != null)
+                            {
+                                throw task.Exception.InnerException;
+                            }
+                        }
+                        return client.Connected ? PortState.Open : PortState.Closed;
+                    }
+                }
+            }
+            catch (OperationCanceledException operationCanceledEx)
+            {
+                // connection timeout
+                return PortState.Closed;
+            }
+            catch (SocketException socketEx)
+            {
+                Console.WriteLine($"Socket-Fehler: {socketEx}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fehler: {ex}");
+            }
+            return PortState.Unknown;
+        }
+
+        /// <summary>
+        /// Tries to open a network connection via UDP to a specific port retrieving the result.
+        /// </summary>
+        /// <param name="host">IP-Address or host name to check for the port.</param>
+        /// <param name="port">The port-number to check.</param>
+        /// <param name="timeoutSeconds">
+        /// The timeoutSeconds in seconds to wait for a reply. Defaults to 2 because 1 second is
+        /// mostly too short for .NET.
+        /// </param>
+        /// <returns>The result of the operation.</returns>
+        private static async Task<PortState> GetUdpPortStateAsync(string host, int port, int timeoutSeconds = 2)
+        {
+            var tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutSeconds));
+            return await Task.Run(
+                () =>
+                {
+                    using (var client = new UdpClient())
+                    {
+                        try
+                        {
+                            client.Connect(host, port);
+                            var asyncResult = client.BeginReceive(
+                                r =>
+                                {
+                                },
+                                null);
+                            asyncResult.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(timeoutSeconds), false);
+                            if (!asyncResult.IsCompleted)
+                            {
+                                return PortState.TimedOut;
+                            }
+                            return PortState.Open;
+                        }
+                        catch (SocketException sockEx)
+                        {
+                            TraceUtil.WriteTraceError(sockEx.Message);
+                            // see https://msdn.microsoft.com/en-us/library/ms740668.aspx for a list of all states
+                            switch (sockEx.NativeErrorCode)
+                            {
+                                case 10060:
+                                    return PortState.TimedOut;
+                                case 10061:
+                                    return PortState.Refused;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            TraceUtil.WriteTraceError(ex.Message);
+                        }
+                    }
+                    return PortState.Unknown;
+                },
+                tokenSource.Token);
         }
 
         #endregion
